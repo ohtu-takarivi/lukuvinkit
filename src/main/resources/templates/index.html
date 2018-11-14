@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Lukuvinkit</title>
+</head>
+<body>
+
+<h2>Hei <span th:text="${customUser.name}"></span>!</h2>
+
+<h3>Lukuvinkkisi:</h3>
+
+<table border="1">
+    <tr>
+        <th>Otsikko</th>
+        <th>Kuvaus</th>
+        <th>Url</th>
+    </tr>
+    <tr th:each="readingTip : ${readingTips}">
+        <td th:text="${readingTip.title}"></td>
+        <td th:text="${readingTip.description}"></td>
+        <td th:text="${readingTip.url}"></td>
+    </tr>
+</table>
+
+<h3>Lisää uusi lukuvinkki:</h3>
+
+<form th:action="@{/addReadingTip}" method="POST">
+    <p><label>Otsikko</label>: <input type="text" name="title"/></p>
+    <p><label>Kuvaus</label>: <input type="text" name="description"/></p>
+    <p><label>Url</label>: <input type="text" name="url"/></p>
+    <p><input type="submit" value="Lisää"/></p>
+</form>
+
+<h3>Vaihda salasana:</h3>
+
+<form th:action="@{/changePassword}" method="POST">
+    <p><label>Uusi salasana</label>: <input type="text" name="newPassword"/></p>
+    <p><label>Uudestaan</label>: <input type="text" name="newPasswordAgain"/></p>
+    <p><input type="submit" value="Vaihda"/></p>
+</form>
+
+<p></p>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Kirjaudu ulos"/>
+</form>
+
+</body>
+</html>
