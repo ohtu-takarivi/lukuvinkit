@@ -29,11 +29,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
 
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.4.0'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.4.0'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.4.0'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.4.0'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.4.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
 
     testCompile "junit:junit"
     testCompile "info.cukes:cucumber-core:1.2.5"
@@ -42,7 +42,7 @@ dependencies {
     testCompile "info.cukes:cucumber-spring:1.2.5"
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
-    testCompile("io.github.bonigarcia:webdrivermanager:1.6.2") {
+    testCompile("io.github.bonigarcia:webdrivermanager:3.0.0") {
         exclude group: 'org.seleniumhq.selenium'
     }
 }
