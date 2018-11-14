@@ -14,6 +14,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class Stepdefs {
 
     WebDriver driver;
+    private static final int LOCAL_PORT=8080;
+    private static final int SLEEPING_TIME=1000;
+    private static final int NUMBER_OF_TRIALS=5;
 
     public Stepdefs() {
         File file;
@@ -35,15 +38,15 @@ public class Stepdefs {
 
     @Given("^user is at the main page$")
     public void user_is_at_the_main_page() throws Throwable {
-        driver.get("http://localhost:" + 8080 + "/" );
-        Thread.sleep(1000);        
+        driver.get("http://localhost:" + LOCAL_PORT + "/" );
+        Thread.sleep(SLEEPING_TIME);        
     }
 
     @When("^a link is clicked$")
     public void a_link_is_clicked() throws Throwable {
-        Thread.sleep(1000);  
+        Thread.sleep(SLEEPING_TIME);  
         clickLinkWithText("linkki" );
-        Thread.sleep(1000);  
+        Thread.sleep(SLEEPING_TIME);  
     }    
    
     @Then("^\"([^\"]*)\" is shown$")
@@ -54,7 +57,7 @@ public class Stepdefs {
 
     private void clickLinkWithText(String text) {
         int trials = 0;
-        while( trials++<5 ) {
+        while( trials++<NUMBER_OF_TRIALS ) {
             try{
                 WebElement element = driver.findElement(By.linkText(text));
                 element.click();
