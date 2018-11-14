@@ -35,8 +35,8 @@
 <h3>Vaihda salasana:</h3>
 
 <form th:action="@{/changePassword}" method="POST">
-    <p><label>Uusi salasana</label>: <input type="text" name="newPassword"/></p>
-    <p><label>Uudestaan</label>: <input type="text" name="newPasswordAgain"/></p>
+    <p><label>Uusi salasana</label>: <input type="password" name="newPassword"/></p>
+    <p><label>Uudestaan</label>: <input type="password" name="newPasswordAgain"/></p>
     <p><input type="submit" value="Vaihda"/></p>
 </form>
 

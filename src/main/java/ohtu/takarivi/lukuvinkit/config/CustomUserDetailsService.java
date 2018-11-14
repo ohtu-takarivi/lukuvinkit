@@ -36,6 +36,8 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @PostConstruct
     public void init() {
+        if (!customUserRepository.findAll().isEmpty()) return;
+
         CustomUser customUser = new CustomUser("abel", encoder.encode("123456"), "Abel");
         customUserRepository.save(customUser);
         readingTipRepository.save(new ReadingTip("Title 1", "-", "-", customUser));
