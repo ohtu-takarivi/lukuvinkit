@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * The Spring controller for reading tip related activity.
+ */
 @Controller
 public class ReadingTipController {
 

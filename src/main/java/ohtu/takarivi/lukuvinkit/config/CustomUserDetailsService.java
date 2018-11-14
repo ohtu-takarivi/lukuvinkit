@@ -16,6 +16,9 @@ import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
+/**
+ * Represents an user details service for Spring Data JPA. This handles users that are defined as CustomUser instances.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -28,6 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
+    /**
+     * Initializes this details service.
+     */
     @PostConstruct
     public void init() {
         CustomUser customUser = new CustomUser("abel", encoder.encode("123456"), "Abel");

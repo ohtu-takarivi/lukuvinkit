@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+/**
+ * This class represents an user in the system.
+ */
 @Entity
 public class CustomUser extends AbstractPersistable<Long> {
 
@@ -19,10 +22,20 @@ public class CustomUser extends AbstractPersistable<Long> {
     @OneToMany
     private List<ReadingTip> readingTips;
 
+    /**
+     * Constructs a new empty CustomUser instance.
+     */
     public CustomUser() {
         super();
     }
 
+    /**
+     * Constructs a new CustomUser with the given parameters.
+     * 
+     * @param username The username for this user.
+     * @param password The password for this user.
+     * @param name The display name of this user.
+     */
     public CustomUser(String username, String password, String name) {
         this();
         this.username = username;
@@ -30,34 +43,74 @@ public class CustomUser extends AbstractPersistable<Long> {
         this.name = name;
     }
 
+    /**
+     * Gets the username of the user.
+     * 
+     * @return The username.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets the new username for this user.
+     * 
+     * @param username The new username.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets the password of the user.
+     * 
+     * @return The password.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the new password for this user.
+     * 
+     * @param password The new password.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Gets the display name of the user.
+     * 
+     * @return The display name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the new display name for this user.
+     * 
+     * @param name The new display name.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the new list of reading tips for this user.
+     * 
+     * @return The list of reading tips associated with this user.
+     */
     public List<ReadingTip> getReadingTips() {
         return readingTips;
     }
 
+    /**
+     * Sets the new list of reading tips for this user.
+     * 
+     * @param name The new list of display tips.
+     */
     public void setReadingTips(List<ReadingTip> readingTips) {
         this.readingTips = readingTips;
     }
