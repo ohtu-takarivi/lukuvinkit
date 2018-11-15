@@ -16,14 +16,22 @@
         <th>Otsikko</th>
         <th>Kuvaus</th>
         <th>Url</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="readingTip : ${readingTips}">
-        <td th:text="${readingTip.title}"></td>
-        <td th:text="${readingTip.description}"></td>
-        <td th:text="${readingTip.url}"></td>
-    </tr>
+    
+        <tr th:each="readingTip : ${readingTips}">
+            <td th:text="${readingTip.title}"></td>
+            <td th:text="${readingTip.description}"></td>
+            <td th:text="${readingTip.url}"></td>
+            <td>
+                <form th:action="@{/deleteReadingTip}" method="POST">
+                    <input type="hidden" name=readingTip th:value="${readingTip.id}"/>
+                    <button type="submit">Poista</button>
+                </form>
+            </td>
+        </tr>
     </tbody>
 </table>
 
