@@ -13,6 +13,18 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 
+logging.captureStandardOutput LogLevel.QUIET
+
+run {
+    standardInput = System.in
+}
+
+project.ext {
+    cucumberVersion = "4.2.0"
+    junitVersion = "4.12"
+    seleniumVersion = "3.141.59"
+}
+
 mainClassName = 'ohtu.takarivi.lukuvinkit.Application'
 
 repositories {
@@ -29,17 +41,17 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
 
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.141.59'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.141.59'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: seleniumVersion
 
-    testCompile "junit:junit"
-    testCompile "info.cukes:cucumber-core:1.2.5"
-    testCompile "info.cukes:cucumber-java:1.2.5"
-    testCompile "info.cukes:cucumber-junit:1.2.5"
-    testCompile "info.cukes:cucumber-spring:1.2.5"
+    testCompile "junit:junit:" + junitVersion
+    testCompile "io.cucumber:cucumber-core:" + cucumberVersion
+    testCompile "io.cucumber:cucumber-java:" + cucumberVersion
+    testCompile "io.cucumber:cucumber-junit:" + cucumberVersion
+    testCompile "io.cucumber:cucumber-spring:" + cucumberVersion
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
     testCompile("io.github.bonigarcia:webdrivermanager:3.0.0") {
