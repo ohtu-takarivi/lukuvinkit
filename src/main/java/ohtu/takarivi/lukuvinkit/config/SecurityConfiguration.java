@@ -23,15 +23,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated().and()
-                .formLogin().permitAll().and()
-                .logout().permitAll();
+        http.authorizeRequests().anyRequest().authenticated().and().formLogin().permitAll();
     }
 
     /**
      * Configures the security for the application.
-     * 
+     *
      * @param auth The authentication manager builder object.
      * @throws Exception
      */
@@ -42,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * Returns the password encoder used in this application.
-     * 
+     *
      * @return The password encoder to be used.
      */
     @Bean

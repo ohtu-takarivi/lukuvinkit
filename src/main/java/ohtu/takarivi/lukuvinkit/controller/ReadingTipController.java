@@ -5,9 +5,8 @@ import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,10 +23,9 @@ public class ReadingTipController {
     private ReadingTipRepository readingTipRepository;
 
     @PostMapping(value = "/addReadingTip")
-    public String submitReadTip(Model model, @RequestParam String title, @RequestParam String description,
+    public String submitReadTip(Authentication auth, @RequestParam String title, @RequestParam String description,
                                 @RequestParam String url) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        CustomUser customUser = customUserRepository.findByUsername(username);
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty()) {
             readingTipRepository.save(new ReadingTip(title, description, url, customUser));
         }

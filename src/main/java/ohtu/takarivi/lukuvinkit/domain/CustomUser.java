@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -13,11 +14,12 @@ import java.util.List;
 @Entity
 public class CustomUser extends AbstractPersistable<Long> {
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
+    @NotEmpty
     private String username;
-    @Column(nullable = false)
+    @NotEmpty
     private String password;
-    @Column(nullable = false)
+    @NotEmpty
     private String name;
     @OneToMany
     private List<ReadingTip> readingTips;
@@ -31,10 +33,10 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Constructs a new CustomUser with the given parameters.
-     * 
+     *
      * @param username The username for this user.
      * @param password The password for this user.
-     * @param name The display name of this user.
+     * @param name     The display name of this user.
      */
     public CustomUser(String username, String password, String name) {
         this();
@@ -45,7 +47,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Gets the username of the user.
-     * 
+     *
      * @return The username.
      */
     public String getUsername() {
@@ -54,7 +56,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Sets the new username for this user.
-     * 
+     *
      * @param username The new username.
      */
     public void setUsername(String username) {
@@ -63,7 +65,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Gets the password of the user.
-     * 
+     *
      * @return The password.
      */
     public String getPassword() {
@@ -72,7 +74,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Sets the new password for this user.
-     * 
+     *
      * @param password The new password.
      */
     public void setPassword(String password) {
@@ -81,7 +83,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Gets the display name of the user.
-     * 
+     *
      * @return The display name.
      */
     public String getName() {
@@ -90,7 +92,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Sets the new display name for this user.
-     * 
+     *
      * @param name The new display name.
      */
     public void setName(String name) {
@@ -99,7 +101,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Gets the new list of reading tips for this user.
-     * 
+     *
      * @return The list of reading tips associated with this user.
      */
     public List<ReadingTip> getReadingTips() {
@@ -108,7 +110,7 @@ public class CustomUser extends AbstractPersistable<Long> {
 
     /**
      * Sets the new list of reading tips for this user.
-     * 
+     *
      * @param name The new list of display tips.
      */
     public void setReadingTips(List<ReadingTip> readingTips) {

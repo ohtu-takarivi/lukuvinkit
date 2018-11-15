@@ -1,20 +1,18 @@
 package ohtu.takarivi.lukuvinkit.config;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 
 /**
  * Represents an user details service for Spring Data JPA. This handles users that are defined as CustomUser instances.
@@ -63,13 +61,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (customUser == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
-        return new User(customUser.getUsername(),
-                customUser.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                Arrays.asList(new SimpleGrantedAuthority("USER")));
+        return User.withUsername(customUser.getUsername()).password(customUser.getPassword()).roles("USER").build();
     }
 
 }
