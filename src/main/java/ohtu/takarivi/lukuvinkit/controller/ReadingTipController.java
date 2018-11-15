@@ -22,8 +22,8 @@ public class ReadingTipController {
     @Autowired
     private ReadingTipRepository readingTipRepository;
 
-    @PostMapping(value = "/addReadingTip")
-    public String submitReadTip(Authentication auth, @RequestParam String title, @RequestParam String description,
+    @PostMapping(value = "/newReadingTip")
+    public String newReadingTip(Authentication auth, @RequestParam String title, @RequestParam String description,
                                 @RequestParam String url) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty()) {

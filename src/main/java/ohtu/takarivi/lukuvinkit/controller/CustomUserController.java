@@ -55,9 +55,9 @@ public class CustomUserController {
      *
      * @return The action to be taken by this controller.
      */
-    @PostMapping(value = "/changePassword")
-    public String submitNewName(Authentication auth, @RequestParam String newPassword,
-                                @RequestParam String newPasswordAgain) {
+    @PostMapping(value = "/editPassword")
+    public String editPassword(Authentication auth, @RequestParam String newPassword,
+                               @RequestParam String newPasswordAgain) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (!newPassword.trim().isEmpty() && newPassword.equals(newPasswordAgain)) {
             customUser.setPassword(encoder.encode(newPassword));

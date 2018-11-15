@@ -10,12 +10,12 @@ import java.util.List;
  */
 public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
 
-	/**
-	 * Searches a reading tip by the ID from the database.
-	 * 
-	 * @param id The ID to find a reading tip with.
-	 * @return The ReadingTip instance for the reading tip, or null if not found.
-	 */
-    List<ReadingTip> findByCustomUserId(Long id);
+    /**
+     * Searches a reading tip by the ID from the database.
+     *
+     * @param id The ID to find a reading tip with.
+     * @return The ReadingTip instance for the reading tip, or null if not found.
+     */
+    List<ReadingTip> findByCustomUserId(Long customUserId);
 
 }

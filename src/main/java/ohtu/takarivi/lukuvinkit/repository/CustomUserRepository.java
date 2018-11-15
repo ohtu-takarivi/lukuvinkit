@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CustomUserRepository extends JpaRepository<CustomUser, Long> {
 
-	/**
-	 * Searches an user by the username from the database.
-	 * 
-	 * @param username The username to find an user with.
-	 * @return The CustomUser instance for the username, or null if not found.
-	 */
+    /**
+     * Searches an user by the username from the database.
+     *
+     * @param username The username to find an user with.
+     * @return The CustomUser instance for the username, or null if not found.
+     */
     CustomUser findByUsername(String username);
 
 }

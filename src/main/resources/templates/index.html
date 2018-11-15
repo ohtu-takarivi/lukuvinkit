@@ -11,39 +11,58 @@
 <h3>Lukuvinkkisi:</h3>
 
 <table border="1">
+    <thead>
     <tr>
         <th>Otsikko</th>
         <th>Kuvaus</th>
         <th>Url</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="readingTip : ${readingTips}">
         <td th:text="${readingTip.title}"></td>
         <td th:text="${readingTip.description}"></td>
         <td th:text="${readingTip.url}"></td>
     </tr>
+    </tbody>
 </table>
 
 <h3>Lisää uusi lukuvinkki:</h3>
 
-<form th:action="@{/addReadingTip}" method="POST">
-    <p><label>Otsikko</label>: <input type="text" name="title"/></p>
-    <p><label>Kuvaus</label>: <input type="text" name="description"/></p>
-    <p><label>Url</label>: <input type="text" name="url"/></p>
-    <p><input type="submit" value="Lisää"/></p>
+<form th:action="@{/newReadingTip}" method="POST">
+    <div>
+        <label>Otsikko:</label>
+        <input type="text" name="title"/>
+    </div>
+    <div>
+        <label>Kuvaus:</label>
+        <input type="text" name="description"/>
+    </div>
+    <div>
+        <label>Url:</label>
+        <input type="text" name="url"/>
+    </div>
+    <button type="submit">Lisää</button>
 </form>
 
 <h3>Vaihda salasana:</h3>
 
-<form th:action="@{/changePassword}" method="POST">
-    <p><label>Uusi salasana</label>: <input type="password" name="newPassword"/></p>
-    <p><label>Uudestaan</label>: <input type="password" name="newPasswordAgain"/></p>
-    <p><input type="submit" value="Vaihda"/></p>
+<form th:action="@{/editPassword}" method="POST">
+    <div>
+        <label>Uusi salasana:</label>
+        <input type="password" name="newPassword"/>
+    </div>
+    <div>
+        <label>Uudelleen:</label>
+        <input type="password" name="newPasswordAgain"/>
+    </div>
+    <button type="submit">Vaihda</button>
 </form>
 
 <p></p>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Kirjaudu ulos"/>
+<form th:action="@{/logout}" method="POST">
+    <button type="submit">Kirjaudu ulos</button>
 </form>
 
 </body>
