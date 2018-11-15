@@ -32,4 +32,10 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
+    @PostMapping(value = "/deleteReadingTip")
+    public String deleteReadingTip(Authentication auth, @RequestParam Long readingTip) {
+        System.out.println(readingTip);
+        readingTipRepository.deleteById(readingTip);
+        return "redirect:/";
+    }
 }

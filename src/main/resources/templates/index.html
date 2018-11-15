@@ -20,14 +20,18 @@
     </tr>
     </thead>
     <tbody>
-    <form th:action="@{/deleteReadingTip}" method="POST">
+    
         <tr th:each="readingTip : ${readingTips}">
             <td th:text="${readingTip.title}"></td>
             <td th:text="${readingTip.description}"></td>
             <td th:text="${readingTip.url}"></td>
-            <td><button type="submit">Poista</button></td>
+            <td>
+                <form th:action="@{/deleteReadingTip}" method="POST">
+                    <input type="hidden" name=readingTip th:value="${readingTip.id}"/>
+                    <button type="submit">Poista</button>
+                </form>
+            </td>
         </tr>
-    </form>
     </tbody>
 </table>
 
