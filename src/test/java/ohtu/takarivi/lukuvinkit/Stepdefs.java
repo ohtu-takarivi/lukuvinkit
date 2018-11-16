@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Stepdefs {
+    private static final int SLEEP_BETWEEN_CLICKS = 100;
 
     WebDriver driver;
     private static final int LOCAL_PORT=8080;
@@ -67,7 +68,7 @@ public class Stepdefs {
             } catch(Exception e) {
                 System.out.println(e.getStackTrace());
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(SLEEP_BETWEEN_CLICKS);
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }

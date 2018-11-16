@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty"})
 public class RunCukesTest {
+    private static final int SERVER_PORT = 8080;
     @ClassRule
-    public static ServerRule server = new ServerRule(8080);
+    public static ServerRule server = new ServerRule(SERVER_PORT);
 }
