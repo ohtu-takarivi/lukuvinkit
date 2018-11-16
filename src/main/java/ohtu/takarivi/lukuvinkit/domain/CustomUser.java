@@ -15,6 +15,8 @@ import java.util.List;
 public class CustomUser extends AbstractPersistable<Long> {
 
     private static final String ALLOWED_USERNAME_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_";
+    private static final int MIN_USERNAME_LENGTH = 3;
+    private static final int MAX_USERNAME_LENGTH = 32;
     
     @Column(unique = true)
     @NotEmpty
@@ -131,7 +133,7 @@ public class CustomUser extends AbstractPersistable<Long> {
             return false;
         }
         
-        if (name.length() < 3 || name.length() > 32) {
+        if (name.length() < MIN_USERNAME_LENGTH || name.length() > MAX_USERNAME_LENGTH) {
             return false;
         }
         
