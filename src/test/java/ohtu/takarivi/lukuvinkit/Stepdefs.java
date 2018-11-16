@@ -35,6 +35,8 @@ public class Stepdefs {
     public void tearDown() {
         driver.quit();
     }
+    
+    /// TODO
 
     @Given("^user is at the main page$")
     public void user_is_at_the_main_page() throws Throwable {
@@ -64,6 +66,11 @@ public class Stepdefs {
                 break;           
             } catch(Exception e) {
                 System.out.println(e.getStackTrace());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
     }

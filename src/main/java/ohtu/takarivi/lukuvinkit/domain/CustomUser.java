@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 public class CustomUser extends AbstractPersistable<Long> {
 
+    private static final String ALLOWED_USERNAME_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_";
+    
     @Column(unique = true)
     @NotEmpty
     private String username;
@@ -115,6 +117,30 @@ public class CustomUser extends AbstractPersistable<Long> {
      */
     public void setReadingTips(List<ReadingTip> readingTips) {
         this.readingTips = readingTips;
+    }
+
+    /**
+     * Returns whether the given username is valid. Valid usernames only contain lowercase letters, numbers and underscores and must be between 3-32 characters long.
+     * 
+     * @param username The username to test.
+     * @return Whether the username is valid.
+     */
+    public static boolean isValidUsername(String username) {
+        String name = username.trim();
+        if (name.isEmpty()) {
+            return false;
+        }
+        
+        if (name.length() < 3 || name.length() > 32) {
+            return false;
+        }
+        
+        for (char c: username.toCharArray()) {
+            if (!ALLOWED_USERNAME_CHARS.contains("" + c)) {
+                return false; 
+            }
+        }
+        return true;
     }
 
 }

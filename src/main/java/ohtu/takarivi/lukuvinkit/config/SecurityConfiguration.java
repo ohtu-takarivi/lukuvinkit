@@ -23,7 +23,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().and().formLogin().permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers("/static/**").permitAll()              // allow static resources access without auth
+                .antMatchers("/register").permitAll()               // allow registration without auth
+                .antMatchers("/register/register").permitAll()      // allow registration without auth
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login/login")
+                .defaultSuccessUrl("/", true)
+                .permitAll();
     }
 
     /**
