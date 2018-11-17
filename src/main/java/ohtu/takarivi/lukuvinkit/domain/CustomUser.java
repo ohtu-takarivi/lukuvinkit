@@ -17,7 +17,7 @@ public class CustomUser extends AbstractPersistable<Long> {
     private static final String ALLOWED_USERNAME_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_";
     private static final int MIN_USERNAME_LENGTH = 3;
     private static final int MAX_USERNAME_LENGTH = 32;
-    
+
     @Column(unique = true)
     @NotEmpty
     private String username;
@@ -115,15 +115,16 @@ public class CustomUser extends AbstractPersistable<Long> {
     /**
      * Sets the new list of reading tips for this user.
      *
-     * @param name The new list of display tips.
+     * @param readingTips The new list of display tips.
      */
     public void setReadingTips(List<ReadingTip> readingTips) {
         this.readingTips = readingTips;
     }
 
     /**
-     * Returns whether the given username is valid. Valid usernames only contain lowercase letters, numbers and underscores and must be between 3-32 characters long.
-     * 
+     * Returns whether the given username is valid. Valid usernames only contain lowercase letters, numbers and
+     * underscores and must be between 3-32 characters long.
+     *
      * @param username The username to test.
      * @return Whether the username is valid.
      */
@@ -132,14 +133,14 @@ public class CustomUser extends AbstractPersistable<Long> {
         if (name.isEmpty()) {
             return false;
         }
-        
+
         if (name.length() < MIN_USERNAME_LENGTH || name.length() > MAX_USERNAME_LENGTH) {
             return false;
         }
-        
-        for (char c: username.toCharArray()) {
+
+        for (char c : username.toCharArray()) {
             if (!ALLOWED_USERNAME_CHARS.contains("" + c)) {
-                return false; 
+                return false;
             }
         }
         return true;

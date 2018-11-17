@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lukuvinkit</title>
 </head>
@@ -20,14 +19,12 @@
     </tr>
     </thead>
     <tbody>
-    
         <tr th:each="readingTip : ${readingTips}">
             <td th:text="${readingTip.title}"></td>
             <td th:text="${readingTip.description}"></td>
             <td th:text="${readingTip.url}"></td>
             <td>
-                <form th:action="@{/deleteReadingTip}" method="POST">
-                    <input type="hidden" name=readingTip th:value="${readingTip.id}"/>
+                <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
                     <button type="submit">Poista</button>
                 </form>
             </td>
@@ -37,7 +34,7 @@
 
 <h3>Lisää uusi lukuvinkki:</h3>
 
-<form th:action="@{/newReadingTip}" method="POST">
+<form th:action="@{/readingTips/new}" method="POST">
     <div>
         <label>Otsikko:</label>
         <input type="text" name="title"/>
@@ -62,7 +59,7 @@
     </div>
     <div>
         <label>Uudelleen:</label>
-        <input type="password" name="newPasswordAgain"/>
+        <input type="password" name="verifyNewPassword"/>
     </div>
     <button type="submit">Vaihda</button>
 </form>
