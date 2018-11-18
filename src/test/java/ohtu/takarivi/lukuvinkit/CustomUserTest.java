@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import org.junit.Ignore;
+
 
 public class CustomUserTest {
     

@@ -15,6 +15,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+
+
 
 public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
@@ -24,6 +28,7 @@ public class Stepdefs extends SpringBootTestBase {
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
     public Stepdefs() {
+        
         super();
         File file;
         
@@ -39,6 +44,7 @@ public class Stepdefs extends SpringBootTestBase {
         System.setProperty("webdriver.gecko.driver", absolutePath);
 
         this.driver = new FirefoxDriver();
+        //this.driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
     }
     
     @Before
@@ -64,6 +70,46 @@ public class Stepdefs extends SpringBootTestBase {
         driver.get("http://localhost:" + port + "/register");
         Thread.sleep(SLEEPING_TIME);        
     }
+    
+    @Given("^test user is logged in$")
+    public void test_user_is_logged_in() throws Throwable {
+        driver.get("http://localhost:" + port + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        
+    }
+    
+    
+    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
+    public void tip_with_valid_information_is_given(String title, String description, String url) throws Throwable {
+        createTip(title, description, url);
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
+    @When("^no title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
+    public void tip_with_invalid_title_is_given(String title, String description, String url) throws Throwable {
+        createTip(title, description, url);
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
+    @When("^title \"([^\"]*)\" and no description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
+    public void tip_with_invalid_description_is_given(String title, String description, String url) throws Throwable {
+        createTip(title, description, url);
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url \"([^\"]*)\" are given$")
+    public void tip_with_invalid_url_is_given(String title, String description, String url) throws Throwable {
+        createTip(title, description, url);
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
+    @When("^tip with title \"([^\"]*)\" is deleted$")
+    public void tip_is_deleted(String title) throws Throwable {
+        driver.findElement(By.name(title)).click();
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
     public void username_password_entered(String username, String password) throws Throwable {
@@ -97,6 +143,29 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
     
+            
+    @Then("^new tip with title \"([^\"]*)\" description \"([^\"]*)\" and url \"([^\"]*)\" is created$")
+    public void new_tip_is_created(String title, String description, String url) throws Throwable {
+        pageHasContent(title);
+        pageHasContent(description);
+        pageHasContent(url);
+    }
+    
+    @Then("^new tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
+    public void new_tip_is_created(String first, String second) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(first));
+        assertTrue(!driver.getPageSource().contains(second));
+        
+    }
+    
+    @Then("^tip with title \"([^\"]*)\" is no longer visible$")
+    public void tip_not_visible(String title) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(title));
+        
+    }
+    
+    
+    
     @Then("^user is logged in$")
     public void logged_in() throws Throwable {
         assertTrue(driver.findElement(By.tagName("body"))
@@ -126,6 +195,19 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.id("buttonlogin")).click();
         waitForPageChange();
+    }
+    
+    private void pageHasContent(String content) {
+        assertTrue(driver.getPageSource().contains(content));
+    }
+    
+    private void createTip(String title, String description, String url) {
+        assertTrue(driver.getPageSource().contains("Lisää uusi lukuvinkki:"));
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("description")).sendKeys(description);
+        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.name("buttonadd")).click();
+        waitForPageChange();
     } 
 
     private void waitForPageChange() {
@@ -149,5 +231,5 @@ public class Stepdefs extends SpringBootTestBase {
             }
         }
     }
-    
 }
+    

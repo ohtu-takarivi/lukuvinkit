@@ -25,7 +25,7 @@
             <td th:text="${readingTip.url}"></td>
             <td>
                 <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-                    <button type="submit">Poista</button>
+                    <button type="submit" th:name="${readingTip.title}">Poista</button>
                 </form>
             </td>
         </tr>
@@ -47,7 +47,7 @@
         <label>Url:</label>
         <input type="text" name="url"/>
     </div>
-    <button type="submit">Lisää</button>
+    <button type="submit" name="buttonadd">Lisää</button>
 </form>
 
 <h3>Vaihda salasana:</h3>
