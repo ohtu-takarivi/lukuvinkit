@@ -1,7 +1,12 @@
 language: java
 
+env:
+  - MOZ_HEADLESS=1
+addons:
+  firefox: latest
 script:
-  - ./gradlew check --info
+  - xvfb-run make test
+  - ./gradlew check
   - ./gradlew jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
