@@ -55,7 +55,7 @@ public class CustomUserTest {
 
     @Test
     public void canSetReadingTips() {
-    	CustomUser cu = new CustomUser("user", "password", "name");
+        CustomUser cu = new CustomUser("user", "password", "name");
         ReadingTip readingTip = new ReadingTip("title", "description", "url", cu);
         List<ReadingTip> readingTips = new ArrayList<>();
         readingTips.add(readingTip);
@@ -65,26 +65,26 @@ public class CustomUserTest {
 
     @Test
     public void validUsernameIsValid() {
-        assertEquals(true, CustomUser.isValidUsername("user"));
+        assertTrue(CustomUser.isValidUsername("user"));
     }
 
     @Test
     public void tooShortUsernameIsInvalid() {
-        assertEquals(false, CustomUser.isValidUsername("u"));
+        assertFalse(CustomUser.isValidUsername("u"));
     }
 
     @Test
     public void tooLongUsernameIsInvalid() {
-        assertEquals(false, CustomUser.isValidUsername("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        assertFalse(CustomUser.isValidUsername("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
     }
 
     @Test
     public void emptyUsernameIsInvalid() {
-        assertEquals(false, CustomUser.isValidUsername(""));
+        assertFalse(CustomUser.isValidUsername(""));
     }
 
     @Test
     public void specialCharacterUsernameIsInvalid() {
-        assertEquals(false, CustomUser.isValidUsername("%%%%%"));
+        assertFalse(CustomUser.isValidUsername("%%%%%"));
     }
 }
