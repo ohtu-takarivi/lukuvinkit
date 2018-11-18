@@ -5,8 +5,7 @@ env:
 addons:
   firefox: latest
 script:
-  - xvfb-run make test
-  - ./gradlew check
+  - xvfb-run ./gradlew check --info
   - ./gradlew jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
