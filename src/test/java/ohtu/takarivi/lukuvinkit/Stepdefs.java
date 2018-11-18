@@ -6,6 +6,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.By;
@@ -17,8 +20,8 @@ public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
     private static final int SLEEP_BETWEEN_CLICKS = 50;
     private static final int SLEEPING_TIME = 100;
-    private static final int PAGE_LOAD_SLEEP = 2000;
     private static final int NUMBER_OF_TRIALS = 5;
+    private static final int PAGE_LOAD_TIMEOUT = 10;
 
     public Stepdefs() {
         super();
@@ -89,10 +92,11 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("username")).sendKeys(username);
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("verifyPassword")).sendKeys(password);
+        driver.findElement(By.name("name")).sendKeys(username);
         driver.findElement(By.id("buttonregister")).click();
         waitForPageChange();
-    }      
-
+    }
+    
     @Then("^user is logged in$")
     public void logged_in() throws Throwable {
         assertTrue(driver.findElement(By.tagName("body"))
@@ -102,6 +106,16 @@ public class Stepdefs extends SpringBootTestBase {
     @Then("^user is not logged in$")
     public void not_logged_in() throws Throwable {
         assertTrue(driver.getCurrentUrl().contains("/login?error"));
+    }    
+
+    @Then("^user account is created$")
+    public void account_created() throws Throwable {
+        assertTrue(driver.getPageSource().contains("Please sign in"));
+    } 
+   
+    @Then("^user account is not created$")
+    public void account_not_created() throws Throwable {
+        assertFalse(driver.getPageSource().contains("Please sign in"));
     }
 
     /* helper methods */
@@ -115,11 +129,7 @@ public class Stepdefs extends SpringBootTestBase {
     } 
 
     private void waitForPageChange() {
-        try {
-            Thread.sleep(PAGE_LOAD_SLEEP);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
     }
 
     private void clickLinkWithText(String text) {

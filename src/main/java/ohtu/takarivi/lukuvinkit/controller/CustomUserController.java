@@ -85,11 +85,19 @@ public class CustomUserController {
     @PostMapping(value = "/register")
     public String register(@RequestParam String username, @RequestParam String password,
                            @RequestParam String verifyPassword, @RequestParam String name) {
-        if (CustomUser.isValidUsername(username) && !password.trim().isEmpty() && password.equals(verifyPassword)
+        if (CustomUser.isValidUsername(username) 
+                && !password.trim().isEmpty() 
+                && password.equals(verifyPassword)
                 && !name.trim().isEmpty()) {
-            customUserRepository.save(new CustomUser(username, encoder.encode(password), name));
+            if (customUserRepository.findByUsername(username) == null) {
+                customUserRepository.save(new CustomUser(username, encoder.encode(password), name));
+                return "redirect:/";
+            } else {
+                return "redirect:/register?error=reserved";
+            }
+        } else {
+            return "redirect:/register?error=invalid";
         }
-        return "redirect:/";
     }
 
     /**

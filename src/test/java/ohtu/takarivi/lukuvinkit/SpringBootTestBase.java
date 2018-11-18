@@ -8,7 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -22,6 +24,9 @@ public abstract class SpringBootTestBase {
     private CustomUserRepository customUserRepository;
 
     @Autowired
+    private ReadingTipRepository readingTipRepository;
+
+    @Autowired
     private PasswordEncoder encoder;
     
     public SpringBootTestBase() {
@@ -31,7 +36,13 @@ public abstract class SpringBootTestBase {
         if (first) {
             first = false;
             
-            customUserRepository.save(new CustomUser("nolla", encoder.encode("yksi"), "Testi"));
+            CustomUser nolla = new CustomUser("nolla", encoder.encode("yksi"), "Testi");
+            customUserRepository.save(nolla);
+            CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");
+            customUserRepository.save(testi2);
+            
+            readingTipRepository.save(new ReadingTip("test reading tip 1", "description for tip 1", "https://example.com/", nolla));
+            readingTipRepository.save(new ReadingTip("test reading tip 2", "description for tip 2", "https://example.com/", testi2));
         }
     }
 }
