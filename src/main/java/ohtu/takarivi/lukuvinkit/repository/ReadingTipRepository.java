@@ -26,5 +26,7 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
      * @return The ReadingTip instance for the reading tip, or null if not found.
      */
     List<ReadingTip> findByCustomUserIdAndTitleContaining(Long customUserId, String title);
+    
+    List<ReadingTip> findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(String title, Long customUserId, String description, Long customUserId2);
 
 }
