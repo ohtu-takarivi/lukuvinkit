@@ -18,15 +18,9 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
      */
     List<ReadingTip> findByCustomUserId(Long customUserId);
     
-    /**
-     * Searches a reading tips by the ID and title from the database.
-     *
-     * @param id The ID to find a reading tip with.
-     * @param title The title of tip
-     * @return The ReadingTip instance for the reading tip, or null if not found.
-     */
+    
     List<ReadingTip> findByCustomUserIdAndTitleContaining(Long customUserId, String title);
     
-    List<ReadingTip> findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(String title, Long customUserId, String description, Long customUserId2);
+//    List<ReadingTip> findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(String title, Long customUserId, String description, Long customUserId2);
 
 }
