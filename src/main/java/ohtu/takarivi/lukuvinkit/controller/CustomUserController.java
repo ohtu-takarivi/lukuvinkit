@@ -43,8 +43,9 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/login")
-    public String login() {
-        return "login";
+    public String login(Model model) {
+        model.addAttribute("view", "login");
+        return "layout";
     }
 
     /**
@@ -53,15 +54,17 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/register")
-    public String register() {
-        return "register";
+    public String register(Model model) {
+        model.addAttribute("view", "register");
+        return "layout";
     }
 
     /**
      * The index page, listing all tasks.
      *
-     * @param auth  An Authentication object representing the currently authenticated user. The user that created the
-     *              tip must also be the one removing it.
+     * @param auth  An Authentication object representing the currently
+     *              authenticated user. The user that created the tip must also be
+     *              the one removing it.
      * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
@@ -70,7 +73,8 @@ public class CustomUserController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", readingTipRepository.findByCustomUserId(customUser.getId()));
-        return "index";
+        model.addAttribute("view", "index");
+        return "layout";
     }
 
     /**
@@ -103,10 +107,12 @@ public class CustomUserController {
     /**
      * The page used by users to change their passwords.
      *
-     * @param auth              An Authentication object representing the currently authenticated user. The user that
-     *                          created the tip must also be the one removing it.
+     * @param auth              An Authentication object representing the currently
+     *                          authenticated user. The user that created the tip
+     *                          must also be the one removing it.
      * @param newPassword       The new password set by the user.
-     * @param verifyNewPassword The new password set by the user; this must match newPassword.
+     * @param verifyNewPassword The new password set by the user; this must match
+     *                          newPassword.
      * @return The action to be taken by this controller.
      */
     @PostMapping(value = "/editPassword")
