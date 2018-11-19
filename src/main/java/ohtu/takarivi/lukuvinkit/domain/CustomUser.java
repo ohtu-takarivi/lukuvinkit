@@ -1,5 +1,7 @@
 package ohtu.takarivi.lukuvinkit.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -12,6 +14,8 @@ import java.util.List;
  * This class represents an user in the system.
  */
 @Entity
+@Getter
+@Setter
 public class CustomUser extends AbstractPersistable<Long> {
 
     private static final String ALLOWED_USERNAME_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_";
@@ -47,78 +51,6 @@ public class CustomUser extends AbstractPersistable<Long> {
         this.username = username;
         this.password = password;
         this.name = name;
-    }
-
-    /**
-     * Gets the username of the user.
-     *
-     * @return The username.
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Sets the new username for this user.
-     *
-     * @param username The new username.
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * Gets the password of the user.
-     *
-     * @return The password.
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets the new password for this user.
-     *
-     * @param password The new password.
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * Gets the display name of the user.
-     *
-     * @return The display name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the new display name for this user.
-     *
-     * @param name The new display name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Gets the new list of reading tips for this user.
-     *
-     * @return The list of reading tips associated with this user.
-     */
-    public List<ReadingTip> getReadingTips() {
-        return readingTips;
-    }
-
-    /**
-     * Sets the new list of reading tips for this user.
-     *
-     * @param readingTips The new list of display tips.
-     */
-    public void setReadingTips(List<ReadingTip> readingTips) {
-        this.readingTips = readingTips;
     }
 
     /**
