@@ -13,13 +13,13 @@ public class CustomUserControllerTest extends SpringBootTestControllerBase {
 
     @Test
     public void indexNoRedirectIfAuthenticated() throws Exception {
-        UserDetails user = userDetailsService.loadUserByUsername("user1");
+        UserDetails user = userDetailsService.loadUserByUsername("nolla");
         mvc.perform(get("/").with(csrf()).with(user(user))).andExpect(status().isOk());
     }
 
     @Test
     public void defaultMappingIfAuthenticated() throws Exception {
-        UserDetails user = userDetailsService.loadUserByUsername("user1");
+        UserDetails user = userDetailsService.loadUserByUsername("nolla");
         mvc.perform(get("/test").with(csrf()).with(user(user))).andExpect(status().is3xxRedirection());
     }
 

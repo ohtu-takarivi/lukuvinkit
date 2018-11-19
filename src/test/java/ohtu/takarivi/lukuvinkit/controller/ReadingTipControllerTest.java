@@ -1,5 +1,6 @@
-package ohtu.takarivi.lukuvinkit;
+package ohtu.takarivi.lukuvinkit.controller;
 
+import ohtu.takarivi.lukuvinkit.SpringBootTestControllerBase;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import org.junit.Test;
@@ -14,8 +15,8 @@ public class ReadingTipControllerTest extends SpringBootTestControllerBase {
 
     @Test
     public void deleteReadingTipRedirectIfAuthorized() throws Exception {
-        UserDetails user = userDetailsService.loadUserByUsername("user1");
-        CustomUser cu = customUserRepository.findByUsername("user1");
+        UserDetails user = userDetailsService.loadUserByUsername("nolla");
+        CustomUser cu = customUserRepository.findByUsername("nolla");
         ReadingTip tip = readingTipRepository.findByCustomUserId(cu.getId()).get(0);
         mvc.perform(post("/readingTips/delete/{id}", tip.getId()).with(csrf()).with(user(user)))
                 .andExpect(status().is3xxRedirection());
@@ -23,8 +24,8 @@ public class ReadingTipControllerTest extends SpringBootTestControllerBase {
 
     @Test
     public void deleteReadingTipForbiddenIfNotAuthorized() throws Exception {
-        UserDetails user = userDetailsService.loadUserByUsername("user2");
-        CustomUser cu = customUserRepository.findByUsername("user1");
+        UserDetails user = userDetailsService.loadUserByUsername("testi2");
+        CustomUser cu = customUserRepository.findByUsername("nolla");
         ReadingTip tip = readingTipRepository.findByCustomUserId(cu.getId()).get(0);
         mvc.perform(post("/readingTips/delete/{id}", tip.getId()).with(csrf()).with(user(user)))
                 .andExpect(status().isForbidden());
