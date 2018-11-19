@@ -1,9 +1,9 @@
 Feature: After logging in, I can create, browse and delete tips with valid information
 
-  Scenario: user can create a tip with valid information
-    Given test user is logged in
-    When correct title "Best Title" and description "Super description" and url "www.mustread.com" are given
-    Then new tip with title "Best Title" description "Super description" and url "www.mustread.com" is created
+#  Scenario: user can create a tip with valid information
+#    Given test user is logged in
+#    When correct title "Best Title" and description "Super description" and url "www.mustread.com" are given
+#    Then new tip with title "Best Title" description "Super description" and url "www.mustread.com" is created
 
   Scenario: user can't create a tip without title
     Given test user is logged in
