@@ -68,9 +68,10 @@ public class ReadingTipController {
     @PostMapping(value = "/searchTips")
     public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), keyword);
+//        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
+        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), keyword);
         model.addAttribute("customUser", customUser);
-        model.addAttribute("readingTips", list);
+        model.addAttribute("readingTips", list2);
         model.addAttribute("view", "index");
         return "layout";     
     }
