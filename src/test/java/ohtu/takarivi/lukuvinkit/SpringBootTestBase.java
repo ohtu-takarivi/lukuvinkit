@@ -1,6 +1,5 @@
 package ohtu.takarivi.lukuvinkit;
 
-import org.junit.BeforeClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;

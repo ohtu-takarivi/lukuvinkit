@@ -15,10 +15,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-
-
-
 
 public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
@@ -76,9 +72,8 @@ public class Stepdefs extends SpringBootTestBase {
         driver.get("http://localhost:" + port + "/login");
         Thread.sleep(SLEEPING_TIME);
         logInWith("nolla", "yksi");
-        
+        Thread.sleep(SLEEPING_TIME);
     }
-    
     
     @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
     public void tip_with_valid_information_is_given(String title, String description, String url) throws Throwable {
@@ -109,7 +104,6 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name(title)).click();
         Thread.sleep(SLEEPING_TIME);
     }
-    
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
     public void username_password_entered(String username, String password) throws Throwable {
@@ -134,7 +128,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are registered$")
     public void username_password_registered(String username, String password) throws Throwable {
-        assertTrue(driver.getPageSource().contains("Register"));
+        assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
         driver.findElement(By.name("username")).sendKeys(username);
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("verifyPassword")).sendKeys(password);
@@ -142,7 +136,6 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonregister")).click();
         waitForPageChange();
     }
-    
             
     @Then("^new tip with title \"([^\"]*)\" description \"([^\"]*)\" and url \"([^\"]*)\" is created$")
     public void new_tip_is_created(String title, String description, String url) throws Throwable {
@@ -155,21 +148,16 @@ public class Stepdefs extends SpringBootTestBase {
     public void new_tip_is_created(String first, String second) throws Throwable {
         assertTrue(!driver.getPageSource().contains(first));
         assertTrue(!driver.getPageSource().contains(second));
-        
     }
     
     @Then("^tip with title \"([^\"]*)\" is no longer visible$")
     public void tip_not_visible(String title) throws Throwable {
         assertTrue(!driver.getPageSource().contains(title));
-        
     }
-    
-    
     
     @Then("^user is logged in$")
     public void logged_in() throws Throwable {
-        assertTrue(driver.findElement(By.tagName("body"))
-                .getText().contains("Lukuvinkkisi:"));
+        assertFalse(driver.findElements(By.id("buttonlogout")).isEmpty());
     } 
    
     @Then("^user is not logged in$")
@@ -179,18 +167,18 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Then("^user account is created$")
     public void account_created() throws Throwable {
-        assertTrue(driver.getPageSource().contains("Please sign in"));
+        assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
     } 
    
     @Then("^user account is not created$")
     public void account_not_created() throws Throwable {
-        assertFalse(driver.getPageSource().contains("Please sign in"));
+        assertTrue(driver.findElements(By.id("buttonlogin")).isEmpty());
     }
 
     /* helper methods */
         
     private void logInWith(String username, String password) {
-        assertTrue(driver.getPageSource().contains("Please sign in"));
+        assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
         driver.findElement(By.name("username")).sendKeys(username);
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.id("buttonlogin")).click();
@@ -202,11 +190,11 @@ public class Stepdefs extends SpringBootTestBase {
     }
     
     private void createTip(String title, String description, String url) {
-        assertTrue(driver.getPageSource().contains("Lisää uusi lukuvinkki:"));
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
         driver.findElement(By.name("description")).sendKeys(description);
         driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("buttonadd")).click();
+        driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
     } 
 
