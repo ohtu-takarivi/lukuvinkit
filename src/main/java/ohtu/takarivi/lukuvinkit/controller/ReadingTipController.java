@@ -1,5 +1,6 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
+import java.util.List;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +62,22 @@ public class ReadingTipController {
             throw new AccessDeniedException("Access denied");
         }
         readingTipRepository.deleteById(readingTipId);
+        return "redirect:/";
+    }
+    
+    @PostMapping(value = "/searchTips")
+    public String searchReadingTip(Authentication auth, @RequestParam String title, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTip> list = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), title);
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("readingTips", list);
+        model.addAttribute("view", "index");
+        return "layout";     
+    }
+    
+    @PostMapping(value = "/resetSearch")
+    public String resetSearch(Authentication auth) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         return "redirect:/";
     }
 }

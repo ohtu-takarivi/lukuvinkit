@@ -3,6 +3,23 @@
 
   <h3>Lukuvinkkisi:</h3>
   
+  <div>
+        <form th:action="@{/searchTips}" method="POST">
+            <div class="form-group">
+                <label for="title">Haku:</label>
+                <input type="text" id="title" name="title" class="form-control" required/>
+                <button class="btn btn-primary" type="submit">Hae</button>
+            </div>
+            
+        </form>
+        
+        <form th:action="@{/resetSearch}" method="POST">
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">Peruuta haku</button>
+            </div>
+        </form>
+    </div>
+  
   <table class="table">
     <thead>
       <tr>
