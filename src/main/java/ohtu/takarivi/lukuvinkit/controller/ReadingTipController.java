@@ -36,7 +36,7 @@ public class ReadingTipController {
      * @param url         The URL of the reading tip to add.
      * @return The action to be taken by this controller.
      */
-    @PostMapping(value = "/readingTips/new")
+    @PostMapping("/readingTips/new")
     public String newReadingTip(Authentication auth, @RequestParam String title, @RequestParam String description,
                                 @RequestParam String url) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
@@ -54,7 +54,7 @@ public class ReadingTipController {
      * @param readingTipId The ID of the reading tip to delete.
      * @return The action to be taken by this controller.
      */
-    @PostMapping(value = "/readingTips/delete/{readingTipId}")
+    @PostMapping("/readingTips/delete/{readingTipId}")
     public String deleteReadingTip(Authentication auth, @PathVariable Long readingTipId) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         ReadingTip readingTip = readingTipRepository.getOne(readingTipId);
@@ -65,7 +65,7 @@ public class ReadingTipController {
         return "redirect:/";
     }
     
-    @PostMapping(value = "/searchTips")
+    @PostMapping("/searchTips")
     public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
 //        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
@@ -76,7 +76,7 @@ public class ReadingTipController {
         return "layout";     
     }
     
-    @PostMapping(value = "/resetSearch")
+    @PostMapping("/resetSearch")
     public String resetSearch(Authentication auth) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         return "redirect:/";

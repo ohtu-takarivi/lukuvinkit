@@ -62,9 +62,7 @@ jacocoTestReport {
     }
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
+lombok {
+	version = '1.18.4'
+	sha256 = ""
 }

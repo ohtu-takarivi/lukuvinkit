@@ -39,22 +39,26 @@ public class CustomUserController {
 
     /**
      * The log in page, allowing users to log in.
-     *
+     * 
+     * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/login")
     public String login(Model model) {
+        model.addAttribute("title", "Kirjaudu");
         model.addAttribute("view", "login");
         return "layout";
     }
 
     /**
      * The register page, allowing users to create an account.
-     *
+     * 
+     * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/register")
     public String register(Model model) {
+        model.addAttribute("title", "Luo tili");
         model.addAttribute("view", "register");
         return "layout";
     }
@@ -70,6 +74,8 @@ public class CustomUserController {
      */
     @GetMapping("/")
     public String index(Authentication auth, Model model) {
+        model.addAttribute("title", "Etusivu");
+        model.addAttribute("nav", "navbar");
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", readingTipRepository.findByCustomUserId(customUser.getId()));
@@ -86,7 +92,7 @@ public class CustomUserController {
      * @param name           The name set by the user.
      * @return The action to be taken by this controller.
      */
-    @PostMapping(value = "/register")
+    @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password,
                            @RequestParam String verifyPassword, @RequestParam String name) {
         if (CustomUser.isValidUsername(username) 
@@ -115,7 +121,7 @@ public class CustomUserController {
      *                          newPassword.
      * @return The action to be taken by this controller.
      */
-    @PostMapping(value = "/editPassword")
+    @PostMapping("/editPassword")
     public String editPassword(Authentication auth, @RequestParam String newPassword,
                                @RequestParam String verifyNewPassword) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
