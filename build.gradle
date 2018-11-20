@@ -16,10 +16,6 @@ run {
 
 test { 
     systemProperty "cucumber.options", System.getProperty("cucumber.options")
-    testLogging {
-        outputs.upToDateWhen {false}
-        showStandardStreams = true
-    }
 }
 
 project.ext {

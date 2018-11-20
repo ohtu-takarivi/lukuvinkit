@@ -226,11 +226,6 @@ public class Stepdefs extends SpringBootTestBase {
 
     private String findIdOfTipWithTitle(String title) {
         List<WebElement> els = driver.findElements(By.className("tiptitle"));
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
         assertTrue(els.size() > 0);
         for (WebElement el: els) {
             System.err.println("TITLE " + el.getText() + " == " + title);
