@@ -6,6 +6,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertFalse;
@@ -16,6 +17,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.test.annotation.DirtiesContext;
 
 @DirtiesContext
@@ -83,33 +85,43 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
-    public void tip_with_valid_information_is_given(String title, String description, String url) throws Throwable {
-        createTip(title, description, url);
+    @When("^browsing tips$")
+    public void browse_tips() throws Throwable {
+    }
+
+    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
+        createTip(title, description, url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^no title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
-    public void tip_with_invalid_title_is_given(String title, String description, String url) throws Throwable {
-        createTip(title, description, url);
+    @When("^no title and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_title_is_given(String description, String url, String author) throws Throwable {
+        createTip("", description, url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and no description \"([^\"]*)\" and url \"([^\"]*)\" are given$")
-    public void tip_with_invalid_description_is_given(String title, String description, String url) throws Throwable {
-        createTip(title, description, url);
+    @When("^title \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_description_is_given(String title, String url, String author) throws Throwable {
+        createTip(title, "", url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url \"([^\"]*)\" are given$")
-    public void tip_with_invalid_url_is_given(String title, String description, String url) throws Throwable {
-        createTip(title, description, url);
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_url_is_given(String title, String description, String author) throws Throwable {
+        createTip(title, description, "", author);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author are given$")
+    public void tip_with_invalid_author_is_given(String title, String description, String url) throws Throwable {
+        createTip(title, description, url, "");
         Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
-        driver.findElement(By.name(title)).click();
+        driver.findElement(By.cssSelector("#" + findIdOfTipWithTitle(title) + " .buttondelete")).click();
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -158,8 +170,13 @@ public class Stepdefs extends SpringBootTestBase {
         assertTrue(!driver.getPageSource().contains(second));
     }
 
-    @Then("^tip with title \"([^\"]*)\" is no longer visible$")
+    @Then("^tip with title \"([^\"]*)\" is not visible$")
     public void tip_not_visible(String title) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(title));
+    }
+
+    @Then("^tip with title \"([^\"]*)\" is no longer visible$")
+    public void tip_not_visible_(String title) throws Throwable {
         assertTrue(!driver.getPageSource().contains(title));
     }
 
@@ -197,13 +214,32 @@ public class Stepdefs extends SpringBootTestBase {
         assertTrue(driver.getPageSource().contains(content));
     }
 
-    private void createTip(String title, String description, String url) {
+    private void createTip(String title, String description, String url, String author) {
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
         driver.findElement(By.name("description")).sendKeys(description);
         driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.name("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
+    }
+
+    private String findIdOfTipWithTitle(String title) {
+        List<WebElement> els = driver.findElements(By.className("tiptitle"));
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        assertTrue(els.size() > 0);
+        for (WebElement el: els) {
+            System.err.println("TITLE " + el.getText() + " == " + title);
+            if (el.getText().equals(title)) {
+                WebElement e = el.findElement(By.xpath(".."));
+                return e.getAttribute("id");
+            }
+        }
+        return null;
     }
 
     private void waitForPageChange() {

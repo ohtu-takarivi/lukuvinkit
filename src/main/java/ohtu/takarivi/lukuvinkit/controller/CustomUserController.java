@@ -86,6 +86,8 @@ public class CustomUserController {
     /**
      * The page used by users to register an account.
      *
+     * @param auth           An Authentication object representing the currently
+     *                       authenticated user.
      * @param username       The username set by the user.
      * @param password       The password set by the user.
      * @param verifyPassword The password set by the user; this must match password.
@@ -93,15 +95,18 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password,
+    public String register(Authentication auth, @RequestParam String username, @RequestParam String password,
                            @RequestParam String verifyPassword, @RequestParam String name) {
+        if (auth != null && auth.isAuthenticated()) {
+            return "redirect:/"; // cannot create account if you are already logged in one
+        }
         if (CustomUser.isValidUsername(username) 
                 && !password.trim().isEmpty() 
                 && password.equals(verifyPassword)
                 && !name.trim().isEmpty()) {
             if (customUserRepository.findByUsername(username) == null) {
                 customUserRepository.save(new CustomUser(username, encoder.encode(password), name));
-                return "redirect:/";
+                return "redirect:/login?registerok";
             } else {
                 return "redirect:/register?error=reserved";
             }

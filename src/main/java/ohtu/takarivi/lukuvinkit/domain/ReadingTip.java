@@ -24,6 +24,8 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String description;
     @NotEmpty
     private String url;
+    @NotEmpty
+    private String author;
     @ManyToOne
     private CustomUser customUser;
 
@@ -41,13 +43,15 @@ public class ReadingTip extends AbstractPersistable<Long> {
      * @param description A description to the work, added by the user who adds the reading tip.
      * @param url         The URL of the reading tip; this is the video link for YouTube links, audio link for
      *                    podcasts and blog post link for blog posts. It is customizable for books.
+     * @param author      The author of the work, such as of a book or an article.
      * @param customUser  The CustomUser instance representing the user who added this reading tip.
      */
-    public ReadingTip(String title, String description, String url, CustomUser customUser) {
+    public ReadingTip(String title, String description, String url, String author, CustomUser customUser) {
         this();
         this.title = title;
         this.description = description;
         this.url = url;
+        this.author = author;
         this.customUser = customUser;
     }
 

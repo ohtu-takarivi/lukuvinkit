@@ -46,10 +46,11 @@ public abstract class SpringBootTestBase {
             customUserRepository.save(nolla);
             CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");
             customUserRepository.save(testi2);
+            
             readingTipRepository.save(new ReadingTip("test reading tip 1", "description for tip 1", "https://example" +
-                    ".com/", nolla));
+                    ".com/", "John Doe", nolla));
             readingTipRepository.save(new ReadingTip("test reading tip 2", "description for tip 2", "https://example" +
-                    ".com/", testi2));
+                    ".com/", "Jane Doe", testi2));
         }
     }
 

@@ -24,13 +24,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="readingTip : ${readingTips}">
-          <td th:text="${readingTip.title}"></td>
+        <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
+          <td class="tiptitle" th:text="${readingTip.title}"></td>
           <td th:text="${readingTip.description}"></td>
           <td th:text="${readingTip.url}"></td>
           <td>
             <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-              <button class="btn btn-danger" type="submit" th:name="${readingTip.title}">Poista</button>
+              <button class="btn btn-danger buttondelete" type="submit">Poista</button>
             </form>
           </td>
         </tr>
@@ -51,6 +51,10 @@
       <div class="form-group">
         <label for="url">Linkki</label>
         <input type="text" id="url" name="url" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <label for="author">Tekijä tai kirjoittaja</label>
+        <input type="text" id="author" name="author" class="form-control" required/>
       </div>
       <button class="btn btn-primary" type="submit" id="buttonadd">Lisää</button>
     </form>

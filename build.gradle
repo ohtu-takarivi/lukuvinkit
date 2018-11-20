@@ -14,6 +14,14 @@ run {
     standardInput = System.in
 }
 
+test { 
+    systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}
+
 project.ext {
     cucumberVersion = "4.2.0"
     junitVersion = "4.12"
@@ -41,6 +49,9 @@ dependencies {
     compile group: "org.seleniumhq.selenium", name: "selenium-java", version: seleniumVersion
     compile group: "org.seleniumhq.selenium", name: "selenium-server", version: seleniumVersion
     compile group: "org.seleniumhq.selenium", name: "selenium-remote-driver", version: seleniumVersion
+
+    // for Heroku
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
     testCompile "junit:junit:" + junitVersion
     testCompile "io.cucumber:cucumber-core:" + cucumberVersion

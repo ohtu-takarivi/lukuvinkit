@@ -10,7 +10,7 @@ public class ReadingTipTest {
     @Test
     public void constructorNoException() {
         CustomUser cu = new CustomUser("user", "password", "name");
-        new ReadingTip("title", "description", "url", cu);
+        new ReadingTip("title", "description", "url", "author", cu);
     }
 
 }

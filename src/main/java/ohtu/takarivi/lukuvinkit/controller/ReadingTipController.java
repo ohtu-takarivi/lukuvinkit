@@ -34,14 +34,15 @@ public class ReadingTipController {
      * @param title       The title of the reading tip to add.
      * @param description The description of the reading tip to add.
      * @param url         The URL of the reading tip to add.
+     * @param author      The author of the reading tip to add.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/new")
     public String newReadingTip(Authentication auth, @RequestParam String title, @RequestParam String description,
-                                @RequestParam String url) {
+                                @RequestParam String url, @RequestParam String author) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty()) {
-            readingTipRepository.save(new ReadingTip(title, description, url, customUser));
+            readingTipRepository.save(new ReadingTip(title, description, url, author, customUser));
         }
         return "redirect:/";
     }
@@ -64,13 +65,22 @@ public class ReadingTipController {
         readingTipRepository.deleteById(readingTipId);
         return "redirect:/";
     }
-    
+
+    /**
+     * The form search page that allows searching tips by keywords.
+     *
+     * @param auth         An Authentication object representing the currently authenticated user.
+     * @param keyword      The keyword to search with.
+     * @param model        The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/searchTips")
     public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
         if (keyword.isEmpty()) {
             return "redirect:/";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        /// TODO also search from description and author
 //        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
         List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), keyword);
         model.addAttribute("nav", "navbar");
@@ -79,7 +89,13 @@ public class ReadingTipController {
         model.addAttribute("view", "index");
         return "layout";     
     }
-    
+
+    /**
+     * The page that resets a search.
+     *
+     * @param auth         An Authentication object representing the currently authenticated user.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/resetSearch")
     public String resetSearch(Authentication auth) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
