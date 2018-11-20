@@ -67,9 +67,13 @@ public class ReadingTipController {
     
     @PostMapping("/searchTips")
     public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
+        if (keyword.isEmpty()) {
+            return "redirect:/";
+        }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
 //        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
         List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), keyword);
+        model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);
         model.addAttribute("view", "index");
