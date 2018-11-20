@@ -5,28 +5,41 @@ import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-@ContextConfiguration(classes = Application.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("classpath:application-test.properties")
 public abstract class SpringBootTestBase {
     private static boolean first = true;
     protected static final int port = 8090;
 
     @Autowired
-    private CustomUserRepository customUserRepository;
+    protected CustomUserRepository customUserRepository;
     @Autowired
-    private ReadingTipRepository readingTipRepository;
+    protected ReadingTipRepository readingTipRepository;
     @Autowired
-    private PasswordEncoder encoder;
+    protected PasswordEncoder encoder;
+    @Autowired
+    protected UserDetailsService userDetailsService;
+    @Autowired
+    protected WebApplicationContext context;
+    protected MockMvc mvc;
 
     @Before
     public void setUpTestData() {
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         if (first) {
             first = false;
             CustomUser nolla = new CustomUser("nolla", encoder.encode("yksi"), "Testi");
@@ -39,4 +52,5 @@ public abstract class SpringBootTestBase {
                     ".com/", testi2));
         }
     }
+
 }

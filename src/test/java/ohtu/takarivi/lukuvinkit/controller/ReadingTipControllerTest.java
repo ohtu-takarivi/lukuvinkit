@@ -1,17 +1,19 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.SpringBootTestControllerBase;
+import ohtu.takarivi.lukuvinkit.SpringBootTestBase;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import org.junit.Test;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ReadingTipControllerTest extends SpringBootTestControllerBase {
+@DirtiesContext
+public class ReadingTipControllerTest extends SpringBootTestBase {
 
     @Test
     public void deleteReadingTipRedirectIfAuthorized() throws Exception {
