@@ -23,17 +23,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private CustomUserRepository customUserRepository;
 
-    @Autowired
-    private ReadingTipRepository readingTipRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
     /**
      * Initializes this details service.
      */
     @PostConstruct
     public void init() {
+        /*
+        DISABLED ENTRY OF INITIAL TEST DATA
+         
         if (!customUserRepository.findAll().isEmpty()) return;
 
         CustomUser customUser = new CustomUser("abel", encoder.encode("123456"), "Abel");
@@ -52,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         customUserRepository.save(customUser);
         readingTipRepository.save(new ReadingTip("Title 7", "-", "-", "-", customUser));
         readingTipRepository.save(new ReadingTip("Title 8", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 9", "-", "-", "-", customUser));
+        readingTipRepository.save(new ReadingTip("Title 9", "-", "-", "-", customUser));*/
     }
 
     @Override

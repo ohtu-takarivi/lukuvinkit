@@ -19,13 +19,13 @@
         <tr>
           <th scope="col">Otsikko</th>
           <th scope="col">Kuvaus</th>
-          <th scope="col">Url</th>
+          <th scope="col">Linkki</th>
           <th scope="col">Toiminto</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-          <td class="tiptitle" th:text="${readingTip.title}"></td>
+          <td class="tiptitle"><a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a></td>
           <td th:text="${readingTip.description}"></td>
           <td th:text="${readingTip.url}"></td>
           <td>

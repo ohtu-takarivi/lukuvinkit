@@ -10,6 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,29 @@ public class ReadingTipController {
     @Autowired
     private ReadingTipRepository readingTipRepository;
 
+    /**
+     * The page that allows an user to view the details of a reading tip.
+     *
+     * @param auth         An Authentication object representing the currently authenticated user.
+     * @param readingTipId The ID of the reading tip to view.
+     * @param model        The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
+    @GetMapping("/readingTips/view/{readingTipId}")
+    public String viewReadingTip(Authentication auth, @PathVariable Long readingTipId, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        ReadingTip tip = readingTipRepository.getOne(readingTipId);
+        if (tip == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("title", "Lukuvinkki");
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("readingTip", tip);
+        model.addAttribute("view", "viewtip");
+        return "layout";
+    }
+    
     /**
      * The form submit page that allows an user to create a reading tip. It accepts the information related to the
      * reading tip and adds it to the database, if it is valid.

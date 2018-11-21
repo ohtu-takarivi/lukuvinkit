@@ -44,8 +44,7 @@ public class Stepdefs extends SpringBootTestBase {
 
         System.setProperty("webdriver.gecko.driver", absolutePath);
 
-        this.driver = new FirefoxDriver();
-        //this.driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
+        this.driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
     }
 
     @Before
@@ -228,7 +227,6 @@ public class Stepdefs extends SpringBootTestBase {
         List<WebElement> els = driver.findElements(By.className("tiptitle"));
         assertTrue(els.size() > 0);
         for (WebElement el: els) {
-            System.err.println("TITLE " + el.getText() + " == " + title);
             if (el.getText().equals(title)) {
                 WebElement e = el.findElement(By.xpath(".."));
                 return e.getAttribute("id");
