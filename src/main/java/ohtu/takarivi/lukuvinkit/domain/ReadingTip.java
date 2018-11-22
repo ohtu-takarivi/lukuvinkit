@@ -34,7 +34,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     @NotEmpty
     private String author;
 
-    private Boolean finished;
+    private Boolean isRead;
 
     @ManyToOne
     private CustomUser customUser;
@@ -69,7 +69,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
         this.description = description;
         this.url = url;
         this.author = author;
-        this.finished = false;
+        this.isRead = false;
         this.customUser = customUser;
     }
 

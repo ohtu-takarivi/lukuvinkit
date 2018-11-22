@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-            <td th:text="${readingTip.finished} ? 'v' : 'x'"></td>
+            <td th:text="${readingTip.isRead} ? 'v' : 'x'"></td>
             <td id="tiptitle">
               <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
             </td>

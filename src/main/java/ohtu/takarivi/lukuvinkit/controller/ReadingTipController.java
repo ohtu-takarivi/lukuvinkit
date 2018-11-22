@@ -2,6 +2,8 @@ package ohtu.takarivi.lukuvinkit.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
@@ -97,6 +99,28 @@ public class ReadingTipController {
             readingTipRepository.save(new ReadingTip(title, type, description, url, author, customUser));
         }
         return "redirect:/";
+    }
+
+    /**
+     * The form submit page that allows an user to mark a reading tip as having been read.
+     *
+     * @param request      The HTTP request used to access this controller.
+     * @param auth         An Authentication object representing the currently authenticated user. The user that
+     *                     created the tip must also be the one setting it as read.
+     * @param readingTipId The ID of the reading tip to mark as read.
+     * @return The action to be taken by this controller.
+     */
+    @PostMapping("/readingTips/markAsRead/{readingTipId}")
+    public String markReadingTipAsRead(HttpServletRequest request, Authentication auth, @PathVariable Long readingTipId) {
+        String referer = request.getHeader("Referer");
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        ReadingTip readingTip = readingTipRepository.getOne(readingTipId);
+        if (readingTip.getCustomUser().getId() != customUser.getId()) {
+            throw new AccessDeniedException("Access denied");
+        }
+        readingTip.setIsRead(true);
+        readingTipRepository.save(readingTip);
+        return "redirect:" + (referer == null ? "/" : referer);
     }
 
     /**
