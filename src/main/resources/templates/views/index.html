@@ -25,12 +25,14 @@
       </thead>
       <tbody>
         <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-          <td class="tiptitle"><a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a></td>
+          <td id="tiptitle">
+            <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
+          </td>
           <td th:text="${readingTip.description}"></td>
           <td th:text="${readingTip.url}"></td>
           <td>
             <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-              <button class="btn btn-danger buttondelete" type="submit">Poista</button>
+              <button class="btn btn-danger" type="submit">Poista</button>
             </form>
           </td>
         </tr>
@@ -56,7 +58,7 @@
         <label for="author">Tekijä tai kirjoittaja</label>
         <input type="text" id="author" name="author" class="form-control" required/>
       </div>
-      <button class="btn btn-primary" type="submit" id="buttonadd">Lisää</button>
+      <button id="buttonadd" class="btn btn-primary" type="submit">Lisää</button>
     </form>
   
     <br>
@@ -72,7 +74,7 @@
         <label for="verifyNewPassword">Uudelleen</label>
         <input type="password" id="verifyNewPassword" name="verifyNewPassword" class="form-control" required/>
       </div>
-      <button class="btn btn-primary" type="submit">Vaihda</button>
+      <button id="buttonchangepassword" class="btn btn-primary" type="submit">Vaihda</button>
     </form>
   </div>
 </main>

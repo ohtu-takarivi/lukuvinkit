@@ -6,7 +6,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertFalse;
@@ -120,7 +119,10 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
-        driver.findElement(By.cssSelector("#" + findIdOfTipWithTitle(title) + " .buttondelete")).click();
+        driver.findElement(
+            By.xpath(
+                "//td[@id='tiptitle']/a[text()='" + title + "']/../..//button"))
+                .click();
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -221,18 +223,6 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
-    }
-
-    private String findIdOfTipWithTitle(String title) {
-        List<WebElement> els = driver.findElements(By.className("tiptitle"));
-        assertTrue(els.size() > 0);
-        for (WebElement el: els) {
-            if (el.getText().equals(title)) {
-                WebElement e = el.findElement(By.xpath(".."));
-                return e.getAttribute("id");
-            }
-        }
-        return null;
     }
 
     private void waitForPageChange() {
