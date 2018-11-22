@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <!-- Required meta tags -->
@@ -21,7 +21,7 @@
   <th:block th:if="${ nav }">
       <div th:replace="@{'fragments/' + ${ nav }} :: ${ nav }"></div>
   </th:block>
-  
+
   <!-- Content -->
   <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
 

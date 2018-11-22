@@ -2,12 +2,14 @@ package ohtu.takarivi.lukuvinkit.repository;
 
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * The JPA Repository for ReadingTip instances.
  */
+@Repository
 public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
 
     /**
@@ -17,10 +19,13 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
      * @return The ReadingTip instance for the reading tip, or null if not found.
      */
     List<ReadingTip> findByCustomUserId(Long customUserId);
-    
-    
+
+
     List<ReadingTip> findByCustomUserIdAndTitleContaining(Long customUserId, String title);
-    
-    List<ReadingTip> findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(String title, Long customUserId, String description, Long customUserId2);
+
+    List<ReadingTip> findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(String title,
+                                                                                                Long customUserId,
+                                                                                                String description,
+                                                                                                Long customUserId2);
 
 }

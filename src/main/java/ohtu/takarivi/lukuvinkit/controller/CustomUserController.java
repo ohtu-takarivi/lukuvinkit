@@ -1,6 +1,7 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.forms.CustomUserRegisterForm;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 /**
  * The Spring controller for user-related activity.
@@ -39,7 +44,7 @@ public class CustomUserController {
 
     /**
      * The log in page, allowing users to log in.
-     * 
+     *
      * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
@@ -52,12 +57,12 @@ public class CustomUserController {
 
     /**
      * The register page, allowing users to create an account.
-     * 
+     *
      * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, @ModelAttribute CustomUserRegisterForm customUserRegisterForm) {
         model.addAttribute("title", "Luo tili");
         model.addAttribute("view", "register");
         return "layout";
@@ -95,24 +100,20 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @PostMapping("/register")
-    public String register(Authentication auth, @RequestParam String username, @RequestParam String password,
-                           @RequestParam String verifyPassword, @RequestParam String name) {
+    public String register(Authentication auth, @Valid @ModelAttribute CustomUserRegisterForm customUserRegisterForm,
+                           BindingResult result, Model model) {
         if (auth != null && auth.isAuthenticated()) {
-            return "redirect:/"; // cannot create account if you are already logged in one
+            return "redirect:/";
         }
-        if (CustomUser.isValidUsername(username) 
-                && !password.trim().isEmpty() 
-                && password.equals(verifyPassword)
-                && !name.trim().isEmpty()) {
-            if (customUserRepository.findByUsername(username) == null) {
-                customUserRepository.save(new CustomUser(username, encoder.encode(password), name));
-                return "redirect:/login?registerok";
-            } else {
-                return "redirect:/register?error=reserved";
-            }
-        } else {
-            return "redirect:/register?error=invalid";
+        customUserRegisterForm.validateRest(result, customUserRepository);
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Luo tili");
+            model.addAttribute("view", "register");
+            return "layout";
         }
+        customUserRepository.save(new CustomUser(customUserRegisterForm.getUsername(),
+                encoder.encode(customUserRegisterForm.getPassword()), customUserRegisterForm.getName()));
+        return "redirect:/login";
     }
 
     /**
