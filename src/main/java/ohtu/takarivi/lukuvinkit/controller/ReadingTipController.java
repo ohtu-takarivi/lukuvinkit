@@ -1,6 +1,7 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
 import java.util.List;
+
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
@@ -51,7 +52,30 @@ public class ReadingTipController {
     }
     
     /**
-     * The form submit page that allows an user to create a reading tip. It accepts the information related to the
+     * The page that displays reading tips of that category.
+     *
+     * @param auth      An Authentication object representing the currently authenticated user.
+     * @param category  The name of the reading tip to view.
+     * @param model     The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
+
+    @GetMapping("/readingTips/{category}")
+    public String viewCategory(Authentication auth, @PathVariable String category, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTip> tips = readingTipRepository.findByTyyppi(category);
+
+        model.addAttribute("title", "Kategoria");
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("readingTips", tips);
+        model.addAttribute("view", "category");
+        return "layout";
+    }
+
+    /**
+     * The form submit page that allows an user to create a reading tip. 
+     * It accepts the information related to the
      * reading tip and adds it to the database, if it is valid.
      *
      * @param auth        An Authentication object representing the currently authenticated user.
@@ -62,11 +86,15 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/new")
-    public String newReadingTip(Authentication auth, @RequestParam String title, @RequestParam String description,
-                                @RequestParam String url, @RequestParam String author) {
+    public String newReadingTip(Authentication auth,
+                                @RequestParam String title,
+                                @RequestParam String type,
+                                @RequestParam String description,
+                                @RequestParam String url,
+                                @RequestParam String author) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty()) {
-            readingTipRepository.save(new ReadingTip(title, description, url, author, customUser));
+            readingTipRepository.save(new ReadingTip(title, type, description, url, author, customUser));
         }
         return "redirect:/";
     }

@@ -69,6 +69,20 @@ public class CustomUserController {
     }
 
     /**
+     * The register page, allowing users to create an account.
+     *
+     * @param model The Model that the task information will be fit into.
+     * @return The action to be taken by this controller.
+     */
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        model.addAttribute("title", "Profiili");
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("view", "profile");
+        return "layout";
+    }
+
+    /**
      * The index page, listing all tasks.
      *
      * @param auth  An Authentication object representing the currently

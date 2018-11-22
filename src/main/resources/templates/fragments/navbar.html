@@ -5,19 +5,23 @@
   </button>
 
   <div class="navbar-collapse collapse" id="navbar">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
         <a class="nav-link" href="/">Etusivu</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Profiili</a>
+        <a class="nav-link" href="/profile">Profiili</a>
       </li>
-    </ul>
-    <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">
-      <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Hae lukuvinkkejä" >
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Hae</button>
-    </form>
-    <form class="form-inline mr-2" th:action="@{/logout}" method="POST">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button" data-toggle="dropdown">Kategoriat</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/readingTips/books">Kirja</a>
+          <a class="dropdown-item" href="/readingTips/videos">Video</a>
+          <a class="dropdown-item" href="/readingTips/links">Linkki</a>
+        </div>  
+      </li>
+    </div>
+    <form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="POST">
       <button class="btn btn-primary" type="submit" id="buttonlogout">Kirjaudu ulos</button>
     </form>
   </div>

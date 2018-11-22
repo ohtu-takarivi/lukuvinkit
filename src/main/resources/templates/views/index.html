@@ -2,80 +2,80 @@
   <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading" th:inline="text">Hei [[${ customUser.name }]]!</h1>
-      <p class="lead text-muted">Tässä ovat koottuna sinun lukuvinkkisi.</p>
+      <p class="lead text-muted">
+        Minkälaista lukuvinkkiä etsit? Alempana voit myös hakea vanhoja tai luoda uusia lukuvinkkejä.
+      </p>
+      <p class="pt-2">
+        <a href="/readingTips/books" class="btn btn-success btn-lg mx-1">Kirja</a>
+        <a href="/readingTips/videos" class="btn btn-success btn-lg mx-1">Video</a>
+        <a href="/readingTips/links" class="btn btn-success btn-lg mx-1">Linkki</a>
+      </p>
     </div>
   </section>
 
-  <!--
-    <form th:action="@{/resetSearch}" method="POST">
-      <div class="form-group">
-        <button class="btn btn-danger" type="submit">Peruuta haku</button>
+  <section class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-6">
+        <h3 class="text-center">Haku</h3>
+        <form th:action="@{/readingTips/search}" method="POST">
+          <div class="form-group">
+            <label for="title">Otsikko</label>
+            <input type="text" id="title" name="title" class="form-control" required/>
+          </div>
+          <div class="form-group">
+            <label for="type">Tyyppi</label>
+            <select id="type" name="type" class="form-control">
+              <option value="books">Kirja</option>
+              <option value="videos">Video</option>
+              <option value="links">Linkki</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Kuvaus</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="url">Linkki</label>
+            <input type="text" id="url" name="url" class="form-control" required/>
+          </div>
+          <div class="form-group">
+            <label for="author">Tekijä</label>
+            <input type="text" id="author" name="author" class="form-control" required/>
+          </div>
+          <button id="buttonsearch" class="btn btn-primary btn-lg" type="submit">Hae</button>
+        </form>
       </div>
-    </form>
-  -->
-  <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Otsikko</th>
-          <th scope="col">Kuvaus</th>
-          <th scope="col">Linkki</th>
-          <th scope="col">Toiminto</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-          <td id="tiptitle">
-            <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
-          </td>
-          <td th:text="${readingTip.description}"></td>
-          <td th:text="${readingTip.url}"></td>
-          <td>
-            <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-              <button class="btn btn-danger" type="submit">Poista</button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <h3>Lisää uusi lukuvinkki:</h3>
-  
-    <form th:action="@{/readingTips/new}" method="POST">
-      <div class="form-group">
-        <label for="title">Otsikko</label>
-        <input type="text" id="title" name="title" class="form-control" required/>
+      <div class="col-lg-5 col-md-6">
+        <h3 class="text-center">Uusi lukuvinkki</h3>
+        <form th:action="@{/readingTips/new}" method="POST">
+          <div class="form-group">
+            <label for="title">Otsikko</label>
+            <input type="text" id="title" name="title" class="form-control" required/>
+          </div>
+          <div class="form-group">
+            <label for="type">Tyyppi</label>
+            <select id="type" name="type" class="form-control">
+              <option value="books">Kirja</option>
+              <option value="videos">Video</option>
+              <option value="links">Linkki</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Kuvaus</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="url">Linkki</label>
+            <input type="text" id="url" name="url" class="form-control" required/>
+          </div>
+          <div class="form-group">
+            <label for="author">Tekijä</label>
+            <input type="text" id="author" name="author" class="form-control" required/>
+          </div>
+          <button id="buttonadd" class="btn btn-primary btn-lg" type="submit">Lisää</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="description">Kuvaus</label>
-        <input type="text" id="description" name="description" class="form-control" required/>
-      </div>
-      <div class="form-group">
-        <label for="url">Linkki</label>
-        <input type="text" id="url" name="url" class="form-control" required/>
-      </div>
-      <div class="form-group">
-        <label for="author">Tekijä tai kirjoittaja</label>
-        <input type="text" id="author" name="author" class="form-control" required/>
-      </div>
-      <button id="buttonadd" class="btn btn-primary" type="submit">Lisää</button>
-    </form>
-  
-    <br>
-  
-    <h3>Vaihda salasana</h3>
-  
-    <form th:action="@{/editPassword}" method="POST">
-      <div class="form-group">
-        <label for="newPassword">Uusi salasana</label>
-        <input type="password" id="newPassword" name="newPassword" class="form-control" required/>
-      </div>
-      <div class="form-group">
-        <label for="verifyNewPassword">Uudelleen</label>
-        <input type="password" id="verifyNewPassword" name="verifyNewPassword" class="form-control" required/>
-      </div>
-      <button id="buttonchangepassword" class="btn btn-primary" type="submit">Vaihda</button>
-    </form>
-  </div>
+    </div>
+  </section>
 </main>
 

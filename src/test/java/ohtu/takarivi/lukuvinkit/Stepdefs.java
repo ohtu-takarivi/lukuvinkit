@@ -5,7 +5,9 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertFalse;
@@ -17,6 +19,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.test.annotation.DirtiesContext;
 
 @DirtiesContext
@@ -87,42 +90,46 @@ public class Stepdefs extends SpringBootTestBase {
     public void browse_tips() throws Throwable {
     }
 
-    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
-        createTip(title, description, url, author);
+    @When("^correct title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_valid_information_is_given(String title, String type, String description, String url, String author) throws Throwable {
+        createTip(title, type, description, url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^no title and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_title_is_given(String description, String url, String author) throws Throwable {
-        createTip("", description, url, author);
+    @When("^no title and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_title_is_given(String type, String description, String url, String author) throws Throwable {
+        createTip("", type, description, url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_description_is_given(String title, String url, String author) throws Throwable {
-        createTip(title, "", url, author);
+    @When("^title \"([^\"]*)\" and no type and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_type_is_given(String title, String description, String url, String author) throws Throwable {
+        createTip(title, "", description, url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_url_is_given(String title, String description, String author) throws Throwable {
-        createTip(title, description, "", author);
+    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_description_is_given(String title, String type, String url, String author) throws Throwable {
+        createTip(title, type, "", url, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author are given$")
-    public void tip_with_invalid_author_is_given(String title, String description, String url) throws Throwable {
-        createTip(title, description, url, "");
+    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" are given$")
+    public void tip_with_invalid_url_is_given(String title, String type, String description, String author) throws Throwable {
+        createTip(title, type, description, "", author);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author are given$")
+    public void tip_with_invalid_author_is_given(String title, String type, String description, String url) throws Throwable {
+        createTip(title, type, description, url, "");
         Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
-        driver.findElement(
-            By.xpath(
-                "//td[@id='tiptitle']/a[text()='" + title + "']/../..//button"))
-                .click();
+        // driver.get("http://localhost:" + port + "/readingTips/" + type);
+        driver.findElement(By.xpath("//td[@id='tiptitle']/a[text()='" + title + "']/../../td/form/button")).click();
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -158,11 +165,14 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    @Then("^new tip with title \"([^\"]*)\" description \"([^\"]*)\" and url \"([^\"]*)\" is created$")
-    public void new_tip_is_created(String title, String description, String url) throws Throwable {
-        pageHasContent(title);
-        pageHasContent(description);
-        pageHasContent(url);
+    @Then("^new tip with title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    public void new_tip_is_created(String title, String type, String description, String url, String author) throws Throwable {
+        driver.get("http://localhost:" + port + "/readingTips/" + type);
+        List<WebElement> elements = driver.findElements(By.xpath("//td[@id='tiptitle']/a[text()='" + title + "']/../../td"));
+        assertTrue(elements.get(0).getText().contains(title));
+        assertTrue(elements.get(1).getText().contains(description));
+        assertTrue(elements.get(2).getText().contains(url));
+        assertTrue(elements.get(3).getText().contains(author));
     }
 
     @Then("^new tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
@@ -211,13 +221,11 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    private void pageHasContent(String content) {
-        assertTrue(driver.getPageSource().contains(content));
-    }
-
-    private void createTip(String title, String description, String url, String author) {
+    private void createTip(String title, String type, String description, String url, String author) {
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
+        Select drpType = new Select(driver.findElement(By.name("type")));
+        drpType.selectByValue(type);
         driver.findElement(By.name("description")).sendKeys(description);
         driver.findElement(By.name("url")).sendKeys(url);
         driver.findElement(By.name("author")).sendKeys(author);

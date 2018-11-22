@@ -47,14 +47,34 @@ public abstract class SpringBootTestBase {
             CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");
             customUserRepository.save(testi2);
             
-            readingTipRepository.save(new ReadingTip("test reading tip 1", "description for tip 1", "https://example" +
-                    ".com/", "John Doe", nolla));
-            readingTipRepository.save(new ReadingTip("test reading tip 2", "description for tip 2", "https://example" +
-                    ".com/", "Jane Doe", testi2));
-            readingTipRepository.save(new ReadingTip("test reading tip 3", "description for tip 3", "https://example" +
-                    ".com/", "J. Doe", nolla));
-            readingTipRepository.save(new ReadingTip("test reading tip 4", "description for tip 4", "https://example" +
-                    ".com/", "Johnny Doe", nolla));
+            readingTipRepository.save(
+                new ReadingTip("test reading tip 1",
+                               "book",
+                               "description for tip 1",
+                               "https://example.com/",
+                               "John Doe",
+                               nolla));
+            readingTipRepository.save(
+                new ReadingTip("test reading tip 2",
+                               "video",
+                               "description for tip 2",
+                               "https://example.com/",
+                               "Jane Doe",
+                               testi2));
+            readingTipRepository.save(
+                new ReadingTip("test reading tip 3",
+                               "link",
+                               "description for tip 3",
+                               "https://example.com/",
+                               "J. Doe",
+                               nolla));
+            readingTipRepository.save(
+                new ReadingTip("test reading tip 4",
+                               "book",
+                               "description for tip 4",
+                               "https://example.com/",
+                               "Johnny Doe",
+                               nolla));
         }
     }
 
