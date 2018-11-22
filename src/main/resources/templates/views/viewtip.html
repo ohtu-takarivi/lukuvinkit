@@ -11,6 +11,9 @@
     <p><b>Tekijä tai kirjoittaja</b>: <span th:text="${readingTip.author}"></span></p>
     <br />
     <hr />
+    <form th:action="@{/readingTips/markAsRead/{id}(id=${readingTip.id})}" method="POST">
+      <button class="btn btn-primary buttonread" type="submit" th:attrappend="disabled=${readingTip.isRead()}?true" th:text="${readingTip.isRead() ? 'Luettu!' : 'Merkitse luetuksi'}"></button>
+    </form>
     <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
       <button class="btn btn-danger buttondelete" type="submit">Poista</button>
     </form>

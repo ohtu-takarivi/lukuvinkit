@@ -113,7 +113,7 @@ public class CustomUserController {
         }
         customUserRepository.save(new CustomUser(customUserRegisterForm.getUsername(),
                 encoder.encode(customUserRegisterForm.getPassword()), customUserRegisterForm.getName()));
-        return "redirect:/login";
+        return "redirect:/login#registerok";
     }
 
     /**
