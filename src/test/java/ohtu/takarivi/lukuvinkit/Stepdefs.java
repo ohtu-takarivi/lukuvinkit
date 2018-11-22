@@ -5,6 +5,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 
 import java.io.File;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.hibernate.annotations.SourceType;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -175,6 +178,15 @@ public class Stepdefs extends SpringBootTestBase {
         assertTrue(elements.get(3).getText().contains(author));
     }
 
+    @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
+    public void new_password_created(String password, String verifyPassword) throws Throwable {
+        assertFalse(driver.findElements(By.id("buttonchange")).isEmpty());
+        driver.findElement(By.name("newPassword")).sendKeys(password);
+        driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
+        driver.findElement(By.id("buttonchange")).click();
+        waitForPageChange();
+    }
+
     @Then("^new tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
     public void new_tip_is_created(String first, String second) throws Throwable {
         assertTrue(!driver.getPageSource().contains(first));
@@ -209,6 +221,15 @@ public class Stepdefs extends SpringBootTestBase {
     @Then("^user account is not created$")
     public void account_not_created() throws Throwable {
         assertTrue(driver.findElements(By.id("buttonlogin")).isEmpty());
+    }
+
+    @Then("^the password is changed$")
+    public void password_is_changed() throws Throwable {
+        driver.findElement(By.id("buttonlogout")).click();
+        waitForPageChange();
+        logInWith("nolla", "yksi");
+        waitForPageChange();
+        assertFalse(driver.findElements(By.id("buttonlogout")).isEmpty());
     }
 
     /* helper methods */
