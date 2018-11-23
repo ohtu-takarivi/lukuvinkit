@@ -39,8 +39,37 @@ public class BookAddForm {
         }
     }
 
+    /**
+     * Checks if ISBN 13 is bad.
+     *  
+     * @param isbn The value that is checked.
+     * @return Return true if ISBN 13 is bad.
+     */
     private boolean checkIfBadISBN() {
-        return false; // TODO
+        String isbnInteger = this.isbn;
+        if (isbn.length() > 13) {
+            if (!isbn.contains("-")){
+                return true;
+            } 
+            isbnInteger = isbnInteger.replaceAll("-", "");
+        }
+        int sum = 0;
+        for (int i = 0; i < 12; i++) {
+            int charToNum = Character.getNumericValue(isbnInteger.charAt(i));
+            if (i % 2 == 0) {
+                sum += 1 * charToNum;
+            } else {
+                sum += 3 * charToNum;
+            }
+        }
+        int result = sum %10;
+        if (result != 0) {
+            result = 10-result;
+        }
+        if (result != Character.getNumericValue(isbnInteger.charAt(12))) {
+            return false;
+        }
+        return false;
     }
 
 }
