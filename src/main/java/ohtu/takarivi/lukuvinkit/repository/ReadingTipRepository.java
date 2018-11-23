@@ -1,6 +1,8 @@
 package ohtu.takarivi.lukuvinkit.repository;
 
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +30,6 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
                                                                                                 String description,
                                                                                                 Long customUserId2);
 
-    List<ReadingTip> findByCategory(String category);
+    List<ReadingTip> findByCategory(ReadingTipCategory category);
 
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,13 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
 
-    @GetMapping("/readingTips/{category}")
-    public String viewCategory(Authentication auth, @PathVariable String category, Model model) {
+    @GetMapping("/readingTips/{categoryText}")
+    public String viewCategory(Authentication auth, @PathVariable String categoryText, Model model) {
+        ReadingTipCategory category = ReadingTipCategory.getByName(categoryText.toUpperCase());
+        if (category == null) {
+            return "redirect:/";
+        }
+        
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCategory(category);
 
@@ -95,8 +101,11 @@ public class ReadingTipController {
                                 @RequestParam String url,
                                 @RequestParam String author) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty()) {
-            readingTipRepository.save(new ReadingTip(title, type, description, url, author, customUser));
+        if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty() && !author.trim().isEmpty()) {
+            ReadingTipCategory category = ReadingTipCategory.getByName(type.toUpperCase());
+            if (category != null) {
+                readingTipRepository.save(new ReadingTip(title, category, description, url, author, customUser));
+            }
         }
         return "redirect:/";
     }

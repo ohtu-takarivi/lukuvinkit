@@ -172,10 +172,11 @@ public class Stepdefs extends SpringBootTestBase {
     public void new_tip_is_created(String title, String type, String description, String url, String author) throws Throwable {
         driver.get("http://localhost:" + port + "/readingTips/" + type);
         List<WebElement> elements = driver.findElements(By.xpath("//td[@id='tiptitle']/a[text()='" + title + "']/../../td"));
-        assertTrue(elements.get(0).getText().contains(title));
-        assertTrue(elements.get(1).getText().contains(description));
-        assertTrue(elements.get(2).getText().contains(url));
-        assertTrue(elements.get(3).getText().contains(author));
+        int i = 0;
+        assertTrue(elements.get(i++).getText().contains(title));
+        assertTrue(elements.get(i++).getText().contains(description));
+        assertTrue(elements.get(i++).getText().contains(url));
+        assertTrue(elements.get(i++).getText().contains(author));
     }
 
     @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")

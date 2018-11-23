@@ -5,8 +5,11 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * This class represents a reading tip, consisting of a title, 
@@ -22,15 +25,16 @@ public class ReadingTip extends AbstractPersistable<Long> {
     @NotEmpty
     private String title;
 
-    @NotEmpty
-    private String category;
-
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private ReadingTipCategory category;
+    
     @NotEmpty
     private String description;
-
+    
     @NotEmpty
     private String url;
-
+    
     @NotEmpty
     private String author;
 
@@ -58,7 +62,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
      * @param customUser  The CustomUser instance representing the user who added this reading tip.
      */
     public ReadingTip(String title, 
-                      String category, 
+                      ReadingTipCategory category, 
                       String description, 
                       String url, 
                       String author, 

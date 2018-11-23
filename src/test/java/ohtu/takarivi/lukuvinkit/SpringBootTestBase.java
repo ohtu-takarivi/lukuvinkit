@@ -2,6 +2,7 @@ package ohtu.takarivi.lukuvinkit;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.junit.Before;
@@ -49,28 +50,28 @@ public abstract class SpringBootTestBase {
             
             readingTipRepository.save(
                 new ReadingTip("test reading tip 1",
-                               "book",
+                               ReadingTipCategory.BOOK,
                                "description for tip 1",
                                "https://example.com/",
                                "John Doe",
                                nolla));
             readingTipRepository.save(
                 new ReadingTip("test reading tip 2",
-                               "video",
+                               ReadingTipCategory.VIDEO,
                                "description for tip 2",
                                "https://example.com/",
                                "Jane Doe",
                                testi2));
             readingTipRepository.save(
                 new ReadingTip("test reading tip 3",
-                               "link",
+                               ReadingTipCategory.LINK,
                                "description for tip 3",
                                "https://example.com/",
                                "J. Doe",
                                nolla));
             readingTipRepository.save(
                 new ReadingTip("test reading tip 4",
-                               "book",
+                               ReadingTipCategory.BOOK,
                                "description for tip 4",
                                "https://example.com/",
                                "Johnny Doe",
