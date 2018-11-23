@@ -90,7 +90,7 @@ public class ReadingTipController {
         }
 
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> tips = readingTipRepository.findByCategory(category);
+        List<ReadingTip> tips = readingTipRepository.findByCategoryOrderByIsReadAsc(category);
 
         model.addAttribute("title", "Kategoria");
         model.addAttribute("nav", "navbar");

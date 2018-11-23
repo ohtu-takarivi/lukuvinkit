@@ -14,7 +14,7 @@ run {
     standardInput = System.in
 }
 
-test { 
+test {
     systemProperty "cucumber.options", System.getProperty("cucumber.options")
 }
 
