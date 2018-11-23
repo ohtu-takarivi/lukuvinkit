@@ -4,6 +4,7 @@ import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * The JPA Repository for ReadingTip instances.
  */
 @Repository
-public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
+public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long>, JpaSpecificationExecutor<ReadingTip> {
 
     /**
      * Searches a reading tip by the ID from the database.

@@ -59,6 +59,7 @@ public class CustomUserController {
      * The register page, allowing users to create an account.
      *
      * @param model The Model that the task information will be fit into.
+     * @param customUserRegisterForm The custom registration form.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/register")
@@ -69,9 +70,9 @@ public class CustomUserController {
     }
 
     /**
-     * The register page, allowing users to create an account.
+     * The profile page for a given user.
      *
-     * @param model The Model that the task information will be fit into.
+     * @param model The Model that the profile information will be fit into.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/profile")
@@ -83,7 +84,7 @@ public class CustomUserController {
     }
 
     /**
-     * The index page, listing all tasks.
+     * The index page or front page.
      *
      * @param auth  An Authentication object representing the currently
      *              authenticated user. The user that created the tip must also be

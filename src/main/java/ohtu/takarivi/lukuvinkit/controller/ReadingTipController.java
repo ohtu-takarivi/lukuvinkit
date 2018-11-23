@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,9 +183,7 @@ public class ReadingTipController {
             return "redirect:/search";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        /// TODO also search from description and author
-//        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
-        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(customUser.getId(), keyword, keyword, keyword, keyword);
+        List<ReadingTip> list2 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getId(), keyword);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);
@@ -195,21 +194,24 @@ public class ReadingTipController {
     /**
      * 
      * @param auth An Authentication object representing the currently authenticated user.
-     * @param title Given keyword
-     * @param description Given keyword
-     * @param url Given keyword
-     * @param author Given keyword
+     * @param title Keyword given to search the title or empty.
+     * @param description Keyword given to search the description or empty.
+     * @param url Keyword given to search the URL or empty.
+     * @param author Keyword given to search the author or empty.
      * @param model The model to feed the information into.
      * @return 
      */
     @PostMapping("/search")
-    public String searchTip(Authentication auth, @RequestParam String title, @RequestParam String description, @RequestParam String url, @RequestParam String author, Model model) {
+    public String searchTip(Authentication auth, @RequestParam String title, @RequestParam String description, 
+                            @RequestParam String url, @RequestParam String author, 
+                            @RequestParam("category") List<String> category, 
+                            @RequestParam("unreadstatus") List<String> unreadstatus,
+                            Model model) {
         if (title.isEmpty() && description.isEmpty() && url.isEmpty() && author.isEmpty()) {
             return "redirect:/search";
         }
-        System.out.println(title + description + url +author);
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(customUser.getId(), title, description, url, author);
+        List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser.getId(), title, description, url, author, category, unreadstatus);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);

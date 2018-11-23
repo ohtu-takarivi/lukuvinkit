@@ -1,14 +1,14 @@
 <main th:fragment="viewtip">
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading" th:inline="text" th:text="${readingTip.title}"></h1>
-      <p class="lead text-muted" th:text="${readingTip.description}"></p>
+      <h1 class="jumbotron-heading" th:inline="text" th:text="${readingTip.title}" id="tiptitle"></h1>
+      <p class="lead text-muted" th:text="${readingTip.description}" id="tipdescription"></p>
     </div>
   </section>
 
   <div class="container">
-    <p><b>Linkki</b>: <a href="${readingTip.url}" th:text="${readingTip.url}"></a></p>
-    <p><b>Tekijä tai kirjoittaja</b>: <span th:text="${readingTip.author}"></span></p>
+    <p><b>Linkki</b>: <a href="${readingTip.url}" th:text="${readingTip.url}" id="tipurl"></a></p>
+    <p><b>Tekijä tai kirjoittaja</b>: <span th:text="${readingTip.author}" id="tipauthor"></span></p>
     <br />
     <hr />
     <form th:action="@{/readingTips/markAsRead/{id}(id=${readingTip.id})}" method="POST">

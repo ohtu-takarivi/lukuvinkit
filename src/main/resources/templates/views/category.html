@@ -12,7 +12,7 @@
         </thead>
         <tbody>
           <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-            <td id="tiptitle">
+            <td class="tiptitle">
               <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
             </td>
             <td th:text="${readingTip.description}"></td>
