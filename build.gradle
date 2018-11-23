@@ -14,9 +14,7 @@ run {
     standardInput = System.in
 }
 
-test { 
-    dependsOn cleanTest
-    testLogging.showStandardStreams = true
+test {
     systemProperty "cucumber.options", System.getProperty("cucumber.options")
 }
 
