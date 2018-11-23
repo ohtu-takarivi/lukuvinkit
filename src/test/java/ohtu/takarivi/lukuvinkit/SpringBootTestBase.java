@@ -58,6 +58,7 @@ public abstract class SpringBootTestBase {
                            "description for tip 1",
                            "https://example.com/",
                            "John Doe",
+                           "978-3-16-148410-0", 
                            nolla));
         readingTipRepository.save(
             new ReadingTip("test reading tip 2",
@@ -65,6 +66,7 @@ public abstract class SpringBootTestBase {
                            "description for tip 2",
                            "https://example.com/",
                            "Jane Doe",
+                           "",
                            testi2));
         readingTipRepository.save(
             new ReadingTip("test reading tip 3",
@@ -72,6 +74,7 @@ public abstract class SpringBootTestBase {
                            "description for tip 3",
                            "https://example.com/",
                            "J. Doe",
+                           "",
                            nolla));
         readingTipRepository.save(
             new ReadingTip("test reading tip 4",
@@ -79,6 +82,7 @@ public abstract class SpringBootTestBase {
                            "description for tip 4",
                            "https://example.com/",
                            "Johnny Doe",
+                           "978-3-16-148410-0",
                            nolla));
         readingTipRepository.save(
             new ReadingTip("test reading tip 5",
@@ -86,6 +90,7 @@ public abstract class SpringBootTestBase {
                            "description for tip 5",
                            "https://example.com/",
                            "Doe, John",
+                           "978-3-16-148410-0",
                            testi2));
     }
 }

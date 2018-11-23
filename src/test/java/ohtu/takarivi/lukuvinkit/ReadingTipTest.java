@@ -12,7 +12,7 @@ public class ReadingTipTest {
     @Test
     public void constructorNoException() {
         CustomUser cu = new CustomUser("user", "password", "name");
-        new ReadingTip("title", ReadingTipCategory.BOOK, "description", "url", "author", cu);
+        new ReadingTip("title", ReadingTipCategory.BOOK, "description", "url", "author", "978-3-16-148410-0", cu);
     }
 
 }
