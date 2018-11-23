@@ -15,11 +15,6 @@ Feature: After logging in, I can create tips with valid information
     When title "Good title" and no description and url "www.notgonnawork.com" and author "John Doe" and isbn "978-3-16-148410-0" are given
     Then new book tip with "Good title" and "www.notgonnawork.com" is not created
 
-  Scenario: user can't create a book tip without url
-    Given test user is logged in
-    When title "Good title" and description "I wonder" and no url and author "John Doe" and isbn "978-3-16-148410-0" are given
-    Then new book tip with "Good title" and "I wonder" is not created 
-
   Scenario: user can't create a book tip without author
     Given test user is logged in
     When title "Good title" and description "I wonder" and url "www.nobleeffort.com" and no author and isbn "978-3-16-148410-0" are given
