@@ -39,12 +39,14 @@ public class BookAddForm {
         }
     }
 
+    //CHECKSTYLE:OFF: MagicNumber
     /**
      * Checks if the given ISBN-13 is valid.
      *  
      * @param isbn The value that is checked.
      * @return Return true if ISBN-13 is valid.
      */
+    @SuppressWarnings("checkstyle:MagicNumber")
     public static boolean isValidISBN(String isbn) {
         String isbnInteger = isbn;
         if (isbn.length() > 13) {
@@ -64,12 +66,13 @@ public class BookAddForm {
         }
         int result = sum % 10;
         if (result != 0) {
-            result = 10-result;
+            result = 10 - result;
         }
         if (result != Character.getNumericValue(isbnInteger.charAt(12))) {
             return false;
         }
         return true;
     }
+    //CHECKSTYLE:ON: MagicNumber
 
 }
