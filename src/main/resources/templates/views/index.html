@@ -17,38 +17,6 @@
 
   <section class="container">
     <div class="row justify-content-center">
-      
-      <div class="col-lg-5 col-md-6">
-        <h3 class="text-center">Uusi lukuvinkki</h3>
-        <form th:action="@{/readingTips/new}" method="POST">
-          <div class="form-group">
-            <label for="title">Otsikko</label>
-            <input type="text" id="title" name="title" class="form-control" required/>
-          </div>
-          <div class="form-group">
-            <label for="type">Tyyppi</label>
-            <select id="type" name="type" class="form-control">
-              <option value="books">Kirja</option>
-              <option value="articles">Artikkeli</option>
-              <option value="videos">Video</option>
-              <option value="links">Linkki</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="description">Kuvaus</label>
-            <textarea id="description" name="description" class="form-control" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="url">Linkki</label>
-            <input type="text" id="url" name="url" class="form-control" required/>
-          </div>
-          <div class="form-group">
-            <label for="author">Tekijä</label>
-            <input type="text" id="author" name="author" class="form-control" required/>
-          </div>
-          <button id="buttonadd" class="btn btn-primary btn-lg" type="submit">Lisää</button>
-        </form>
-      </div>
     </div>
   </section>
 </main>

@@ -3,11 +3,13 @@ package ohtu.takarivi.lukuvinkit.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
+import ohtu.takarivi.lukuvinkit.forms.ArticleAddForm;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The Spring controller for reading tip related activity.
@@ -99,32 +99,32 @@ public class ReadingTipController {
         return "layout";
     }
 
-    /**
-     * The form submit page that allows an user to create a reading tip. 
-     * It accepts the information related to the
-     * reading tip and adds it to the database, if it is valid.
-     *
-     * @param auth        An Authentication object representing the currently authenticated user.
-     * @param title       The title of the reading tip to add.
-     * @param description The description of the reading tip to add.
-     * @param url         The URL of the reading tip to add.
-     * @param author      The author of the reading tip to add.
-     * @return The action to be taken by this controller.
-     */
-    @PostMapping("/readingTips/new")
-    public String newReadingTip(Authentication auth,
-                                @RequestParam String title,
-                                @RequestParam String type,
-                                @RequestParam String description,
-                                @RequestParam String url,
-                                @RequestParam String author) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        if (!title.trim().isEmpty() && !description.trim().isEmpty() && !url.trim().isEmpty() && !author.trim().isEmpty()) {
-            ReadingTipCategory category = ReadingTipCategory.getByName(type.toUpperCase());
-            if (category != null) {
-                readingTipRepository.save(new ReadingTip(title, category, description, url, author, customUser));
-            }
+    @GetMapping("/readingTips/articles/new")
+    public String newArticle(Model model, @ModelAttribute ArticleAddForm articleAddForm) {
+        model.addAttribute("title", "Lisää artikkeli");
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("view", "newArticle");
+        return "layout";
+    }
+
+    @PostMapping("/readingTips/articles/new")
+    public String newReadingTip(Authentication auth, @Valid @ModelAttribute ArticleAddForm articleAddForm,
+                                BindingResult result, Model model) {
+        articleAddForm.validateRest(result);
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Lisää artikkeli");
+            model.addAttribute("nav", "navbar");
+            model.addAttribute("view", "newArticle");
+            return "layout";
         }
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        readingTipRepository.save(new ReadingTip(articleAddForm.getTitle(),
+                ReadingTipCategory.ARTICLE,
+                articleAddForm.getDescription(),
+                "",
+                articleAddForm.getAuthor(),
+                "",
+                customUser));
         return "redirect:/";
     }
 
