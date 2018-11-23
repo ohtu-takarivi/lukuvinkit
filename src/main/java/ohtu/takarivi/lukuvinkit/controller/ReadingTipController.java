@@ -179,16 +179,16 @@ public class ReadingTipController {
     @PostMapping("/searchTips")
     public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
         if (keyword.isEmpty()) {
-            return "redirect:/";
+            return "redirect:/search";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         /// TODO also search from description and author
 //        List<ReadingTip> list = readingTipRepository.findByTitleContainingAndCustomUserIdOrDescriptionContainingAndCustomUserId(keyword, customUser.getId(), keyword, customUser.getId());
-        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContaining(customUser.getId(), keyword);
+        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(customUser.getId(), keyword, keyword, keyword, keyword);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);
-        model.addAttribute("view", "index");
+        model.addAttribute("view", "search");
         return "layout";     
     }
     
