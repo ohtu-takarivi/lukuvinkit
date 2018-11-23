@@ -55,6 +55,23 @@ public class ReadingTipController {
     }
     
     /**
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param model The model to feed the information into.
+     * @return 
+     */
+    @GetMapping("/search")
+    public String viewSearch(Authentication auth, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+
+        model.addAttribute("title", "Haku");
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("view", "search");
+        return "layout";
+    }
+    
+    /**
      * The page that displays reading tips of that category.
      *
      * @param auth      An Authentication object representing the currently authenticated user.
@@ -174,6 +191,33 @@ public class ReadingTipController {
         model.addAttribute("view", "index");
         return "layout";     
     }
+    
+    /**
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param title Given keyword
+     * @param description Given keyword
+     * @param url Given keyword
+     * @param author Given keyword
+     * @param model The model to feed the information into.
+     * @return 
+     */
+    @PostMapping("/search")
+    public String searchTip(Authentication auth, @RequestParam String title, @RequestParam String description, @RequestParam String url, @RequestParam String author, Model model) {
+        if (title.isEmpty() && description.isEmpty() && url.isEmpty() && author.isEmpty()) {
+            return "redirect:/search";
+        }
+        System.out.println(title + description + url +author);
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTip> list2 = readingTipRepository.findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(customUser.getId(), title, description, url, author);
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("readingTips", list2);
+        model.addAttribute("view", "search");
+        return "layout";     
+    }
+    
+    
 
     /**
      * The page that resets a search.
