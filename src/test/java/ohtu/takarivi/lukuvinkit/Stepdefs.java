@@ -22,7 +22,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -119,39 +118,39 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/links");
     }
 
-    @When("^correct title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_valid_information_is_given(String title, String type, String description, String url, String author) throws Throwable {
-        createTip(title, type, description, url, author);
+    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void tip_with_valid_information_is_given(String title, String description, String url, String author, String isbn) throws Throwable {
+        createBookTip(title, description, url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^no title and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_title_is_given(String type, String description, String url, String author) throws Throwable {
-        createTip("", type, description, url, author);
+    @When("^no title and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void tip_with_invalid_title_is_given(String description, String url, String author, String isbn) throws Throwable {
+        createBookTip("", description, url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and no type and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_type_is_given(String title, String description, String url, String author) throws Throwable {
-        createTip(title, "", description, url, author);
+    @When("^title \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void tip_with_invalid_description_is_given(String title, String url, String author, String isbn) throws Throwable {
+        createBookTip(title, "", url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_description_is_given(String title, String type, String url, String author) throws Throwable {
-        createTip(title, type, "", url, author);
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void tip_with_invalid_url_is_given(String title, String description, String author, String isbn) throws Throwable {
+        createBookTip(title, description, "", author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" are given$")
-    public void tip_with_invalid_url_is_given(String title, String type, String description, String author) throws Throwable {
-        createTip(title, type, description, "", author);
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author and isbn \"([^\"]*)\" are given$")
+    public void tip_with_invalid_author_is_given(String title, String description, String url, String isbn) throws Throwable {
+        createBookTip(title, description, url, "", isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author are given$")
-    public void tip_with_invalid_author_is_given(String title, String type, String description, String url) throws Throwable {
-        createTip(title, type, description, url, "");
+    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and no isbn are given$")
+    public void tip_with_invalid_ISBN_is_given(String title, String description, String url, String author) throws Throwable {
+        createBookTip(title, description, url, author, "");
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -201,8 +200,8 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    @Then("^new book tip with title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" is created$")
-    public void new_tip_is_created(String title, String type, String description, String url, String author) throws Throwable {
+    @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    public void new_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/books");
         List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']"));
         
@@ -213,7 +212,6 @@ public class Stepdefs extends SpringBootTestBase {
         
         assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
         assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
-        assertEquals(url, driver.findElement(By.id("tipurl")).getText());
         assertEquals(author, driver.findElement(By.id("tipauthor")).getText());
     }
 
@@ -326,16 +324,14 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    private void createTip(String title, String type, String description, String url, String author) throws InterruptedException {
+    private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
+        browseTo("/readingTips/books/new");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
-        Select drpType = new Select(driver.findElement(By.name("type")));
-        if (!type.isEmpty()) {
-            drpType.selectByValue(type);
-        }
         driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("url")).sendKeys(url);
+        //driver.findElement(By.name("url")).sendKeys(url);
         driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.name("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
     }
