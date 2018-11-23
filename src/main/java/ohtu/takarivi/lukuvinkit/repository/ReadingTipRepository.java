@@ -28,6 +28,6 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long> {
                                                                                                 String description,
                                                                                                 Long customUserId2);
 
-    List<ReadingTip> findByTyyppi(String tyyppi);
+    List<ReadingTip> findByCategory(String category);
 
 }

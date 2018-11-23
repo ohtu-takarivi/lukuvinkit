@@ -23,7 +23,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String title;
 
     @NotEmpty
-    private String tyyppi;
+    private String category;
 
     @NotEmpty
     private String description;
@@ -50,7 +50,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
      * Constructs a new ReadingTip with the given parameters.
      *
      * @param title       The title of the work to be read.
-     * @param tyyppi        The type e.g. a book, video or link.
+     * @param category    The type e.g. a book, video or link.
      * @param description A description to the work, added by the user who adds the reading tip.
      * @param url         The URL of the reading tip; this is the video link for YouTube links, audio link for
      *                    podcasts and blog post link for blog posts. It is customizable for books.
@@ -58,14 +58,14 @@ public class ReadingTip extends AbstractPersistable<Long> {
      * @param customUser  The CustomUser instance representing the user who added this reading tip.
      */
     public ReadingTip(String title, 
-                      String tyyppi, 
+                      String category, 
                       String description, 
                       String url, 
                       String author, 
                       CustomUser customUser) {
         this();
         this.title = title;
-        this.tyyppi = tyyppi;
+        this.category = category;
         this.description = description;
         this.url = url;
         this.author = author;

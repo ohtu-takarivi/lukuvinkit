@@ -65,7 +65,7 @@ public class ReadingTipController {
     @GetMapping("/readingTips/{category}")
     public String viewCategory(Authentication auth, @PathVariable String category, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> tips = readingTipRepository.findByTyyppi(category);
+        List<ReadingTip> tips = readingTipRepository.findByCategory(category);
 
         model.addAttribute("title", "Kategoria");
         model.addAttribute("nav", "navbar");
