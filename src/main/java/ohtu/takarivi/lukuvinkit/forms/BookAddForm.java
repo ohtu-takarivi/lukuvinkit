@@ -30,7 +30,7 @@ public class BookAddForm {
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     private String author;
     @NotEmpty
-    @Size(min = ISBN_MIN_LENGTH, max = ISBN_MAX_LENGTH, message = "ISBN:n pituus väliviivoineen 13-175 merkkiä")
+    @Size(min = ISBN_MIN_LENGTH, max = ISBN_MAX_LENGTH, message = "ISBN:n pituus väliviivoineen 13-17 merkkiä")
     private String isbn;
 
     public void validateRest(BindingResult result) {
