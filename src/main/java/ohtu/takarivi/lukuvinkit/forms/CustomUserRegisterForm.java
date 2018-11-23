@@ -33,6 +33,12 @@ public class CustomUserRegisterForm {
     private String password;
     private String verifyPassword;
 
+    /**
+     * Used to run additional validation for this form.
+     * 
+     * @param result The BindingResult that value rejections are submitted to.
+     * @param customUserRepository The CustomUserRepository for looking up existing users.
+     */
     public void validateRest(BindingResult result, CustomUserRepository customUserRepository) {
         if (checkIfUsernameTaken(customUserRepository)) {
             result.rejectValue("username", "", "Käyttäjänimi on jo olemassa");

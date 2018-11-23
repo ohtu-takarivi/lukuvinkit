@@ -21,7 +21,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.test.annotation.DirtiesContext;
 
 @DirtiesContext
@@ -29,6 +31,7 @@ public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
     private static final int SLEEPING_TIME = 100;
     private static final int PAGE_LOAD_TIMEOUT = 10;
+    private static final int ELEMENT_LOAD_TIMEOUT = 5;
 
     public Stepdefs() {
 
@@ -93,6 +96,7 @@ public class Stepdefs extends SpringBootTestBase {
         logInWith("nolla", "yksi");
         Thread.sleep(SLEEPING_TIME);
         browseTo("/profile");
+        Thread.sleep(SLEEPING_TIME);
     }
 
     @Given("^test user is logged in and browsing book tips$")
@@ -102,6 +106,7 @@ public class Stepdefs extends SpringBootTestBase {
         logInWith("nolla", "yksi");
         Thread.sleep(SLEEPING_TIME);
         browseTo("/readingTips/books");
+        Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^browsing book tips$")
@@ -152,12 +157,14 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^book tip with title \"([^\"]*)\" is marked as read$")
     public void tip_mark_as_read(String title) throws Throwable {
+        waitForElementWithId("loadfinish");
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonread")).click();
         Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^book tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
+        waitForElementWithId("loadfinish");
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttondelete")).click();
         Thread.sleep(SLEEPING_TIME);
     }
@@ -202,6 +209,7 @@ public class Stepdefs extends SpringBootTestBase {
         assertTrue(elements.size() > 0);
         elements.get(0).click();
         waitForPageChange();
+        waitForElementWithId("tiptitle");
         
         assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
         assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
@@ -296,12 +304,21 @@ public class Stepdefs extends SpringBootTestBase {
         return "http://localhost:" + port;
     }
 
-    private void browseTo(String string) {
+    private void browseTo(String string) throws InterruptedException {
         driver.navigate().to(getBaseUrl() + string);
         waitForPageChange();
     }
+
+    private void waitForPageChange() throws InterruptedException {
+        driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    private void waitForElementWithId(String id) throws InterruptedException {
+        new WebDriverWait(driver, ELEMENT_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+    }
     
-    private void logInWith(String username, String password) {
+    private void logInWith(String username, String password) throws InterruptedException {
         assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
         driver.findElement(By.name("username")).sendKeys(username);
         driver.findElement(By.name("password")).sendKeys(password);
@@ -309,7 +326,7 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    private void createTip(String title, String type, String description, String url, String author) {
+    private void createTip(String title, String type, String description, String url, String author) throws InterruptedException {
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
         Select drpType = new Select(driver.findElement(By.name("type")));
@@ -321,9 +338,5 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
-    }
-
-    private void waitForPageChange() {
-        driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
     }
 }

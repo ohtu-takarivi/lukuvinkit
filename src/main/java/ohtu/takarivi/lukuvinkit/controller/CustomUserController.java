@@ -108,26 +108,25 @@ public class CustomUserController {
      *
      * @param auth           An Authentication object representing the currently
      *                       authenticated user.
-     * @param username       The username set by the user.
-     * @param password       The password set by the user.
-     * @param verifyPassword The password set by the user; this must match password.
-     * @param name           The name set by the user.
+     * @param registerForm   The registration form.
+     * @param result         The binding result of the given form.
+     * @param model          The model to set the data into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/register")
-    public String register(Authentication auth, @Valid @ModelAttribute CustomUserRegisterForm customUserRegisterForm,
+    public String register(Authentication auth, @Valid @ModelAttribute CustomUserRegisterForm registerForm,
                            BindingResult result, Model model) {
         if (auth != null && auth.isAuthenticated()) {
             return "redirect:/";
         }
-        customUserRegisterForm.validateRest(result, customUserRepository);
+        registerForm.validateRest(result, customUserRepository);
         if (result.hasErrors()) {
             model.addAttribute("title", "Luo tili");
             model.addAttribute("view", "register");
             return "layout";
         }
-        customUserRepository.save(new CustomUser(customUserRegisterForm.getUsername(),
-                encoder.encode(customUserRegisterForm.getPassword()), customUserRegisterForm.getName()));
+        customUserRepository.save(new CustomUser(registerForm.getUsername(),
+                encoder.encode(registerForm.getPassword()), registerForm.getName()));
         return "redirect:/login#registerok";
     }
 

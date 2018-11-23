@@ -23,7 +23,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("classpath:application-test.properties")
 public abstract class SpringBootTestBase {
-    private static boolean testDataHasBeenSetUp = false;
     protected static final int port = 8090;
 
     @Autowired
@@ -41,13 +40,13 @@ public abstract class SpringBootTestBase {
     @Before
     public void setUpMvc() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        if (!testDataHasBeenSetUp) {
-            setUpTestData();
-            testDataHasBeenSetUp = true;
-        }
+        setUpTestData();
     }
 
     public void setUpTestData() {
+        readingTipRepository.deleteAll();
+        customUserRepository.deleteAll();
+        
         CustomUser nolla = new CustomUser("nolla", encoder.encode("yksi"), "Testi");
         customUserRepository.save(nolla);
         CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");

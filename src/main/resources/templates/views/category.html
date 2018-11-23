@@ -19,10 +19,10 @@
             <td th:text="${readingTip.url}"></td>
             <td>
               <form th:action="@{/readingTips/markAsRead/{id}(id=${readingTip.id})}" method="POST">
-                <button class="btn btn-primary btn-sm" type="submit" th:attr="disabled=${readingTip.isRead ? 'disabled' : null}" th:text="${readingTip.isRead} ? 'Luettu!' : 'Merkitse luetuksi'"></button>
+                <button class="btn btn-primary btn-sm buttonread" type="submit" th:attr="disabled=${readingTip.isRead ? 'disabled' : null}" th:text="${readingTip.isRead} ? 'Luettu!' : 'Merkitse luetuksi'"></button>
               </form>
               <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-                <button class="btn btn-danger btn-sm" type="submit">Poista</button>
+                <button class="btn btn-danger btn-sm buttondelete" type="submit">Poista</button>
               </form>
             </td>
           </tr>

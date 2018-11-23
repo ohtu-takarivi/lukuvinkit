@@ -6,6 +6,12 @@ public enum ReadingTipCategory {
     VIDEO,
     LINK;
 
+    /**
+     * Gets the proper ReadingTipCategory value by the name of that category.
+     * 
+     * @param category The name of the category to look for.
+     * @return The correct ReadingTipCategory value, or null if no such category was found.
+     */
     public static ReadingTipCategory getByName(String category) {
         if (category.equalsIgnoreCase("books")) {
             return BOOK;
