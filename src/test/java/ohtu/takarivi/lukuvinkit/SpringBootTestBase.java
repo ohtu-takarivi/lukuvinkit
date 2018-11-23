@@ -23,7 +23,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("classpath:application-test.properties")
 public abstract class SpringBootTestBase {
-    private static boolean first = true;
+    private static boolean testDataHasBeenSetUp = false;
     protected static final int port = 8090;
 
     @Autowired
@@ -39,44 +39,54 @@ public abstract class SpringBootTestBase {
     protected MockMvc mvc;
 
     @Before
-    public void setUpTestData() {
+    public void setUpMvc() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        if (first) {
-            first = false;
-            CustomUser nolla = new CustomUser("nolla", encoder.encode("yksi"), "Testi");
-            customUserRepository.save(nolla);
-            CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");
-            customUserRepository.save(testi2);
-            
-            readingTipRepository.save(
-                new ReadingTip("test reading tip 1",
-                               ReadingTipCategory.BOOK,
-                               "description for tip 1",
-                               "https://example.com/",
-                               "John Doe",
-                               nolla));
-            readingTipRepository.save(
-                new ReadingTip("test reading tip 2",
-                               ReadingTipCategory.VIDEO,
-                               "description for tip 2",
-                               "https://example.com/",
-                               "Jane Doe",
-                               testi2));
-            readingTipRepository.save(
-                new ReadingTip("test reading tip 3",
-                               ReadingTipCategory.LINK,
-                               "description for tip 3",
-                               "https://example.com/",
-                               "J. Doe",
-                               nolla));
-            readingTipRepository.save(
-                new ReadingTip("test reading tip 4",
-                               ReadingTipCategory.BOOK,
-                               "description for tip 4",
-                               "https://example.com/",
-                               "Johnny Doe",
-                               nolla));
+        if (!testDataHasBeenSetUp) {
+            setUpTestData();
+            testDataHasBeenSetUp = true;
         }
     }
 
+    public void setUpTestData() {
+        CustomUser nolla = new CustomUser("nolla", encoder.encode("yksi"), "Testi");
+        customUserRepository.save(nolla);
+        CustomUser testi2 = new CustomUser("testi2", encoder.encode("testi2"), "testi2");
+        customUserRepository.save(testi2);
+        
+        readingTipRepository.save(
+            new ReadingTip("test reading tip 1",
+                           ReadingTipCategory.BOOK,
+                           "description for tip 1",
+                           "https://example.com/",
+                           "John Doe",
+                           nolla));
+        readingTipRepository.save(
+            new ReadingTip("test reading tip 2",
+                           ReadingTipCategory.VIDEO,
+                           "description for tip 2",
+                           "https://example.com/",
+                           "Jane Doe",
+                           testi2));
+        readingTipRepository.save(
+            new ReadingTip("test reading tip 3",
+                           ReadingTipCategory.LINK,
+                           "description for tip 3",
+                           "https://example.com/",
+                           "J. Doe",
+                           nolla));
+        readingTipRepository.save(
+            new ReadingTip("test reading tip 4",
+                           ReadingTipCategory.BOOK,
+                           "description for tip 4",
+                           "https://example.com/",
+                           "Johnny Doe",
+                           nolla));
+        readingTipRepository.save(
+            new ReadingTip("test reading tip 5",
+                           ReadingTipCategory.BOOK,
+                           "description for tip 5",
+                           "https://example.com/",
+                           "Doe, John",
+                           testi2));
+    }
 }

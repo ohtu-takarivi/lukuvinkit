@@ -5,17 +5,14 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.hibernate.annotations.SourceType;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -54,7 +51,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Before
     public void setUp() {
-        super.setUpTestData();
+        super.setUpMvc();
     }
 
     @After
@@ -71,26 +68,50 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Given("^user is at the login page$")
     public void user_is_at_the_login_page() throws Throwable {
-        driver.get("http://localhost:" + port + "/login");
+        driver.get(getBaseUrl() + "/login");
         Thread.sleep(SLEEPING_TIME);
     }
 
     @Given("^user is at the register page$")
     public void user_is_at_the_register_page() throws Throwable {
-        driver.get("http://localhost:" + port + "/register");
+        driver.get(getBaseUrl() + "/register");
         Thread.sleep(SLEEPING_TIME);
     }
 
     @Given("^test user is logged in$")
     public void test_user_is_logged_in() throws Throwable {
-        driver.get("http://localhost:" + port + "/login");
+        driver.get(getBaseUrl() + "/login");
         Thread.sleep(SLEEPING_TIME);
         logInWith("nolla", "yksi");
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^browsing tips$")
-    public void browse_tips() throws Throwable {
+    @Given("^test user is logged in and on the profile page$")
+    public void test_user_is_logged_in_on_profile_page() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/profile");
+    }
+
+    @Given("^test user is logged in and browsing book tips$")
+    public void test_user_is_logged_in_on_book_tip_list() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/books");
+    }
+
+    @When("^browsing book tips$")
+    public void browse_book_tips() throws Throwable {
+        browseTo("/readingTips/books");
+    }
+
+    @When("^browsing link tips$")
+    public void browse_link_tips() throws Throwable {
+        browseTo("/readingTips/links");
     }
 
     @When("^correct title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
@@ -129,10 +150,9 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^tip with title \"([^\"]*)\" is deleted$")
+    @When("^book tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
-        // driver.get("http://localhost:" + port + "/readingTips/" + type);
-        driver.findElement(By.xpath("//td[@id='tiptitle']/a[text()='" + title + "']/../../td/form/button")).click();
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".btn-danger")).click();
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -168,40 +188,57 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    @Then("^new tip with title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    @Then("^new book tip with title \"([^\"]*)\" and type \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" is created$")
     public void new_tip_is_created(String title, String type, String description, String url, String author) throws Throwable {
-        driver.get("http://localhost:" + port + "/readingTips/" + type);
-        List<WebElement> elements = driver.findElements(By.xpath("//td[@id='tiptitle']/a[text()='" + title + "']/../../td"));
-        int i = 0;
-        assertTrue(elements.get(i++).getText().contains(title));
-        assertTrue(elements.get(i++).getText().contains(description));
-        assertTrue(elements.get(i++).getText().contains(url));
-        assertTrue(elements.get(i++).getText().contains(author));
+        browseTo("/readingTips/books");
+        List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']"));
+        
+        assertTrue(elements.size() > 0);
+        elements.get(0).click();
+        waitForPageChange();
+        
+        assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
+        assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
+        assertEquals(url, driver.findElement(By.id("tipurl")).getText());
+        assertEquals(author, driver.findElement(By.id("tipauthor")).getText());
     }
 
     @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
     public void new_password_created(String password, String verifyPassword) throws Throwable {
-        assertFalse(driver.findElements(By.id("buttonchange")).isEmpty());
+        assertFalse(driver.findElements(By.id("buttonchangepassword")).isEmpty());
         driver.findElement(By.name("newPassword")).sendKeys(password);
         driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
-        driver.findElement(By.id("buttonchange")).click();
+        driver.findElement(By.id("buttonchangepassword")).click();
         waitForPageChange();
     }
 
-    @Then("^new tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
-    public void new_tip_is_created(String first, String second) throws Throwable {
-        assertTrue(!driver.getPageSource().contains(first));
-        assertTrue(!driver.getPageSource().contains(second));
+    @Then("^new book tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
+    public void new_tip_is_not_created(String first, String second) throws Throwable {
+        browseTo("/readingTips/books");
+        assertFalse(driver.getPageSource().contains(first));
     }
 
-    @Then("^tip with title \"([^\"]*)\" is not visible$")
-    public void tip_not_visible(String title) throws Throwable {
-        assertTrue(!driver.getPageSource().contains(title));
+    @Then("^tip with title \"([^\"]*)\" is visible$")
+    public void tip_visible(String title) throws Throwable {
+        assertTrue(driver.getPageSource().contains(title));
     }
 
-    @Then("^tip with title \"([^\"]*)\" is no longer visible$")
-    public void tip_not_visible_(String title) throws Throwable {
-        assertTrue(!driver.getPageSource().contains(title));
+    @Then("^book tip with title \"([^\"]*)\" is still visible$")
+    public void book_tip_still_visible(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        assertTrue(driver.getPageSource().contains(title));
+    }
+
+    @Then("^book tip with title \"([^\"]*)\" is not visible$")
+    public void book_tip_not_visible(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        assertFalse(driver.getPageSource().contains(title));
+    }
+
+    @Then("^book tip with title \"([^\"]*)\" is no longer visible$")
+    public void book_tip_not_visible_(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        assertFalse(driver.getPageSource().contains(title));
     }
 
     @Then("^user is logged in$")
@@ -235,6 +272,15 @@ public class Stepdefs extends SpringBootTestBase {
 
     /* helper methods */
 
+    private String getBaseUrl() {
+        return "http://localhost:" + port;
+    }
+
+    private void browseTo(String string) {
+        driver.navigate().to(getBaseUrl() + string);
+        waitForPageChange();
+    }
+    
     private void logInWith(String username, String password) {
         assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
         driver.findElement(By.name("username")).sendKeys(username);
@@ -247,7 +293,9 @@ public class Stepdefs extends SpringBootTestBase {
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
         Select drpType = new Select(driver.findElement(By.name("type")));
-        drpType.selectByValue(type);
+        if (!type.isEmpty()) {
+            drpType.selectByValue(type);
+        }
         driver.findElement(By.name("description")).sendKeys(description);
         driver.findElement(By.name("url")).sendKeys(url);
         driver.findElement(By.name("author")).sendKeys(author);
@@ -257,23 +305,5 @@ public class Stepdefs extends SpringBootTestBase {
 
     private void waitForPageChange() {
         driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-    }
-
-    private void clickLinkWithText(String text) {
-        int trials = 0;
-        while( trials++<NUMBER_OF_TRIALS ) {
-            try{
-                WebElement element = driver.findElement(By.linkText(text));
-                element.click();
-                break;
-            } catch(Exception e) {
-                System.out.println(e.getStackTrace());
-                try {
-                    Thread.sleep(SLEEP_BETWEEN_CLICKS);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
     }
 }

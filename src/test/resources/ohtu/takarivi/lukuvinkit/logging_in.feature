@@ -1,4 +1,3 @@
-
 Feature: As a registered user, I can log in with a valid username/password combination
 
   Scenario: user can login with correct password

@@ -11,34 +11,9 @@ public class CustomUserTest {
 
     CustomUser cu;
 
-    @Before
-    public void before() {
+    @Test
+    public void constructorNoException() {
         cu = new CustomUser("user", "password", "name");
     }
-
-//    @Test
-//    public void validUsernameIsValid() {
-//        assertTrue(CustomUser.isValidUsername("user"));
-//    }
-//
-//    @Test
-//    public void tooShortUsernameIsInvalid() {
-//        assertFalse(CustomUser.isValidUsername("u"));
-//    }
-//
-//    @Test
-//    public void tooLongUsernameIsInvalid() {
-//        assertFalse(CustomUser.isValidUsername("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-//    }
-//
-//    @Test
-//    public void emptyUsernameIsInvalid() {
-//        assertFalse(CustomUser.isValidUsername(""));
-//    }
-//
-//    @Test
-//    public void specialCharacterUsernameIsInvalid() {
-//        assertFalse(CustomUser.isValidUsername("%%%%%"));
-//    }
 
 }

@@ -38,6 +38,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     @NotEmpty
     private String author;
 
+    @NotNull
     private Boolean isRead;
 
     @ManyToOne
