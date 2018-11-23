@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -25,9 +27,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext
 public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
-    private static final int SLEEP_BETWEEN_CLICKS = 50;
     private static final int SLEEPING_TIME = 100;
-    private static final int NUMBER_OF_TRIALS = 5;
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
     public Stepdefs() {
@@ -150,9 +150,15 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
+    @When("^book tip with title \"([^\"]*)\" is marked as read$")
+    public void tip_mark_as_read(String title) throws Throwable {
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonread")).click();
+        Thread.sleep(SLEEPING_TIME);
+    }
+
     @When("^book tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
-        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".btn-danger")).click();
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttondelete")).click();
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -239,6 +245,20 @@ public class Stepdefs extends SpringBootTestBase {
     public void book_tip_not_visible_(String title) throws Throwable {
         browseTo("/readingTips/books");
         assertFalse(driver.getPageSource().contains(title));
+    }
+
+    @Then("^book tip with title \"([^\"]*)\" has been marked as read$")
+    public void book_tip_mark_as_read(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        WebElement btn = driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonread"));
+        assertNotNull(btn.getAttribute("disabled"));
+    }
+
+    @Then("^book tip with title \"([^\"]*)\" has not been marked as read$")
+    public void book_tip_not_mark_as_read(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        WebElement btn = driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonread"));
+        assertNull(btn.getAttribute("disabled"));
     }
 
     @Then("^user is logged in$")
