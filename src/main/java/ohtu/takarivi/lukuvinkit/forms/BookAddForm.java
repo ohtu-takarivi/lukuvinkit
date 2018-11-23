@@ -34,22 +34,22 @@ public class BookAddForm {
     private String isbn;
 
     public void validateRest(BindingResult result) {
-        if (checkIfBadISBN()) {
+        if (!isValidISBN(this.isbn)) {
             result.rejectValue("isbn", "", "Huono ISBN");
         }
     }
 
     /**
-     * Checks if ISBN 13 is bad.
+     * Checks if the given ISBN-13 is valid.
      *  
      * @param isbn The value that is checked.
-     * @return Return true if ISBN 13 is bad.
+     * @return Return true if ISBN-13 is valid.
      */
-    private boolean checkIfBadISBN() {
-        String isbnInteger = this.isbn;
+    public static boolean isValidISBN(String isbn) {
+        String isbnInteger = isbn;
         if (isbn.length() > 13) {
             if (!isbn.contains("-")){
-                return true;
+                return false;
             } 
             isbnInteger = isbnInteger.replaceAll("-", "");
         }
@@ -62,14 +62,14 @@ public class BookAddForm {
                 sum += 3 * charToNum;
             }
         }
-        int result = sum %10;
+        int result = sum % 10;
         if (result != 0) {
             result = 10-result;
         }
         if (result != Character.getNumericValue(isbnInteger.charAt(12))) {
             return false;
         }
-        return false;
+        return true;
     }
 
 }

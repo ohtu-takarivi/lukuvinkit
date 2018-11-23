@@ -34,13 +34,14 @@ public class LinkAddForm {
     private String url;
 
     public void validateRest(BindingResult result) {
-        if (checkIfBadUrl()) {
+        if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "Huono url");
         }
     }
 
-    private boolean checkIfBadUrl() {
-        return false; // TODO
+    public static boolean isValidURL(String url) {
+        // TODO
+        return true;
     }
 
 }
