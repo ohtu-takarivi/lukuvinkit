@@ -30,11 +30,11 @@ public class BookAddForm {
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     private String author;
     @NotEmpty
-    @Size(min = ISBN_MIN_LENGTH, max = ISBN_MAX_LENGTH, message = "ISBN:n pituus väliviivoineen 13-17 merkkiä")
+    @Size(min = ISBN_MIN_LENGTH, max = ISBN_MAX_LENGTH, message = "ISBN-13 tunnuksen pituus 13-17 merkkiä")
     private String isbn;
 
     public void validateRest(BindingResult result) {
-        if (!result.hasFieldErrors("isbn") && !isValidISBN(this.isbn)) {
+        if (!isValidISBN(this.isbn)) {
             result.rejectValue("isbn", "", "Huono ISBN");
         }
     }
@@ -42,18 +42,18 @@ public class BookAddForm {
     //CHECKSTYLE:OFF: MagicNumber
     /**
      * Checks if the given ISBN-13 is valid.
-     *  
+     *
      * @param isbn The value that is checked.
      * @return Return true if ISBN-13 is valid.
      */
     @SuppressWarnings("checkstyle:MagicNumber")
     public static boolean isValidISBN(String isbn) {
         String isbnInteger = isbn;
-        if (isbn.length() > 13) {
-            if (!isbn.contains("-")){
-                return false;
-            } 
+        if (isbnInteger.length() == 17) {
             isbnInteger = isbnInteger.replaceAll("-", "");
+        }
+        if (isbn.length() != 13) {
+            return false;
         }
         int sum = 0;
         for (int i = 0; i < 12; i++) {
