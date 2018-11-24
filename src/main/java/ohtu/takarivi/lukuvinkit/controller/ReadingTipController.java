@@ -361,9 +361,6 @@ public class ReadingTipController {
                             @RequestParam("category") List<String> category,
                             @RequestParam("unreadstatus") List<String> unreadstatus,
                             Model model) {
-        if (title.isEmpty() && description.isEmpty() && url.isEmpty() && author.isEmpty()) {
-            return "redirect:/search";
-        }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser.getId(), title,
                 description, url, author, category, unreadstatus);

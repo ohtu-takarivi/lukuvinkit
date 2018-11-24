@@ -53,11 +53,8 @@ public class BookAddForm {
      */
     @SuppressWarnings("checkstyle:MagicNumber")
     public static boolean isValidISBN(String isbn) {
-        String isbnInteger = isbn;
-        if (isbnInteger.length() == 17) {
-            isbnInteger = isbnInteger.replaceAll("-", "");
-        }
-        if (isbnInteger.length() != 13) {
+        String isbnInteger = isbn.replace("-", "").replace(" ", "");
+        if (isbnInteger.length() != 13 || !isbnInteger.matches("^[0-9]+$")) {
             return false;
         }
         int sum = 0;

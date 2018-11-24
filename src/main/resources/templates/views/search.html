@@ -40,7 +40,7 @@ function hideForm() {
           </form>
           </div>
           <div id="hiddenButton" style="display:" class="text-center" >
-              <button class="btn btn-primary" onclick="document.getElementById('searchForm').style.display='';document.getElementById('hiddenButton').style.display='none';">Avaa hakulomake</button>                
+              <button class="btn btn-primary" id="buttonshowsearch" onclick="document.getElementById('searchForm').style.display='';document.getElementById('hiddenButton').style.display='none';">Avaa hakulomake</button>                
           </div>
         </div>
       </div>
@@ -54,8 +54,8 @@ function hideForm() {
           </tr>
         </thead>
       <tbody>
-          <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-            <td id="tiptitle">
+          <tr class="searchresult" th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
+            <td class="tiptitle">
               <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
             </td>
             <td th:text="${readingTip.description}"></td>

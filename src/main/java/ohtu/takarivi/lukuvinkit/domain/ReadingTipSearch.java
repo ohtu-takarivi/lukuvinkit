@@ -62,22 +62,22 @@ public class ReadingTipSearch {
                 if (!url.isEmpty()) { // URL must match
                     predicates.add(builder.like(root.get("url"), "%" + url + "%"));
                 }
-                if (!description.isEmpty()) { // description must match
+                if (!author.isEmpty()) { // author must match
                     predicates.add(builder.like(root.get("author"), "%" + author + "%"));
                 }
                 
                 Predicate allowedTypes = builder.disjunction(); 
                 if (category.contains("books")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.get("category"), ReadingTipCategory.BOOK));
+                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.BOOK));
                 }
                 if (category.contains("articles")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.get("category"), ReadingTipCategory.ARTICLE));
+                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.ARTICLE));
                 }
                 if (category.contains("videos")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.get("category"), ReadingTipCategory.VIDEO));
+                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.VIDEO));
                 }
                 if (category.contains("links")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.get("category"), ReadingTipCategory.LINK));
+                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.LINK));
                 }
                 predicates.add(allowedTypes);
                 

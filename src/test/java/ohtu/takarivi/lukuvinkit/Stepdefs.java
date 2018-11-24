@@ -118,39 +118,57 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/links");
     }
 
-    @When("^correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
-    public void tip_with_valid_information_is_given(String title, String description, String url, String author, String isbn) throws Throwable {
+    @When("^creating a book tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void book_tip_with_valid_information_is_given(String title, String description, String url, String author, String isbn) throws Throwable {
         createBookTip(title, description, url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^no title and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
-    public void tip_with_invalid_title_is_given(String description, String url, String author, String isbn) throws Throwable {
+    @When("^creating a book tip and no title and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void book_tip_with_invalid_title_is_given(String description, String url, String author, String isbn) throws Throwable {
         createBookTip("", description, url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
-    public void tip_with_invalid_description_is_given(String title, String url, String author, String isbn) throws Throwable {
+    @When("^creating a book tip and title \"([^\"]*)\" and no description and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void book_tip_with_invalid_description_is_given(String title, String url, String author, String isbn) throws Throwable {
         createBookTip(title, "", url, author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
-    public void tip_with_invalid_url_is_given(String title, String description, String author, String isbn) throws Throwable {
+    @When("^creating a book tip and title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void book_tip_with_invalid_url_is_given(String title, String description, String author, String isbn) throws Throwable {
         createBookTip(title, description, "", author, isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author and isbn \"([^\"]*)\" are given$")
-    public void tip_with_invalid_author_is_given(String title, String description, String url, String isbn) throws Throwable {
+    @When("^creating a book tip and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and no author and isbn \"([^\"]*)\" are given$")
+    public void book_tip_with_invalid_author_is_given(String title, String description, String url, String isbn) throws Throwable {
         createBookTip(title, description, url, "", isbn);
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and no isbn are given$")
-    public void tip_with_invalid_ISBN_is_given(String title, String description, String url, String author) throws Throwable {
+    @When("^creating a book tip and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and no isbn are given$")
+    public void book_tip_with_invalid_ISBN_is_given(String title, String description, String url, String author) throws Throwable {
         createBookTip(title, description, url, author, "");
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^creating a link tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void link_tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
+        createLinkTip(title, description, url, author);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^creating a video tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void video_tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
+        createVideoTip(title, description, url, author);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^creating an article tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    public void article_tip_with_valid_information_is_given(String title, String description, String author) throws Throwable {
+        createArticleTip(title, description, author);
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -166,6 +184,79 @@ public class Stepdefs extends SpringBootTestBase {
         waitForElementWithId("loadfinish");
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttondelete")).click();
         Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^searching for tips with \"([^\"]*)\"$")
+    public void search_keyword(String keyword) throws Throwable {
+        driver.findElement(By.id("keyword")).sendKeys(keyword);
+        driver.findElement(By.id("buttonquicksearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for tips with title \"([^\"]*)\"$")
+    public void search_advanced_title(String title) throws Throwable {
+        prepareSearchForm();
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for tips with description \"([^\"]*)\"$")
+    public void search_advanced_description(String description) throws Throwable {
+        prepareSearchForm();
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for tips with author \"([^\"]*)\"$")
+    public void search_advanced_author(String author) throws Throwable {
+        prepareSearchForm();
+        driver.findElement(By.id("author")).sendKeys(author);
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for article tips only$")
+    public void search_advanced_article_only() throws Throwable {
+        prepareSearchForm();
+        uncheck(driver.findElement(By.id("books")));
+        check(driver.findElement(By.id("articles")));
+        uncheck(driver.findElement(By.id("videos")));
+        uncheck(driver.findElement(By.id("links")));
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for video tips only$")
+    public void search_advanced_video_only() throws Throwable {
+        prepareSearchForm();
+        uncheck(driver.findElement(By.id("books")));
+        uncheck(driver.findElement(By.id("articles")));
+        check(driver.findElement(By.id("videos")));
+        uncheck(driver.findElement(By.id("links")));
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for link tips only$")
+    public void search_advanced_link_only() throws Throwable {
+        prepareSearchForm();
+        uncheck(driver.findElement(By.id("books")));
+        uncheck(driver.findElement(By.id("articles")));
+        uncheck(driver.findElement(By.id("videos")));
+        check(driver.findElement(By.id("links")));
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
+    }
+
+    @When("^searching for read tips only$")
+    public void search_read_link_only() throws Throwable {
+        prepareSearchForm();
+        uncheck(driver.findElement(By.id("unread")));
+        check(driver.findElement(By.id("read")));
+        driver.findElement(By.id("buttonsearch")).click();
+        waitForPageChange();
     }
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
@@ -201,18 +292,27 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
-    public void new_tip_is_created(String title, String description, String author) throws Throwable {
+    public void new_book_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/books");
-        List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']"));
-        
-        assertTrue(elements.size() > 0);
-        elements.get(0).click();
-        waitForPageChange();
-        waitForElementWithId("tiptitle");
-        
-        assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
-        assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
-        assertEquals(author, driver.findElement(By.id("tipauthor")).getText());
+        verifyTipInfo(title, description, author);
+    }
+
+    @Then("^new link tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    public void new_link_tip_is_created(String title, String description, String author) throws Throwable {
+        browseTo("/readingTips/links");
+        verifyTipInfo(title, description, author);
+    }
+
+    @Then("^new video tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    public void new_video_tip_is_created(String title, String description, String author) throws Throwable {
+        browseTo("/readingTips/videos");
+        verifyTipInfo(title, description, author);
+    }
+
+    @Then("^new article tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
+    public void new_article_tip_is_created(String title, String description, String author) throws Throwable {
+        browseTo("/readingTips/articles");
+        verifyTipInfo(title, description, author);
     }
 
     @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
@@ -296,6 +396,25 @@ public class Stepdefs extends SpringBootTestBase {
         assertFalse(driver.findElements(By.id("buttonlogout")).isEmpty());
     }
 
+    @Then("^there are no search results$")
+    public void zero_search_results() throws Throwable {
+        assertEquals(0, driver.findElements(By.cssSelector(".searchresult")).size());
+    }
+
+    @Then("^there is 1 search result and it is \"([^\"]*)\"$")
+    public void one_search_result(String candidate) throws Throwable {
+        assertEquals(1, driver.findElements(By.cssSelector(".searchresult")).size());
+        List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + candidate + "']"));
+        assertTrue(elements.size() > 0);
+    }
+
+    @Then("^there are (\\d+) search results and one of them is \"([^\"]*)\"$")
+    public void search_results(int total, String candidate) throws Throwable {
+        assertEquals(total, driver.findElements(By.cssSelector(".searchresult")).size());
+        List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + candidate + "']"));
+        assertTrue(elements.size() > 0);
+    }
+
     /* helper methods */
 
     private String getBaseUrl() {
@@ -324,6 +443,12 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
+    private void prepareSearchForm() throws InterruptedException {
+        browseTo("/search");
+        driver.findElement(By.id("buttonshowsearch")).click();
+        Thread.sleep(SLEEPING_TIME);
+    }
+    
     private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
         browseTo("/readingTips/books/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
@@ -334,5 +459,64 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonadd")).click();
         waitForPageChange();
+    }
+
+    private void check(WebElement checkBox) throws InterruptedException {
+        if (!checkBox.isSelected()) {
+            checkBox.click();
+            Thread.sleep(SLEEPING_TIME);
+        }
+    }
+
+    private void uncheck(WebElement checkBox) throws InterruptedException {
+        if (checkBox.isSelected()) {
+            checkBox.click();
+            Thread.sleep(SLEEPING_TIME);
+        }
+    }
+
+    private void createArticleTip(String title, String description, String author) throws InterruptedException {
+        browseTo("/readingTips/articles/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("description")).sendKeys(description);
+        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("buttonadd")).click();
+        waitForPageChange();
+    }
+
+    private void createLinkTip(String title, String description, String url, String author) throws InterruptedException {
+        browseTo("/readingTips/links/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("description")).sendKeys(description);
+        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("buttonadd")).click();
+        waitForPageChange();
+    }
+
+    private void createVideoTip(String title, String description, String url, String author) throws InterruptedException {
+        browseTo("/readingTips/videos/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("description")).sendKeys(description);
+        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("buttonadd")).click();
+        waitForPageChange();
+    }
+
+    private void verifyTipInfo(String title, String description, String author) throws InterruptedException {
+        List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']"));
+        
+        assertTrue(elements.size() > 0);
+        elements.get(0).click();
+        waitForPageChange();
+        waitForElementWithId("tiptitle");
+        
+        assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
+        assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
+        assertEquals(author, driver.findElement(By.id("tipauthor")).getText());
     }
 }

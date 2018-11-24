@@ -92,5 +92,13 @@ public abstract class SpringBootTestBase {
                            "Doe, John",
                            "978-3-16-148410-0",
                            testi2));
+
+        readingTipRepository.save(new ReadingTip("Book Tip Alpha 1", ReadingTipCategory.BOOK, "DescSearch", "", "", "", nolla));
+        readingTipRepository.save(new ReadingTip("Book Tip Alpha 2", ReadingTipCategory.BOOK, "", "", "", "", nolla));
+        readingTipRepository.save(new ReadingTip("Book Tip Alpha 3", ReadingTipCategory.BOOK, "", "", "", "", nolla));
+        readingTipRepository.save(new ReadingTip("Book Tip Beta 1", ReadingTipCategory.BOOK, "", "", "AuthorSearch", "", nolla));
+        readingTipRepository.save(new ReadingTip("Book Tip Beta 2", ReadingTipCategory.BOOK, "", "", "", "", nolla));
+        readingTipRepository.save(new ReadingTip("Video Tip 1", ReadingTipCategory.VIDEO, "", "", "", "", nolla));
+        readingTipRepository.save(new ReadingTip("Video Tip 2", ReadingTipCategory.VIDEO, "", "", "", "", nolla));
     }
 }
