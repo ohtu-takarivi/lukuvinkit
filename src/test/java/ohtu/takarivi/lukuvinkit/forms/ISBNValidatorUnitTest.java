@@ -10,6 +10,10 @@ public class ISBNValidatorUnitTest {
     public void acceptsValidISBN() {
         assertTrue(BookAddForm.isValidISBN("978-3-16-148410-0"));
     }
+    @Test
+    public void acceptsValidISBNWithoutDashes() {
+        assertTrue(BookAddForm.isValidISBN("9781938168208"));
+    }
 
     @Test
     public void rejectsISBNWithWrongCheckNumber() {

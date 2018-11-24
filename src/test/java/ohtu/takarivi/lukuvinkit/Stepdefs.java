@@ -160,6 +160,12 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
+    @When("^creating a link tip and title \"([^\"]*)\" and description \"([^\"]*)\" and no url and author \"([^\"]*)\" are given$")
+    public void link_tip_with_invalid_url(String title, String description, String author) throws Throwable {
+        createLinkTip(title, description, "", author);
+        Thread.sleep(SLEEPING_TIME);
+    }
+
     @When("^creating a video tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
     public void video_tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
         createVideoTip(title, description, url, author);
@@ -291,6 +297,17 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
+    @When("^username \"([^\"]*)\" and password \"([^\"]*)\" and verify password \"([^\"]*)\" are registered$")
+    public void username_password_registered_different_verify(String username, String password, String verify) throws Throwable {
+        assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
+        driver.findElement(By.name("username")).sendKeys(username);
+        driver.findElement(By.name("password")).sendKeys(password);
+        driver.findElement(By.name("verifyPassword")).sendKeys(verify);
+        driver.findElement(By.name("name")).sendKeys(username);
+        driver.findElement(By.id("buttonregister")).click();
+        waitForPageChange();
+    }
+
     @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
     public void new_book_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/books");
@@ -325,8 +342,14 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     @Then("^new book tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
-    public void new_tip_is_not_created(String first, String second) throws Throwable {
+    public void new_book_tip_is_not_created(String first, String second) throws Throwable {
         browseTo("/readingTips/books");
+        assertFalse(driver.getPageSource().contains(first));
+    }
+
+    @Then("^new link tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
+    public void new_link_tip_is_not_created(String first, String second) throws Throwable {
+        browseTo("/readingTips/links");
         assertFalse(driver.getPageSource().contains(first));
     }
 

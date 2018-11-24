@@ -25,6 +25,11 @@ Feature: After logging in, I can create tips with valid information
     When creating a book tip and title "Good title" and description "I wonder" and url "http://www.nobleeffort.com" and author "John Doe" and no isbn are given
     Then new book tip with "Good title" and "I wonder" is not created 
 
+  Scenario: user can't create a book tip with invalid ISBN
+    Given test user is logged in
+    When creating a book tip and correct title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" and isbn "978-3-16-148410-4" are given
+    Then new book tip with "Good title" and "I wonder" is not created 
+
   Scenario: user can create an article tip with valid information
     Given test user is logged in
     When creating an article tip and correct title "Best Title" and description "Super description" and author "John Doe" are given
@@ -34,6 +39,11 @@ Feature: After logging in, I can create tips with valid information
     Given test user is logged in
     When creating a link tip and correct title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" are given
     Then new link tip with title "Best Title" and description "Super description" and author "John Doe" is created
+
+  Scenario: user can't create a link tip with empty URL
+    Given test user is logged in
+    When creating a link tip and title "Best Title" and description "Super description" and no url and author "John Doe" are given
+    Then new link tip with "Good title" and "I wonder" is not created 
 
   Scenario: user can create a video tip with valid information
     Given test user is logged in

@@ -6,6 +6,7 @@
 
 Sovellus suoritetaan komennolla `gradle run` ja käynnistyy osoitteeseen http://localhost:8080. Testit suoritetaan komennolla `gradle test`. Testit käyttävät lib-hakemistossa olevaa Firefox Geckodriveriä ja testikokoonpano perustuu [spring-cucumber-repon testikokoonpanoon](https://github.com/mluukkai/spring-cucumber).
 
+Käyttöohjeen sovellukseen löytää [täältä](https://github.com/ohtu-takarivi/lukuvinkit/blob/master/manual.md).
 ## Definition of done
 Taski on valmis, kun sitä vastaava koodi on dokumentoitu, vastaa user storya, sitä vastaavat testit on tehty ja ne menevät läpi.
 

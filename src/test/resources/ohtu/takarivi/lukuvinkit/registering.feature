@@ -5,6 +5,11 @@ Feature: As an unregistered user, I can register a user account
     When username "uusi23732373" and password "salasana" are registered
     Then user account is created
 
+  Scenario: user cannot register an account with different passwords
+    Given user is at the register page
+    When username "uusi484334" and password "salasana2" and verify password "salasnaa2" are registered
+    Then user account is not created
+
   Scenario: user cannot register an account with a taken username
     Given user is at the register page
     When username "nolla" and password "salasana2" are registered
