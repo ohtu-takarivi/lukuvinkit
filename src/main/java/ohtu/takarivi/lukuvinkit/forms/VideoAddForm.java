@@ -39,13 +39,21 @@ public class VideoAddForm {
      * @param result The BindingResult that value rejections are submitted to.
      */
     public void validateRest(BindingResult result) {
-        if (checkIfBadUrl()) {
+        if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "Huono url");
         }
     }
 
-    private boolean checkIfBadUrl() {
-        return false; // TODO
+    /**
+     * Checks if the given URL is valid.
+     *
+     * @param url The value that is checked.
+     * @param regex Regex for validating URLs that begin with http:// or https://.
+     * @return Return true if the given input is a valid URL and false if it is not.
+     */
+    public static boolean isValidURL(String url) {
+        String regex = "^https?://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
+        return url.matches(regex);
     }
 
 }

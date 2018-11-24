@@ -8,21 +8,25 @@ import org.junit.Test;
 public class URLValidatorUnitTest {
     @Test
     public void acceptsValidURL() {
-        assertTrue(LinkAddForm.isValidURL("https://example.com/"));
+        String url = "https://example.com/";
+        assertTrue(LinkAddForm.isValidURL(url)&&VideoAddForm.isValidURL(url));
     }
 
     @Test
     public void rejectsURLWithoutProtocol() {
-        assertFalse(LinkAddForm.isValidURL("://example.com/"));
+        String url = "://example.com/";
+        assertFalse(LinkAddForm.isValidURL("://example.com/")&&VideoAddForm.isValidURL(url));
     }
 
     @Test
     public void rejectsURLWithWhitespace() {
-        assertFalse(LinkAddForm.isValidURL("https://example.com/           .txt"));
+        String url = "https://example.com/           .txt";
+        assertFalse(LinkAddForm.isValidURL(url)&&VideoAddForm.isValidURL(url));
     }
 
     @Test
     public void rejectsURLWithInvalidDomain() {
-        assertFalse(LinkAddForm.isValidURL("https://<b>example.com/"));
+        String url = "https://<b>example.com/";
+        assertFalse(LinkAddForm.isValidURL(url)&&VideoAddForm.isValidURL(url));
     }
 }
