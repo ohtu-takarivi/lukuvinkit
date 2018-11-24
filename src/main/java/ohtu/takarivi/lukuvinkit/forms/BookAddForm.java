@@ -34,7 +34,7 @@ public class BookAddForm {
     private String isbn;
 
     public void validateRest(BindingResult result) {
-        if (!isValidISBN(this.isbn)) {
+        if (!result.hasFieldErrors("isbn") && !isValidISBN(this.isbn)) {
             result.rejectValue("isbn", "", "Huono ISBN");
         }
     }
