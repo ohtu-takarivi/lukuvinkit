@@ -154,7 +154,7 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^creating a link tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    @When("^creating a link tip and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
     public void link_tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
         createLinkTip(title, description, url, author);
         Thread.sleep(SLEEPING_TIME);
@@ -166,7 +166,7 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
-    @When("^creating a video tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
+    @When("^creating a video tip and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" are given$")
     public void video_tip_with_valid_information_is_given(String title, String description, String url, String author) throws Throwable {
         createVideoTip(title, description, url, author);
         Thread.sleep(SLEEPING_TIME);
@@ -349,6 +349,12 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Then("^new link tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
     public void new_link_tip_is_not_created(String first, String second) throws Throwable {
+        browseTo("/readingTips/links");
+        assertFalse(driver.getPageSource().contains(first));
+    }
+
+    @Then("^new video tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
+    public void new_video_tip_is_not_created(String first, String second) throws Throwable {
         browseTo("/readingTips/links");
         assertFalse(driver.getPageSource().contains(first));
     }

@@ -37,15 +37,25 @@ Feature: After logging in, I can create tips with valid information
 
   Scenario: user can create a link tip with valid information
     Given test user is logged in
-    When creating a link tip and correct title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" are given
+    When creating a link tip and title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" are given
     Then new link tip with title "Best Title" and description "Super description" and author "John Doe" is created
 
   Scenario: user can't create a link tip with empty URL
     Given test user is logged in
     When creating a link tip and title "Best Title" and description "Super description" and no url and author "John Doe" are given
-    Then new link tip with "Good title" and "I wonder" is not created 
+    Then new link tip with "Best title" and "I wonder" is not created 
+
+  Scenario: user can't create a link tip with invalid URL
+    Given test user is logged in
+    When creating a link tip and title "Best Title" and description "Super description" and url "https://<b>mustread.com" and author "John Doe" are given
+    Then new link tip with "Best title" and "I wonder" is not created 
 
   Scenario: user can create a video tip with valid information
     Given test user is logged in
-    When creating a video tip and correct title "Best Title" and description "Super description" and url "http://www.youtube.com/watch?v=" and author "John Doe" are given
+    When creating a video tip and title "Best Title" and description "Super description" and url "http://www.youtube.com/watch?v=" and author "John Doe" are given
     Then new video tip with title "Best Title" and description "Super description" and author "John Doe" is created
+
+  Scenario: user can't create a video tip with invalid URL
+    Given test user is logged in
+    When creating a video tip and title "Best Title" and description "Super description" and url "https://<b>mustread.com" and author "John Doe" are given
+    Then new link tip with "Best title" and "I wonder" is not created 
