@@ -52,7 +52,7 @@ public class BookAddForm {
         if (isbnInteger.length() == 17) {
             isbnInteger = isbnInteger.replaceAll("-", "");
         }
-        if (isbn.length() != 13) {
+        if (isbnInteger.length() != 13) {
             return false;
         }
         int sum = 0;
