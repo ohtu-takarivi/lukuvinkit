@@ -100,22 +100,22 @@ public class ReadingTipController {
         return "layout";
     }
 
-    @GetMapping("/readingTips/articles/new")
-    public String newArticleForm(Model model, @ModelAttribute ArticleAddForm articleAddForm) {
+    @GetMapping("/readingTips/articles/add")
+    public String viewAddArticle(Model model, @ModelAttribute ArticleAddForm articleAddForm) {
         model.addAttribute("title", "Lisää artikkeli");
         model.addAttribute("nav", "navbar");
-        model.addAttribute("view", "newArticle");
+        model.addAttribute("view", "addarticle");
         return "layout";
     }
 
-    @PostMapping("/readingTips/articles/new")
-    public String newArticle(Authentication auth, @Valid @ModelAttribute ArticleAddForm articleAddForm,
+    @PostMapping("/readingTips/articles/add")
+    public String addArticle(Authentication auth, @Valid @ModelAttribute ArticleAddForm articleAddForm,
                              BindingResult result, Model model) {
         articleAddForm.validateRest(result);
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää artikkeli");
             model.addAttribute("nav", "navbar");
-            model.addAttribute("view", "newArticle");
+            model.addAttribute("view", "addarticle");
             return "layout";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
@@ -129,22 +129,22 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
-    @GetMapping("/readingTips/books/new")
-    public String newBookForm(Model model, @ModelAttribute BookAddForm bookAddForm) {
+    @GetMapping("/readingTips/books/add")
+    public String viewAddBook(Model model, @ModelAttribute BookAddForm bookAddForm) {
         model.addAttribute("title", "Lisää kirja");
         model.addAttribute("nav", "navbar");
-        model.addAttribute("view", "newBook");
+        model.addAttribute("view", "addbook");
         return "layout";
     }
 
-    @PostMapping("/readingTips/books/new")
-    public String newBook(Authentication auth, @Valid @ModelAttribute BookAddForm bookAddForm,
+    @PostMapping("/readingTips/books/add")
+    public String addBook(Authentication auth, @Valid @ModelAttribute BookAddForm bookAddForm,
                           BindingResult result, Model model) {
         bookAddForm.validateRest(result);
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää kirja");
             model.addAttribute("nav", "navbar");
-            model.addAttribute("view", "newBook");
+            model.addAttribute("view", "addbook");
             return "layout";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
@@ -158,22 +158,22 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
-    @GetMapping("/readingTips/links/new")
-    public String newLinkForm(Model model, @ModelAttribute LinkAddForm linkAddForm) {
+    @GetMapping("/readingTips/links/add")
+    public String viewAddLink(Model model, @ModelAttribute LinkAddForm linkAddForm) {
         model.addAttribute("title", "Lisää linkki");
         model.addAttribute("nav", "navbar");
-        model.addAttribute("view", "newLink");
+        model.addAttribute("view", "addlink");
         return "layout";
     }
 
-    @PostMapping("/readingTips/links/new")
-    public String newLink(Authentication auth, @Valid @ModelAttribute LinkAddForm linkAddForm,
+    @PostMapping("/readingTips/links/add")
+    public String addLink(Authentication auth, @Valid @ModelAttribute LinkAddForm linkAddForm,
                           BindingResult result, Model model) {
         linkAddForm.validateRest(result);
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää linkki");
             model.addAttribute("nav", "navbar");
-            model.addAttribute("view", "newLink");
+            model.addAttribute("view", "addlink");
             return "layout";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
@@ -187,22 +187,22 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
-    @GetMapping("/readingTips/videos/new")
-    public String newVideoForm(Model model, @ModelAttribute VideoAddForm videoAddForm) {
+    @GetMapping("/readingTips/videos/add")
+    public String viewAddVideo(Model model, @ModelAttribute VideoAddForm videoAddForm) {
         model.addAttribute("title", "Lisää video");
         model.addAttribute("nav", "navbar");
-        model.addAttribute("view", "newVideo");
+        model.addAttribute("view", "addvideo");
         return "layout";
     }
 
-    @PostMapping("/readingTips/videos/new")
-    public String newVideo(Authentication auth, @Valid @ModelAttribute VideoAddForm videoAddForm,
+    @PostMapping("/readingTips/videos/add")
+    public String addVideo(Authentication auth, @Valid @ModelAttribute VideoAddForm videoAddForm,
                            BindingResult result, Model model) {
         videoAddForm.validateRest(result);
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää video");
             model.addAttribute("nav", "navbar");
-            model.addAttribute("view", "newVideo");
+            model.addAttribute("view", "addvideo");
             return "layout";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());

@@ -18,27 +18,29 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuAdd" role="button" data-toggle="dropdown">Lisää</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="/readingTips/books/new">Kirja</a>
-          <a class="dropdown-item" href="/readingTips/articles/new">Artikkeli</a>
-          <a class="dropdown-item" href="/readingTips/videos/new">Video</a>
-          <a class="dropdown-item" href="/readingTips/links/new">Linkki</a>
+          <a class="dropdown-item" href="/readingTips/articles/add">Artikkeli</a>
+          <a class="dropdown-item" href="/readingTips/books/add">Kirja</a>
+          <a class="dropdown-item" href="/readingTips/links/add">Linkki</a>
+          <a class="dropdown-item" href="/readingTips/videos/add">Video</a>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button" data-toggle="dropdown">Kategoriat</a>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button"
+           data-toggle="dropdown">Kategoriat</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="/readingTips/books">Kirja</a>
           <a class="dropdown-item" href="/readingTips/articles">Artikkeli</a>
-          <a class="dropdown-item" href="/readingTips/videos">Video</a>
+          <a class="dropdown-item" href="/readingTips/books">Kirja</a>
           <a class="dropdown-item" href="/readingTips/links">Linkki</a>
-        </div>  
+          <a class="dropdown-item" href="/readingTips/videos">Video</a>
+        </div>
       </li>
     </div>
-      <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">
-      <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Hae lukuvinkkejä" required>
+    <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">
+      <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Hae lukuvinkkejä"
+             required>
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Hae</button>
     </form>
-      
+
     <form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="POST">
       <button class="btn btn-primary" type="submit" id="buttonlogout">Kirjaudu ulos</button>
     </form>

@@ -63,7 +63,7 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/register")
-    public String register(Model model, @ModelAttribute CustomUserRegisterForm customUserRegisterForm) {
+    public String viewRegister(Model model, @ModelAttribute CustomUserRegisterForm customUserRegisterForm) {
         model.addAttribute("title", "Luo tili");
         model.addAttribute("view", "register");
         return "layout";

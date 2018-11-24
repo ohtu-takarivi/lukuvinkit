@@ -325,7 +325,7 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
-        browseTo("/readingTips/books/new");
+        browseTo("/readingTips/books/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         driver.findElement(By.name("title")).sendKeys(title);
         driver.findElement(By.name("description")).sendKeys(description);
