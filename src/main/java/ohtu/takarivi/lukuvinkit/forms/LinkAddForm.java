@@ -48,7 +48,7 @@ public class LinkAddForm {
      * Checks if the given URL is valid.
      *
      * @param url The value that is checked.
-     * @return Return true if the URL is valid.
+     * @return Return true if the given input is a valid URL and false if it is not.
      */
     public static boolean isValidURL(String url) {
         // TODO

@@ -49,7 +49,7 @@ public class BookAddForm {
      * Checks if the given ISBN-13 is valid.
      *
      * @param isbn The value that is checked.
-     * @return Return true if ISBN-13 is valid.
+     * @return Return true if the given input is a valid ISBN-13 code and false if it is not.
      */
     @SuppressWarnings("checkstyle:MagicNumber")
     public static boolean isValidISBN(String isbn) {
