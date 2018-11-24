@@ -201,7 +201,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for tips with title \"([^\"]*)\"$")
     public void search_advanced_title(String title) throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         driver.findElement(By.id("title")).sendKeys(title);
         driver.findElement(By.id("buttonsearch")).click();
         waitForPageChange();
@@ -209,7 +209,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for tips with description \"([^\"]*)\"$")
     public void search_advanced_description(String description) throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         driver.findElement(By.id("description")).sendKeys(description);
         driver.findElement(By.id("buttonsearch")).click();
         waitForPageChange();
@@ -217,7 +217,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for tips with author \"([^\"]*)\"$")
     public void search_advanced_author(String author) throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         driver.findElement(By.id("author")).sendKeys(author);
         driver.findElement(By.id("buttonsearch")).click();
         waitForPageChange();
@@ -225,7 +225,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for article tips only$")
     public void search_advanced_article_only() throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         uncheck(driver.findElement(By.id("books")));
         check(driver.findElement(By.id("articles")));
         uncheck(driver.findElement(By.id("videos")));
@@ -236,7 +236,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for video tips only$")
     public void search_advanced_video_only() throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         uncheck(driver.findElement(By.id("books")));
         uncheck(driver.findElement(By.id("articles")));
         check(driver.findElement(By.id("videos")));
@@ -247,7 +247,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for link tips only$")
     public void search_advanced_link_only() throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         uncheck(driver.findElement(By.id("books")));
         uncheck(driver.findElement(By.id("articles")));
         uncheck(driver.findElement(By.id("videos")));
@@ -258,7 +258,7 @@ public class Stepdefs extends SpringBootTestBase {
 
     @When("^searching for read tips only$")
     public void search_read_link_only() throws Throwable {
-        prepareSearchForm();
+        browseTo("/search");
         uncheck(driver.findElement(By.id("unread")));
         check(driver.findElement(By.id("read")));
         driver.findElement(By.id("buttonsearch")).click();
@@ -464,12 +464,6 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.id("buttonlogin")).click();
         waitForPageChange();
-    }
-
-    private void prepareSearchForm() throws InterruptedException {
-        browseTo("/search");
-        driver.findElement(By.id("buttonshowsearch")).click();
-        Thread.sleep(SLEEPING_TIME);
     }
     
     private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {

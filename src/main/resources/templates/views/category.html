@@ -1,33 +1,7 @@
 <main th:fragment="category">
-  <section class="container mt-5">
+  <section class="container mt-4">
     <div class="row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Otsikko</th>
-            <th scope="col">Kuvaus</th>
-            <th scope="col">Linkki</th>
-            <th scope="col">Toiminto</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="readingTip : ${readingTips}" th:id="@{tip{id}(id=${readingTip.id})}">
-            <td class="tiptitle">
-              <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
-            </td>
-            <td th:text="${readingTip.description}"></td>
-            <td th:text="${readingTip.url}"></td>
-            <td>
-              <form th:action="@{/readingTips/markAsRead/{id}(id=${readingTip.id})}" method="POST">
-                <button class="btn btn-primary btn-sm buttonread" type="submit" th:attr="disabled=${readingTip.isRead ? 'disabled' : null}" th:text="${readingTip.isRead} ? 'Luettu!' : 'Merkitse luetuksi'"></button>
-              </form>
-              <form th:action="@{/readingTips/delete/{id}(id=${readingTip.id})}" method="POST">
-                <button class="btn btn-danger btn-sm buttondelete" type="submit">Poista</button>
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div th:replace="fragments/table :: table"></div>
     </div>
   </section>
 </main>
