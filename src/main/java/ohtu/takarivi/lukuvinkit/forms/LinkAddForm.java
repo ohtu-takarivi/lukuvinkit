@@ -33,12 +33,23 @@ public class LinkAddForm {
     @Size(min = URL_MIN_LENGTH, max = URL_MAX_LENGTH, message = "Urlin pituus 1-255 merkkiä")
     private String url;
 
+    /**
+     * Used to run additional validation for this form.
+     * 
+     * @param result The BindingResult that value rejections are submitted to.
+     */
     public void validateRest(BindingResult result) {
         if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "Huono url");
         }
     }
 
+    /**
+     * Checks if the given URL is valid.
+     *
+     * @param url The value that is checked.
+     * @return Return true if the URL is valid.
+     */
     public static boolean isValidURL(String url) {
         // TODO
         return true;

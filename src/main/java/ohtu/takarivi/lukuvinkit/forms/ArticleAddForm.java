@@ -28,6 +28,11 @@ public class ArticleAddForm {
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     private String author;
 
+    /**
+     * Used to run additional validation for this form.
+     * 
+     * @param result The BindingResult that value rejections are submitted to.
+     */
     public void validateRest(BindingResult result) {
     }
 

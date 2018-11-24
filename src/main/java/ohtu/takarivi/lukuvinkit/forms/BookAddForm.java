@@ -33,6 +33,11 @@ public class BookAddForm {
     @Size(min = ISBN_MIN_LENGTH, max = ISBN_MAX_LENGTH, message = "ISBN-13 tunnuksen pituus 13-17 merkkiä")
     private String isbn;
 
+    /**
+     * Used to run additional validation for this form.
+     * 
+     * @param result The BindingResult that value rejections are submitted to.
+     */
     public void validateRest(BindingResult result) {
         if (!isValidISBN(this.isbn)) {
             result.rejectValue("isbn", "", "Huono ISBN");

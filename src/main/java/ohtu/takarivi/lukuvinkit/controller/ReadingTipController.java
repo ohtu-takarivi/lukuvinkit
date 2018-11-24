@@ -58,9 +58,11 @@ public class ReadingTipController {
     }
 
     /**
+     * The page that displays the search form to the user.
+     * 
      * @param auth  An Authentication object representing the currently authenticated user.
      * @param model The model to feed the information into.
-     * @return
+     * @return The action to be taken by this controller.
      */
     @GetMapping("/search")
     public String viewSearch(Authentication auth, Model model) {
@@ -100,6 +102,13 @@ public class ReadingTipController {
         return "layout";
     }
 
+    /**
+     * The page containing the form that allows the user to create a new article reading tip.
+     * 
+     * @param model The model to feed the information into.
+     * @param articleAddForm The instance of the form.
+     * @return The action to be taken by this controller.
+     */
     @GetMapping("/readingTips/articles/add")
     public String viewAddArticle(Model model, @ModelAttribute ArticleAddForm articleAddForm) {
         model.addAttribute("title", "Lisää artikkeli");
@@ -108,6 +117,15 @@ public class ReadingTipController {
         return "layout";
     }
 
+    /**
+     * The page that interprets and handles the form used to create a new article reading tip.
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param articleAddForm The instance of the form.
+     * @param result The binding result of the form.
+     * @param model The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/readingTips/articles/add")
     public String addArticle(Authentication auth, @Valid @ModelAttribute ArticleAddForm articleAddForm,
                              BindingResult result, Model model) {
@@ -129,6 +147,13 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
+    /**
+     * The page containing the form that allows the user to create a new book reading tip.
+     * 
+     * @param model The model to feed the information into.
+     * @param bookAddForm The instance of the form.
+     * @return The action to be taken by this controller.
+     */
     @GetMapping("/readingTips/books/add")
     public String viewAddBook(Model model, @ModelAttribute BookAddForm bookAddForm) {
         model.addAttribute("title", "Lisää kirja");
@@ -137,6 +162,15 @@ public class ReadingTipController {
         return "layout";
     }
 
+    /**
+     * The page that interprets and handles the form used to create a new book reading tip.
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param bookAddForm The instance of the form.
+     * @param result The binding result of the form.
+     * @param model The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/readingTips/books/add")
     public String addBook(Authentication auth, @Valid @ModelAttribute BookAddForm bookAddForm,
                           BindingResult result, Model model) {
@@ -158,6 +192,13 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
+    /**
+     * The page containing the form that allows the user to create a new book reading tip.
+     * 
+     * @param model The model to feed the information into.
+     * @param bookAddForm The instance of the form.
+     * @return The action to be taken by this controller.
+     */
     @GetMapping("/readingTips/links/add")
     public String viewAddLink(Model model, @ModelAttribute LinkAddForm linkAddForm) {
         model.addAttribute("title", "Lisää linkki");
@@ -166,6 +207,15 @@ public class ReadingTipController {
         return "layout";
     }
 
+    /**
+     * The page that interprets and handles the form used to create a new link reading tip.
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param linkAddForm The instance of the form.
+     * @param result The binding result of the form.
+     * @param model The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/readingTips/links/add")
     public String addLink(Authentication auth, @Valid @ModelAttribute LinkAddForm linkAddForm,
                           BindingResult result, Model model) {
@@ -187,6 +237,13 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
+    /**
+     * The page containing the form that allows the user to create a new video reading tip.
+     * 
+     * @param model The model to feed the information into.
+     * @param videoAddForm The instance of the form.
+     * @return The action to be taken by this controller.
+     */
     @GetMapping("/readingTips/videos/add")
     public String viewAddVideo(Model model, @ModelAttribute VideoAddForm videoAddForm) {
         model.addAttribute("title", "Lisää video");
@@ -195,6 +252,15 @@ public class ReadingTipController {
         return "layout";
     }
 
+    /**
+     * The page that interprets and handles the form used to create a new video reading tip.
+     * 
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param videoAddForm The instance of the form.
+     * @param result The binding result of the form.
+     * @param model The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
     @PostMapping("/readingTips/videos/add")
     public String addVideo(Authentication auth, @Valid @ModelAttribute VideoAddForm videoAddForm,
                            BindingResult result, Model model) {
