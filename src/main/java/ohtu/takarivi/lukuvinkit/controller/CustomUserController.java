@@ -98,7 +98,6 @@ public class CustomUserController {
         model.addAttribute("nav", "navbar");
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("customUser", customUser);
-        model.addAttribute("readingTips", readingTipRepository.findByCustomUserId(customUser.getId()));
         model.addAttribute("view", "index");
         return "layout";
     }

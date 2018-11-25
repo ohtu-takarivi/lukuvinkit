@@ -59,7 +59,7 @@ public class ReadingTipController {
 
     /**
      * The page that displays the search form to the user.
-     * 
+     *
      * @param auth  An Authentication object representing the currently authenticated user.
      * @param model The model to feed the information into.
      * @return The action to be taken by this controller.
@@ -92,7 +92,8 @@ public class ReadingTipController {
         }
 
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> tips = readingTipRepository.findByCategoryOrderByIsReadAsc(category);
+        List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndCategoryOrderByIsReadAsc(customUser.getId(),
+                category);
 
         model.addAttribute("title", "Kategoria");
         model.addAttribute("nav", "navbar");
@@ -104,8 +105,8 @@ public class ReadingTipController {
 
     /**
      * The page containing the form that allows the user to create a new article reading tip.
-     * 
-     * @param model The model to feed the information into.
+     *
+     * @param model          The model to feed the information into.
      * @param articleAddForm The instance of the form.
      * @return The action to be taken by this controller.
      */
@@ -119,11 +120,11 @@ public class ReadingTipController {
 
     /**
      * The page that interprets and handles the form used to create a new article reading tip.
-     * 
-     * @param auth An Authentication object representing the currently authenticated user.
+     *
+     * @param auth           An Authentication object representing the currently authenticated user.
      * @param articleAddForm The instance of the form.
-     * @param result The binding result of the form.
-     * @param model The model to feed the information into.
+     * @param result         The binding result of the form.
+     * @param model          The model to feed the information into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/articles/add")
@@ -149,8 +150,8 @@ public class ReadingTipController {
 
     /**
      * The page containing the form that allows the user to create a new book reading tip.
-     * 
-     * @param model The model to feed the information into.
+     *
+     * @param model       The model to feed the information into.
      * @param bookAddForm The instance of the form.
      * @return The action to be taken by this controller.
      */
@@ -164,11 +165,11 @@ public class ReadingTipController {
 
     /**
      * The page that interprets and handles the form used to create a new book reading tip.
-     * 
-     * @param auth An Authentication object representing the currently authenticated user.
+     *
+     * @param auth        An Authentication object representing the currently authenticated user.
      * @param bookAddForm The instance of the form.
-     * @param result The binding result of the form.
-     * @param model The model to feed the information into.
+     * @param result      The binding result of the form.
+     * @param model       The model to feed the information into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/books/add")
@@ -194,8 +195,8 @@ public class ReadingTipController {
 
     /**
      * The page containing the form that allows the user to create a new book reading tip.
-     * 
-     * @param model The model to feed the information into.
+     *
+     * @param model       The model to feed the information into.
      * @param bookAddForm The instance of the form.
      * @return The action to be taken by this controller.
      */
@@ -209,11 +210,11 @@ public class ReadingTipController {
 
     /**
      * The page that interprets and handles the form used to create a new link reading tip.
-     * 
-     * @param auth An Authentication object representing the currently authenticated user.
+     *
+     * @param auth        An Authentication object representing the currently authenticated user.
      * @param linkAddForm The instance of the form.
-     * @param result The binding result of the form.
-     * @param model The model to feed the information into.
+     * @param result      The binding result of the form.
+     * @param model       The model to feed the information into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/links/add")
@@ -239,8 +240,8 @@ public class ReadingTipController {
 
     /**
      * The page containing the form that allows the user to create a new video reading tip.
-     * 
-     * @param model The model to feed the information into.
+     *
+     * @param model        The model to feed the information into.
      * @param videoAddForm The instance of the form.
      * @return The action to be taken by this controller.
      */
@@ -254,11 +255,11 @@ public class ReadingTipController {
 
     /**
      * The page that interprets and handles the form used to create a new video reading tip.
-     * 
-     * @param auth An Authentication object representing the currently authenticated user.
+     *
+     * @param auth         An Authentication object representing the currently authenticated user.
      * @param videoAddForm The instance of the form.
-     * @param result The binding result of the form.
-     * @param model The model to feed the information into.
+     * @param result       The binding result of the form.
+     * @param model        The model to feed the information into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/videos/add")

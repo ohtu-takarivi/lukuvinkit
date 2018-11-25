@@ -9,3 +9,8 @@ Feature: After logging in, I can browse tips
     Given test user is logged in
     When browsing link tips
     Then tip with title "test reading tip 3" is visible
+
+  Scenario: user can't see other users' tips
+    Given test user is logged in
+    When browsing book tips
+    Then book tip with title "test reading tip 5" is not visible

@@ -3,6 +3,7 @@ package ohtu.takarivi.lukuvinkit.controller;
 import ohtu.takarivi.lukuvinkit.SpringBootTestBase;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import org.junit.Test;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
@@ -19,7 +20,8 @@ public class ReadingTipControllerTest extends SpringBootTestBase {
     public void deleteReadingTipRedirectIfAuthorized() throws Exception {
         UserDetails user = userDetailsService.loadUserByUsername("nolla");
         CustomUser cu = customUserRepository.findByUsername("nolla");
-        ReadingTip tip = readingTipRepository.findByCustomUserId(cu.getId()).get(0);
+        ReadingTip tip = readingTipRepository.findByCustomUserIdAndCategoryOrderByIsReadAsc(cu.getId(),
+                ReadingTipCategory.BOOK).get(0);
         mvc.perform(post("/readingTips/delete/{id}", tip.getId()).with(csrf()).with(user(user)))
                 .andExpect(status().is3xxRedirection());
     }
@@ -28,7 +30,8 @@ public class ReadingTipControllerTest extends SpringBootTestBase {
     public void deleteReadingTipForbiddenIfNotAuthorized() throws Exception {
         UserDetails user = userDetailsService.loadUserByUsername("testi2");
         CustomUser cu = customUserRepository.findByUsername("nolla");
-        ReadingTip tip = readingTipRepository.findByCustomUserId(cu.getId()).get(0);
+        ReadingTip tip = readingTipRepository.findByCustomUserIdAndCategoryOrderByIsReadAsc(cu.getId(),
+                ReadingTipCategory.BOOK).get(0);
         mvc.perform(post("/readingTips/delete/{id}", tip.getId()).with(csrf()).with(user(user)))
                 .andExpect(status().isForbidden());
     }

@@ -16,15 +16,6 @@ import java.util.List;
 public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long>, JpaSpecificationExecutor<ReadingTip> {
 
     /**
-     * Searches a reading tip by the ID of the user that added them.
-     *
-     * @param id The ID of the custom user.
-     * @return The list of ReadingTip instances representing the reading tips
-     *         added by that user. 
-     */
-    List<ReadingTip> findByCustomUserId(Long customUserId);
-
-    /**
      * Searches a reading tip by its fields containing given text.
      * 
      * @param customUserId The user ID doing the search.
@@ -37,13 +28,14 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long>, J
     List<ReadingTip> findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(Long customUserId, String title, String description, String url, String author);
 
     /**
-     * Searches for all reading tips in a given category.
+     * Searches for all reading tips by the ID of the user that added them in a given category.
      * The results are sorted by their read status; unread reading tips are before the read ones.
-     * 
+     *
+     * @param customUserId The ID of the custom user.
      * @param category The category to search in.
      * @return The list of reading tips; unread tips are before the read tips.
      */
-    List<ReadingTip> findByCategoryOrderByIsReadAsc(ReadingTipCategory category);
+    List<ReadingTip> findByCustomUserIdAndCategoryOrderByIsReadAsc(Long customUserId, ReadingTipCategory category);
     
     /*
      * List<ReadingTip> findByCustomUserIdAndTitleContaining(Long customUserId, String title);
