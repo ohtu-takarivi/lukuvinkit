@@ -18,7 +18,7 @@ public class CustomUserRegisterForm {
     private static final int USERNAME_MIN_LENGTH = 3;
     private static final int USERNAME_MAX_LENGTH = 32;
     private static final int PASSWORD_MIN_LENGTH = 8;
-    private static final int PASSWORD_MAX_LENGTH = 256;
+    private static final int PASSWORD_MAX_LENGTH = 255;
 
     @NotEmpty
     @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH, message = "Nimen pituus 2-32 merkkiä")
@@ -29,7 +29,7 @@ public class CustomUserRegisterForm {
     @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Nimimerkki saa sisältää vain kirjaimia, numeroita ja alaviivoja")
     private String username;
     @NotEmpty
-    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH, message = "Salasanan pituus 8-32 merkkiä")
+    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH, message = "Salasanan pituus 8-255 merkkiä")
     private String password;
     private String verifyPassword;
 
