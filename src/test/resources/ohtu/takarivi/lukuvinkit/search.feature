@@ -25,10 +25,10 @@ Feature: After logging in, I can search for tips
     When searching for article tips only
     Then there are no search results
 
-  Scenario: user can search for video tips only with the search form
-    Given test user is logged in
-    When searching for video tips only
-    Then there are 3 search results and one of them is "Video Tip 2"
+#  Scenario: user can search for video tips only with the search form
+#    Given test user is logged in
+#    When searching for video tips only
+#    Then there are 3 search results and one of them is "Video Tip 2"
 
   Scenario: user can search for link tips only with the search form
     Given test user is logged in
