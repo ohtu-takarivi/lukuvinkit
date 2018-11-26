@@ -11,7 +11,7 @@ Jos voimassa olevaa käyttäjätunnusta ei vielä ole niin kirjautumisnäkymäst
 Jos mitään virheilmoituksia ei tule näkyviin, voidaan siirtyä omalle sivulle käyttäen voimassa olevaa käyttäjätunnusta. Kirjautumisen jälkeen pääset omalle sivulle.  
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/Documentation/pictures/userMainPage.png" width="500">  
 ## Lukuvinkin lisäys  
-Lukuvinkin lisäys onnistuu valitsemalla navigointipalkkissa _Lisää_ kohdasta uuden lukuvinkin tyypin (Artikkeli, Kirja, Linkki, Video).  
+Lukuvinkin lisäys onnistuu valitsemalla navigointipalkkissa _Lisää_ kohdasta uuden lukuvinkin tyyppi (Artikkeli, Kirja, Linkki, Video).  
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/Documentation/pictures/newTip.png" width="200">   
 Uudessa näkymässä pitäisi antaa uuden lukuvinkin tiedot ja painaa _Lisää_.  
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/Documentation/pictures/newBook.png" width="500">   
