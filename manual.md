@@ -35,4 +35,4 @@ Uusi lukuvinkki on lisätty, kun _Lisää_-nappia on painettu.
 ## Lukuvinkin hakeminen
 Lukuvinkin hakemiseen löytyy kaksi keinoa; yläpalkista löytää hakulomakkeen, joka etsii lukuvinkkien kaikista kohdista, kuten otsikosta, kuvauksesta ja kirjoittajasta.
 
-Tarkempaa hakua varten on olemassa oma hakulomake, joka löytyy yläpalkin Haku-vaihtoehdon tai etusivun Tarkennettu haku -napin takaa. Hakulomakkeen saa esiin painamalla "Näytä hakulomake", ja siinä voi etsiä kaikkien lukuvinkkien ominaisuuksien perusteella.
+Tarkempaa hakua varten on olemassa oma hakulomake, joka löytyy yläpalkin Haku-vaihtoehdon tai etusivun Tarkennettu haku -napin takaa. Hakulomakkeen saa esiin painamalla "Näytä hakulomake", ja sillä voi etsiä lukuvinkkejä kaikkien niiden ominaisuuksien perusteella. Hakua voi rajoittaa esimerkiksi lukuvinkkien tyypin mukaan.
