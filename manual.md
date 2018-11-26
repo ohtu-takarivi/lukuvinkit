@@ -31,3 +31,8 @@ Uudessa näkymässä pitäisi antaa uuden lukuvinkin tiedot ja painaa _Lisää_.
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/documentation/pictures/newBook.png" width="500">   
 
 Uusi lukuvinkki on lisätty, kun _Lisää_-nappia on painettu.
+
+## Lukuvinkin hakeminen
+Lukuvinkin hakemiseen löytyy kaksi keinoa; yläpalkista löytää hakulomakkeen, joka etsii lukuvinkkien kaikista kohdista, kuten otsikosta, kuvauksesta ja kirjoittajasta.
+
+Tarkempaa hakua varten on olemassa oma hakulomake, joka löytyy yläpalkin Haku-vaihtoehdon tai etusivun Tarkennettu haku -napin takaa. Hakulomakkeen saa esiin painamalla "Näytä hakulomake", ja siinä voi etsiä kaikkien lukuvinkkien ominaisuuksien perusteella.
