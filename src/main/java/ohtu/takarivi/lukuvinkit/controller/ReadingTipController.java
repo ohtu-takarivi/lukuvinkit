@@ -325,27 +325,27 @@ public class ReadingTipController {
         return "redirect:/";
     }
 
-//    /**
-//     * The form search page that allows searching tips by keywords.
-//     *
-//     * @param auth    An Authentication object representing the currently authenticated user.
-//     * @param keyword The keyword to search with.
-//     * @param model   The model to feed the information into.
-//     * @return The action to be taken by this controller.
-//     */
-//    @PostMapping("/searchTips")
-//    public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
-//        if (keyword.isEmpty()) {
-//            return "redirect:/search";
-//        }
-//        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-//        List<ReadingTip> list2 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getId(), keyword);
-//        model.addAttribute("nav", "navbar");
-//        model.addAttribute("customUser", customUser);
-//        model.addAttribute("readingTips", list2);
-//        model.addAttribute("view", "search");
-//        return "layout";
-//    }
+    /**
+     * The form search page that allows searching tips by keywords.
+     *
+     * @param auth    An Authentication object representing the currently authenticated user.
+     * @param keyword The keyword to search with.
+     * @param model   The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
+    @PostMapping("/searchTips")
+    public String searchReadingTip(Authentication auth, @RequestParam String keyword, Model model) {
+        if (keyword.isEmpty()) {
+            return "redirect:/search";
+        }
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTip> list2 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getId(), keyword);
+        model.addAttribute("nav", "navbar");
+        model.addAttribute("customUser", customUser);
+        model.addAttribute("readingTips", list2);
+        model.addAttribute("view", "search");
+        return "layout";
+    }
 
     /**
      * @param auth        An Authentication object representing the currently authenticated user.
