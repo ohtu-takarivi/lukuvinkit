@@ -363,7 +363,7 @@ public class ReadingTipController {
                             @RequestParam("unreadstatus") List<String> unreadstatus,
                             Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser.getId(), title,
+        List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId(), title,
                 description, url, author, category, unreadstatus);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
