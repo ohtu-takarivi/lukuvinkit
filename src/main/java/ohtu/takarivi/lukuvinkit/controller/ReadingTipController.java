@@ -339,10 +339,10 @@ public class ReadingTipController {
             return "redirect:/search";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list2 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getId(), keyword);
+        List<ReadingTip> list1 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getUsername(), customUser.getId(), keyword);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
-        model.addAttribute("readingTips", list2);
+        model.addAttribute("readingTips", list1);
         model.addAttribute("view", "search");
         return "layout";
     }
@@ -371,7 +371,6 @@ public class ReadingTipController {
         model.addAttribute("view", "search");
         return "layout";
     }
-
 
     /**
      * The page that resets a search.

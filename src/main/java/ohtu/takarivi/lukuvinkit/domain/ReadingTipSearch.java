@@ -15,6 +15,8 @@ import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 public class ReadingTipSearch {
 
+
+
     /**
      * Searches for reading tips with a single keyword.
      *
@@ -23,10 +25,6 @@ public class ReadingTipSearch {
      * @param keyword The keyword to search with.
      * @return The reading tips found with this search.
      */
-    public static List<ReadingTip> searchSimple(ReadingTipRepository readingTipRepository, Long id, String keyword) {
-        return readingTipRepository.findByCustomUserIdAndTitleContainingOrDescriptionContainingOrUrlContainingOrAuthorContaining(id, keyword, keyword, keyword, keyword);
-    }
-
     public static List<ReadingTip> searchSimple(ReadingTipRepository readingTipRepository, String username, Long id, String keyword) {
         return readingTipRepository.findAll(getSpecSearchSimple(id, username, keyword));
     }
@@ -36,8 +34,7 @@ public class ReadingTipSearch {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Predicate toPredicate(Root<ReadingTip> root, CriteriaQuery<?> query,
-                    CriteriaBuilder builder) {
+            public Predicate toPredicate(Root<ReadingTip> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
                 List<Predicate> predicates = new ArrayList<>();
                 predicates.add(builder.like(root.<String>get("customUser").get("username"), username));
                 Predicate allowed = builder.disjunction();
