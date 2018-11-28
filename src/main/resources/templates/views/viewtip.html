@@ -7,14 +7,18 @@
             <h4 class="card-title" th:text="${readingTip.title}" id="tiptitle"></h4>
             <h6 class="card-subtitle mb-2 text-muted" th:text="${readingTip.author}" id="tipauthor"></h6>
             <p class="card-text" th:text="${readingTip.description}" id="tipdescription"></p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:remove="${readingTip.url} ? none : all">
-              <a href="${readingTip.url}" th:text="${readingTip.url}" id="tipurl"></a>
-            </li>
-            <li class="list-group-item" th:remove="${readingTip.isbn} ? none : all" th:text="${readingTip.isbn}" id="tipisbn"></li>
-          </ul>
+          
+          <p>
+            <div class="tipurl" th:remove="${readingTip.url} ? none : all">
+              <a th:href="@{{url}(url=${readingTip.url})}" th:text="${readingTip.url}" id="tipurl"></a>
+            </div>
+            <div class="tipisbn" th:remove="${readingTip.isbn} ? none : all">
+                <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20 (isbn=${readingTip.isbn})}" id="tipisbn" th:text=" ${readingTip.isbn}"></a>   
+            </div>
+            
+          </p>
           <div class="card-body" th:insert="fragments/read_delete :: read_delete"></div>
+          </div>
         </div>
       </div>
     </div>

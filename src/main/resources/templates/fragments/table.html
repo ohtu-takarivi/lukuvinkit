@@ -13,7 +13,22 @@
         <a th:text="${readingTip.title}" th:href="@{/readingTips/view/{id}(id=${readingTip.id})}"></a>
       </td>
       <td th:text="${readingTip.description}"></td>
-      <td th:text="${readingTip.url}"></td>
+      
+      
+      <td>
+        <div class="tipurl" th:remove="${readingTip.url} ? none : all">
+              <a th:href="@{{url}(url=${readingTip.url})}" th:text="${readingTip.url}" id="tipurl"></a>
+            </div>
+          <div class="tipisbn" th:remove="${readingTip.isbn} ? none : all">
+              <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20 (isbn=${readingTip.isbn})}" id="tipisbn" th:text="${readingTip.isbn}"></a>
+          </div>  
+      </td>
+            
+           
+      
+      
+      
+ 
       <td>
         <div th:replace="fragments/read_delete :: read_delete"></div>
       </td>
