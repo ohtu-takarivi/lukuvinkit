@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
@@ -24,7 +23,8 @@ public class ApiController {
     /**
      * The page that fetches the title of a remote URL.
      *
-     * @param auth         An Authentication object representing the currently authenticated user.
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @param url The URL to get the information from; this is a GET parameter.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/api/getTitle")
