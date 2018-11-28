@@ -109,7 +109,6 @@ public class ReadingTipController {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("org.springframework.validation.BindingResult.readingTipAddForm", result);
             attributes.addFlashAttribute("readingTipAddForm", readingTipAddForm);
-            attributes.addFlashAttribute("category", readingTipAddForm.getCategory());
             return "redirect:/";
         }
         readingTipRepository.save(readingTipAddForm.createReadingTip(customUser));
