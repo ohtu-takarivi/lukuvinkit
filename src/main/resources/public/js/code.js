@@ -14,4 +14,5 @@ $(document).ready(function () {
             $("#url-div").show();
         }
     }).change();
+    $('.javascript-only').removeClass('javascript-only');
 });

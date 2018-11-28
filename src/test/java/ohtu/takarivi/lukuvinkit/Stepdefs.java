@@ -111,11 +111,13 @@ public class Stepdefs extends SpringBootTestBase {
     @When("^browsing book tips$")
     public void browse_book_tips() throws Throwable {
         browseTo("/readingTips/books");
+        Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^browsing link tips$")
     public void browse_link_tips() throws Throwable {
         browseTo("/readingTips/links");
+        Thread.sleep(SLEEPING_TIME);
     }
 
     @When("^creating a book tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
