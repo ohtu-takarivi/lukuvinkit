@@ -4,10 +4,7 @@ import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
-import ohtu.takarivi.lukuvinkit.forms.ArticleAddForm;
-import ohtu.takarivi.lukuvinkit.forms.BookAddForm;
-import ohtu.takarivi.lukuvinkit.forms.LinkAddForm;
-import ohtu.takarivi.lukuvinkit.forms.VideoAddForm;
+import ohtu.takarivi.lukuvinkit.forms.*;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -101,6 +99,21 @@ public class ReadingTipController {
         model.addAttribute("readingTips", tips);
         model.addAttribute("view", "category");
         return "layout";
+    }
+
+    @PostMapping("/readingTips/add")
+    public String addReadingTip(Authentication auth, @Valid @ModelAttribute ReadingTipAddForm readingTipAddForm,
+                                BindingResult result, RedirectAttributes attributes) {
+        readingTipAddForm.validateRest(result);
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("org.springframework.validation.BindingResult.readingTipAddForm", result);
+            attributes.addFlashAttribute("readingTipAddForm", readingTipAddForm);
+            attributes.addFlashAttribute("category", readingTipAddForm.getCategory());
+            return "redirect:/";
+        }
+        readingTipRepository.save(readingTipAddForm.createReadingTip(customUser));
+        return "redirect:/";
     }
 
     /**
@@ -339,7 +352,8 @@ public class ReadingTipController {
             return "redirect:/search";
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list1 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getUsername(), customUser.getId(), keyword);
+        List<ReadingTip> list1 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getUsername(),
+                customUser.getId(), keyword);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list1);
@@ -363,7 +377,8 @@ public class ReadingTipController {
                             @RequestParam("unreadstatus") List<String> unreadstatus,
                             Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId(), title,
+        List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId()
+                , title,
                 description, url, author, category, unreadstatus);
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);

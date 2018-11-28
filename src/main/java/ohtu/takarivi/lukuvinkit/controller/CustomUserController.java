@@ -2,6 +2,7 @@ package ohtu.takarivi.lukuvinkit.controller;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.forms.CustomUserRegisterForm;
+import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,9 +95,12 @@ public class CustomUserController {
      */
     @GetMapping("/")
     public String index(Authentication auth, Model model) {
+        if(!model.containsAttribute("readingTipAddForm")) {
+            model.addAttribute("readingTipAddForm", new ReadingTipAddForm());
+        }
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("title", "Etusivu");
         model.addAttribute("nav", "navbar");
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("customUser", customUser);
         model.addAttribute("view", "index");
         return "layout";
