@@ -28,28 +28,6 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @PostConstruct
     public void init() {
-        /*
-        DISABLED ENTRY OF INITIAL TEST DATA
-         
-        if (!customUserRepository.findAll().isEmpty()) return;
-
-        CustomUser customUser = new CustomUser("abel", encoder.encode("123456"), "Abel");
-        customUserRepository.save(customUser);
-        readingTipRepository.save(new ReadingTip("Title 1", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 2", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 3", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 4", "-", "-", "-", customUser));
-
-        customUser = new CustomUser("bob", encoder.encode("password"), "Bob");
-        customUserRepository.save(customUser);
-        readingTipRepository.save(new ReadingTip("Title 5", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 6", "-", "-", "-", customUser));
-
-        customUser = new CustomUser("charlie", encoder.encode("qwerty"), "Charlie");
-        customUserRepository.save(customUser);
-        readingTipRepository.save(new ReadingTip("Title 7", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 8", "-", "-", "-", customUser));
-        readingTipRepository.save(new ReadingTip("Title 9", "-", "-", "-", customUser));*/
     }
 
     @Override

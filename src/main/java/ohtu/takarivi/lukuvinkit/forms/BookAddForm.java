@@ -19,6 +19,7 @@ public class BookAddForm {
     private static final int AUTHOR_MAX_LENGTH = 255;
     private static final int ISBN_MIN_LENGTH = 13;
     private static final int ISBN_MAX_LENGTH = 17;
+    private static final String ISBN_10_CHECK = "0123456789X";
 
     @NotEmpty
     @Size(min = TITLE_MIN_LENGTH, max = TITLE_MAX_LENGTH, message = "Otsikon pituus 1-255 merkkiä")
@@ -44,15 +45,47 @@ public class BookAddForm {
         }
     }
 
+    /**
+     * Checks if the given code is a valid ISBN-10 or ISBN-13.
+     *
+     * @param isbn The value that is checked.
+     * @return Return true if the given input is a valid ISBN-10 or ISBN-13 code and false if it is not.
+     */
+    public static boolean isValidISBN(String isbn) {
+        return isValidISBN10(isbn) || isValidISBN13(isbn);
+    }
+
     //CHECKSTYLE:OFF: MagicNumber
+    /**
+     * Checks if the given ISBN-10 is valid.
+     *
+     * @param isbn The value that is checked.
+     * @return Return true if the given input is a valid ISBN-10 code and false if it is not.
+     */
+    public static boolean isValidISBN10(String isbn) {
+        String isbnInteger = isbn.replace("-", "").replace(" ", "");
+        if (isbnInteger.length() != 10 || !isbnInteger.matches("^[0-9]+[0-9xX]$")) {
+            return false;
+        }
+        int sum = 0, result = 0;
+        for (int i = 0; i < 9; i++) {
+            sum += Character.getNumericValue(isbnInteger.charAt(i));
+            result += sum;
+        }
+        result = (11 - ((result + sum) % 11)) % 11;
+        if (ISBN_10_CHECK.charAt(result) != isbnInteger.toUpperCase().charAt(9)) {
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Checks if the given ISBN-13 is valid.
      *
      * @param isbn The value that is checked.
      * @return Return true if the given input is a valid ISBN-13 code and false if it is not.
      */
-    @SuppressWarnings("checkstyle:MagicNumber")
-    public static boolean isValidISBN(String isbn) {
+    public static boolean isValidISBN13(String isbn) {
         String isbnInteger = isbn.replace("-", "").replace(" ", "");
         if (isbnInteger.length() != 13 || !isbnInteger.matches("^[0-9]+$")) {
             return false;

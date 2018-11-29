@@ -15,12 +15,11 @@ import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 public class ReadingTipSearch {
 
-
-
     /**
      * Searches for reading tips with a single keyword.
      *
      * @param readingTipRepository The repository to search from.
+     * @param username The user name of the user doing the search.
      * @param id The ID of the user doing the search.
      * @param keyword The keyword to search with.
      * @return The reading tips found with this search.
@@ -36,19 +35,24 @@ public class ReadingTipSearch {
             @Override
             public Predicate toPredicate(Root<ReadingTip> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
                 List<Predicate> predicates = new ArrayList<>();
+                // user can only search for their own tips
                 predicates.add(builder.like(root.<String>get("customUser").get("username"), username));
+                
                 Predicate allowed = builder.disjunction();
+                // allow the keyword to appear in the title, description, author, ISBN or URL
                 allowed = builder.or(allowed, builder.like(root.get("title"), "%" + keyword + "%"));
                 allowed = builder.or(allowed, builder.like(root.get("description"), "%" + keyword + "%"));
-//                allowed = builder.or(allowed, builder.like(root.get("author"), "%" + keyword + "%"));  search by author can be added any time by simply uncomment this
+                allowed = builder.or(allowed, builder.like(root.get("author"), "%" + keyword + "%"));
+                // ignore dashes/hyphens in ISBN search
+                allowed = builder.or(allowed, builder.like(builder.function("REPLACE", 
+                                                            String.class, 
+                                                            root.get("isbn"), 
+                                                            builder.literal("-"), 
+                                                            builder.literal("")), 
+                                                            "%" + keyword.replace("-", "") + "%"));
+                allowed = builder.or(allowed, builder.like(root.get("url"), "%" + keyword + "%"));
                 predicates.add(allowed);
 
-                Predicate allowedTypes = builder.disjunction();
-                allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.BOOK));
-                allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.ARTICLE));
-                allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.VIDEO));
-                allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.LINK));
-                predicates.add(allowedTypes);
                 return builder.and(predicates.toArray(new Predicate[]{}));
             }
         };
@@ -58,6 +62,7 @@ public class ReadingTipSearch {
      * Searches for reading tips with an advanced search.
      *
      * @param readingTipRepository The repository to search from.
+     * @param customUser The CustomUser instance of the user doing the search.
      * @param id The ID of the user doing the search.
      * @param title The title to search for, or empty if title isn't searched
      * for.
@@ -101,6 +106,7 @@ public class ReadingTipSearch {
                 }
 
                 Predicate allowedTypes = builder.disjunction();
+                // set allowed types based on checkbox values
                 if (category.contains("books")) {
                     allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.BOOK));
                 }

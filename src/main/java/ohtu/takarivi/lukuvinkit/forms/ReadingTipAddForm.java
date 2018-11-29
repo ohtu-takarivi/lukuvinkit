@@ -49,63 +49,25 @@ public class ReadingTipAddForm {
             if (isbn.length() < ISBN_MIN_LENGTH || isbn.length() > ISBN_MAX_LENGTH) {
                 result.rejectValue("isbn", "", "ISBN-13 pituus välimerkkeinen 13-17 merkkiä");
             }
-            if (!isValidISBN(this.isbn)) {
+            if (!BookAddForm.isValidISBN(this.isbn)) {
                 result.rejectValue("isbn", "", "Huono ISBN");
             }
         } else if ((readingTipCategory == ReadingTipCategory.LINK || readingTipCategory == ReadingTipCategory.VIDEO)) {
             if (url.length() < URL_MIN_LENGTH || url.length() > URL_MAX_LENGTH) {
                 result.rejectValue("url", "", "Urlin pituus 1-255 merkkiä");
             }
-            if (!isValidURL(this.url)) {
+            if (!LinkAddForm.isValidURL(this.url)) {
                 result.rejectValue("url", "", "Huono url");
             }
         }
     }
 
-    //CHECKSTYLE:OFF: MagicNumber
     /**
-     * Checks if the given ISBN-13 is valid.
-     *
-     * @param isbn The value that is checked.
-     * @return Return true if the given input is a valid ISBN-13 code and false if it is not.
+     * Creates a ReadinGTip object from the values of this form.
+     * 
+     * @param customUser The CustomUser representing the currently authenticated user.
+     * @return The ReadingTip instance.
      */
-    @SuppressWarnings("checkstyle:MagicNumber")
-    public static boolean isValidISBN(String isbn) {
-        String isbnInteger = isbn.replace("-", "").replace(" ", "");
-        if (isbnInteger.length() != 13 || !isbnInteger.matches("^[0-9]+$")) {
-            return false;
-        }
-        int sum = 0;
-        for (int i = 0; i < 12; i++) {
-            int charToNum = Character.getNumericValue(isbnInteger.charAt(i));
-            if (i % 2 == 0) {
-                sum += 1 * charToNum;
-            } else {
-                sum += 3 * charToNum;
-            }
-        }
-        int result = sum % 10;
-        if (result != 0) {
-            result = 10 - result;
-        }
-        if (result != Character.getNumericValue(isbnInteger.charAt(12))) {
-            return false;
-        }
-        return true;
-    }
-    //CHECKSTYLE:ON: MagicNumber
-
-    /**
-     * Checks if the given URL is valid.
-     *
-     * @param url   The value that is checked.
-     * @return Return true if the given input is a valid URL and false if it is not.
-     */
-    public static boolean isValidURL(String url) {
-        String regex = "^https?://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
-        return url.matches(regex);
-    }
-
     public ReadingTip createReadingTip(CustomUser customUser) {
         ReadingTipCategory readingTipCategory = ReadingTipCategory.getByName(category);
         if (readingTipCategory == ReadingTipCategory.ARTICLE) {

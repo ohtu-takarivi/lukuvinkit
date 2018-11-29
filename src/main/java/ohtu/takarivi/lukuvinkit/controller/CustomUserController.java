@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 /**
@@ -32,6 +36,9 @@ public class CustomUserController {
 
     @Autowired
     private PasswordEncoder encoder;
+    
+    @Autowired
+    private Map<Long, List<Long>> selectedTipsMap;
 
     /**
      * The default mapping, used for pages that cannot be found.
@@ -73,14 +80,18 @@ public class CustomUserController {
     /**
      * The profile page for a given user.
      *
+     * @param auth  An Authentication object representing the currently
+     *              authenticated user.
      * @param model The Model that the profile information will be fit into.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/profile")
-    public String profile(Model model) {
+    public String profile(Authentication auth, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("title", "Profiili");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "profile");
+        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
         return "layout";
     }
 
@@ -88,8 +99,7 @@ public class CustomUserController {
      * The index page or front page.
      *
      * @param auth  An Authentication object representing the currently
-     *              authenticated user. The user that created the tip must also be
-     *              the one removing it.
+     *              authenticated user.
      * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */
@@ -103,6 +113,7 @@ public class CustomUserController {
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("view", "index");
+        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
         return "layout";
     }
 
@@ -148,6 +159,7 @@ public class CustomUserController {
     public String editPassword(Authentication auth, @RequestParam String newPassword,
                                @RequestParam String verifyNewPassword) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        // can only change password if the two passwords match and the user matches
         if (!newPassword.trim().isEmpty() && newPassword.equals(verifyNewPassword)) {
             customUser.setPassword(encoder.encode(newPassword));
             customUserRepository.save(customUser);

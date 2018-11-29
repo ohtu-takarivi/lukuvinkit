@@ -1,0 +1,13 @@
+<main th:fragment="selected">
+  <section class="container mt-4">
+    <div class="row">
+      <div th:replace="fragments/table :: table"></div>
+    </div>
+  </section>
+  <section class="container" th:if="${selected != null && selected.size() > 0}">
+    <p class="pt-2">
+      <a href="/readingTips/exportText" class="btn btn-success btn-lg mx-1">Lista tekstimuodossa</a>
+      <a href="/readingTips/exportPdf" class="btn btn-success btn-lg mx-1">Lista PDF-muodossa</a>
+    </p>
+  </section>
+</main>

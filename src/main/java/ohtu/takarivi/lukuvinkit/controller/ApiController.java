@@ -25,7 +25,7 @@ public class ApiController {
      *
      * @param auth An Authentication object representing the currently authenticated user.
      * @param url The URL to get the information from; this is a GET parameter.
-     * @return The action to be taken by this controller.
+     * @return The text returned by this API endpoint.
      */
     @GetMapping("/api/getTitle")
     @ResponseBody
@@ -49,12 +49,14 @@ public class ApiController {
             
             String title = "";
             String description = "";
-            
+
+            // get the text between title tags if ones exist
             if (responseBodyLower.contains("<title>")) {
                 int titleStart = responseBodyLower.indexOf("<title>") + "<title>".length();
                 title = responseBody.substring(titleStart, responseBodyLower.indexOf("</title>", titleStart)).replace('\n', ' ');
             }
-            
+
+            // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
                 int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\">", descStart)).replace('\n', ' ');

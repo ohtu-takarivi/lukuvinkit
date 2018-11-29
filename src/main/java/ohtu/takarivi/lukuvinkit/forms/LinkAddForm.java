@@ -52,6 +52,7 @@ public class LinkAddForm {
      * @return Return true if the given input is a valid URL and false if it is not.
      */
     public static boolean isValidURL(String url) {
+        // test input against regex
         String regex = "^https?://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
         return url.matches(regex);
     }

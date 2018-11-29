@@ -34,9 +34,12 @@
           <a class="dropdown-item" href="/readingTips/videos">Video</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/readingTips/selected" th:inline="text">Valitut ([[${selected != null ? selected.size() : 0}]])</a>
+      </li>
     </div>
     <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">
-      <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Pika haku" required>
+      <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Pikahaku" required>
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="buttonquicksearch">Hae</button>
     </form>
 
