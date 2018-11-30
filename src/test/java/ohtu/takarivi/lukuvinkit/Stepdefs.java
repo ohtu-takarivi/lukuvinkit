@@ -135,7 +135,7 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
         
         Thread.sleep(SLEEPING_TIME);
-        browseTo("/readingTips/selected");
+        browseTo("/readingTips/exportText");
     }
 
     @When("^creating a book tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
