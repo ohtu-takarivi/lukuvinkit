@@ -9,11 +9,9 @@ import static org.junit.Assert.assertTrue;
 
 public class CustomUserTest {
 
-    CustomUser cu;
-
     @Test
     public void constructorNoException() {
-        cu = new CustomUser("user", "password", "name");
+        new CustomUser("user", "password", "name");
     }
 
 }

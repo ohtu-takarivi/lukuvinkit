@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.*;
 public class ApiController {
 
     /**
-     * The page that fetches the title of a remote URL.
+     * The page that fetches the title and description of a remote URL.
      *
      * @param auth An Authentication object representing the currently authenticated user.
      * @param url The URL to get the information from; this is a GET parameter.
      * @return The text returned by this API endpoint.
      */
-    @GetMapping("/api/getTitle")
+    @GetMapping("/api/getLinkInfo")
     @ResponseBody
-    public String getTitle(Authentication auth, @RequestParam String url) {
+    public String getLinkInfo(Authentication auth, @RequestParam String url) {
         if (!LinkAddForm.isValidURL(url)) {
             return "";
         }

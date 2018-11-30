@@ -1,13 +1,16 @@
 $(document).ready(function () {
-    $('#buttonautofill').click(function() {
-        $('#buttonautofill').prop('disabled', true);
+    $('#buttonautofilllink').click(function() {
+        // disable the button while fetching
+        $('#buttonautofilllink').prop('disabled', true);
         $.ajax({
-            url: '/api/getTitle?url=' + encodeURIComponent(document.getElementById('url').value),
+            url: '/api/getLinkInfo?url=' + encodeURIComponent(document.getElementById('url').value),
             complete: function(data) {
-                $('#buttonautofill').prop('disabled', false);
+                $('#buttonautofilllink').prop('disabled', false);
                 if (data.responseText) {
+                    // the returned text is title and description on two separate lines
                     var title = data.responseText.split('\n')[0];
                     var desc = data.responseText.split('\n')[1];
+                    // decodeURIComponent(escape(...)) fixes Unicode
                     if (title)
                         document.getElementById('title').value = decodeURIComponent(escape(title));
                     if (desc)
