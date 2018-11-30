@@ -119,6 +119,24 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/links");
         Thread.sleep(SLEEPING_TIME);
     }
+    
+    @When("selecting tip with title \"([^\"]*)\" and browsing is selected")
+    public void select_tip_and_browse_selected(String title) throws Throwable {
+        waitForElementWithId("loadfinish");
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
+        
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/selected");
+    }
+    
+    @When("selecting tip with title \"([^\"]*)\" and exportText is selected")
+    public void select_tip_and_exportText_selected(String title) throws Throwable {
+        waitForElementWithId("loadfinish");
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
+        
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/selected");
+    }
 
     @When("^creating a book tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
     public void book_tip_with_valid_information_is_given(String title, String description, String url, String author, String isbn) throws Throwable {
@@ -498,6 +516,12 @@ public class Stepdefs extends SpringBootTestBase {
             checkBox.click();
             Thread.sleep(SLEEPING_TIME);
         }
+    }
+    
+    private void selectTip() throws InterruptedException{
+        driver.findElement(By.id("buttonselect")).click();
+        waitForPageChange();
+        
     }
 
     private void createArticleTip(String title, String description, String author) throws InterruptedException {

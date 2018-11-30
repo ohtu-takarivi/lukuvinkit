@@ -277,7 +277,7 @@ public class ReadingTipController {
         model.addAttribute("readingTips", list1);
         model.addAttribute("view", "search");
         model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
-        return "layout";
+        return "layout";        
     }
 
     /**
