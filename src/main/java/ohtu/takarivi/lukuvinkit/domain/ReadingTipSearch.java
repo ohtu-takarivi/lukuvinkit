@@ -25,7 +25,9 @@ public class ReadingTipSearch {
      * @return The reading tips found with this search.
      */
     public static List<ReadingTip> searchSimple(ReadingTipRepository readingTipRepository, String username, Long id, String keyword) {
-        return readingTipRepository.findAll(getSpecSearchSimple(id, username, keyword));
+        return readingTipRepository.findAll(getSpecSearchSimple(id, username, keyword.toLowerCase()));
+        
+        
     }
 
     private static Specification<ReadingTip> getSpecSearchSimple(Long id, String username, String keyword) {
@@ -40,9 +42,9 @@ public class ReadingTipSearch {
                 
                 Predicate allowed = builder.disjunction();
                 // allow the keyword to appear in the title, description, author, ISBN or URL
-                allowed = builder.or(allowed, builder.like(root.get("title"), "%" + keyword + "%"));
-                allowed = builder.or(allowed, builder.like(root.get("description"), "%" + keyword + "%"));
-                allowed = builder.or(allowed, builder.like(root.get("author"), "%" + keyword + "%"));
+                allowed = builder.or(allowed, builder.like(builder.lower(root.get("title")), "%" + keyword + "%"));
+                allowed = builder.or(allowed, builder.like(builder.lower(root.get("description")), "%" + keyword + "%"));
+                allowed = builder.or(allowed, builder.like(builder.lower(root.get("author")), "%" + keyword + "%"));
                 // ignore dashes/hyphens in ISBN search
                 allowed = builder.or(allowed, builder.like(builder.function("REPLACE", 
                                                             String.class, 
@@ -93,16 +95,16 @@ public class ReadingTipSearch {
                 predicates.add(builder.like(root.<String>get("customUser").get("username"), customUser.getUsername()));
 
                 if (!title.isEmpty()) { // title must match
-                    predicates.add(builder.like(root.get("title"), "%" + title + "%"));
+                    predicates.add(builder.like(builder.lower(root.get("title")), "%" + title.toLowerCase() + "%"));
                 }
                 if (!description.isEmpty()) { // description must match
-                    predicates.add(builder.like(root.get("description"), "%" + description + "%"));
+                    predicates.add(builder.like(builder.lower(root.get("description")), "%" + description.toLowerCase() + "%"));
                 }
                 if (!url.isEmpty()) { // URL must match
-                    predicates.add(builder.like(root.get("url"), "%" + url + "%"));
+                    predicates.add(builder.like(builder.lower(root.get("url")), "%" + url.toLowerCase() + "%"));
                 }
                 if (!author.isEmpty()) { // author must match
-                    predicates.add(builder.like(root.get("author"), "%" + author + "%"));
+                    predicates.add(builder.like(builder.lower(root.get("author")), "%" + author.toLowerCase() + "%"));
                 }
 
                 Predicate allowedTypes = builder.disjunction();
