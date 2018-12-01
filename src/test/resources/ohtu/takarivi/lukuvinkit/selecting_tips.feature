@@ -1,4 +1,4 @@
-Feature: After logging in, I can select tips and browse them
+Feature: After logging in, I can select tips, browse them and export a listing in text or PDF
 
   Scenario: user can see selected tips
     Given test user is logged in and browsing book tips

@@ -53,7 +53,7 @@ public class LinkAddForm {
      */
     public static boolean isValidURL(String url) {
         // test input against regex
-        String regex = "^https?://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
+        String regex = "^(http|https|ftp):\\/\\/([a-zA-Z0-9_\\.\\-]+\\.([A-Za-z]{2,20})|localhost)(:[0-9]{1,5})?[a-zA-Z0-9_\\/\\&\\?\\=\\.\\~\\%\\-]*";
         return url.matches(regex);
     }
 

@@ -29,6 +29,7 @@ import org.springframework.test.annotation.DirtiesContext;
 public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
     private static final int SLEEPING_TIME = 200;
+    private static final int FETCH_TIMEOUT = 3000;
     private static final int PAGE_LOAD_TIMEOUT = 15;
     private static final int ELEMENT_LOAD_TIMEOUT = 15;
 
@@ -108,6 +109,16 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
+    @Given("^test user is logged in and creating a link tip$")
+    public void test_user_is_logged_in_creating_link_tip() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/links/add");
+        Thread.sleep(SLEEPING_TIME);
+    }
+
     @When("^browsing book tips$")
     public void browse_book_tips() throws Throwable {
         browseTo("/readingTips/books");
@@ -118,6 +129,20 @@ public class Stepdefs extends SpringBootTestBase {
     public void browse_link_tips() throws Throwable {
         browseTo("/readingTips/links");
         Thread.sleep(SLEEPING_TIME);
+    }
+
+    @When("^viewing the book tip with title \"([^\"]*)\"$")
+    public void view_book_tip(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        Thread.sleep(SLEEPING_TIME);
+        openTipWithTitle(title);
+    }
+
+    @When("^viewing the link tip with title \"([^\"]*)\"$")
+    public void view_link_tip(String title) throws Throwable {
+        browseTo("/readingTips/links");
+        Thread.sleep(SLEEPING_TIME);
+        openTipWithTitle(title);
     }
     
     @When("selecting tip with title \"([^\"]*)\" and browsing is selected")
@@ -328,6 +353,23 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
+    @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
+    public void new_password_created(String password, String verifyPassword) throws Throwable {
+        assertFalse(driver.findElements(By.id("buttonchangepassword")).isEmpty());
+        driver.findElement(By.name("newPassword")).sendKeys(password);
+        driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
+        driver.findElement(By.id("buttonchangepassword")).click();
+        waitForPageChange();
+    }
+    
+    @When("fetching information from our own login page")
+    public void autolink_fetch_from_self() throws Throwable {
+        driver.findElement(By.name("url")).sendKeys(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        driver.findElement(By.id("buttonautofilllink")).click();
+        Thread.sleep(FETCH_TIMEOUT);
+    }
+
     @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
     public void new_book_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/books");
@@ -350,15 +392,6 @@ public class Stepdefs extends SpringBootTestBase {
     public void new_article_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/articles");
         verifyTipInfo(title, description, author);
-    }
-
-    @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
-    public void new_password_created(String password, String verifyPassword) throws Throwable {
-        assertFalse(driver.findElements(By.id("buttonchangepassword")).isEmpty());
-        driver.findElement(By.name("newPassword")).sendKeys(password);
-        driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
-        driver.findElement(By.id("buttonchangepassword")).click();
-        waitForPageChange();
     }
 
     @Then("^new book tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
@@ -416,6 +449,12 @@ public class Stepdefs extends SpringBootTestBase {
         assertNull(btn.getAttribute("disabled"));
     }
 
+    @Then("^fetched title contains \"([^\"]*)\" and description contains \"([^\"]*)\"$")
+    public void autofill_title_description(String title, String description) throws Throwable {
+        assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
+        assertTrue(driver.findElement(By.name("description")).getAttribute("value").contains(description));
+    }
+
     @Then("^user is logged in$")
     public void logged_in() throws Throwable {
         assertFalse(driver.findElements(By.id("buttonlogout")).isEmpty());
@@ -463,11 +502,37 @@ public class Stepdefs extends SpringBootTestBase {
         List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + candidate + "']"));
         assertTrue(elements.size() > 0);
     }
+    
+    @Then("^URL goes to \"([^\"]*)\"$")
+    public void url_clickable_to(String url) throws Throwable {
+        assertEquals(url, driver.findElement(By.id("tipurl")).getAttribute("href"));
+        assertEquals(url, driver.findElement(By.id("tipurl")).getText());
+    }
+    
+    @Then("^ISBN can be clicked$")
+    public void isbn_clickable() throws Throwable {
+        assertTrue(driver.findElement(By.id("tipisbn")).getTagName().equalsIgnoreCase("a"));
+    }
 
     /* helper methods */
 
+    private String getProtocol() {
+        try {
+            String url = driver.getCurrentUrl();
+            if (url != null) {
+                String protocol = url.split(":")[0].toLowerCase();
+                if (protocol.contains("http")) {
+                    return protocol;
+                }
+            }
+        } catch (Exception ex) {
+            // fall down to return
+        }
+        return "http";
+    }
+
     private String getBaseUrl() {
-        return "http://localhost:" + port;
+        return getProtocol() + "://localhost:" + port;
     }
 
     private void browseTo(String string) throws InterruptedException {
@@ -556,13 +621,17 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
 
-    private void verifyTipInfo(String title, String description, String author) throws InterruptedException {
+    private void openTipWithTitle(String title) throws InterruptedException {
         List<WebElement> elements = driver.findElements(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']"));
         
         assertTrue(elements.size() > 0);
         elements.get(0).click();
         waitForPageChange();
         waitForElementWithId("tiptitle");
+    }
+
+    private void verifyTipInfo(String title, String description, String author) throws InterruptedException {
+        openTipWithTitle(title);
         
         assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
         assertEquals(description, driver.findElement(By.id("tipdescription")).getText());

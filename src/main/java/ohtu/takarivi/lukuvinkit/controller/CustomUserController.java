@@ -59,6 +59,7 @@ public class CustomUserController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("title", "Kirjaudu");
+        model.addAttribute("description", "Lukuvinkkien säilöntään soveltuva palvelu.");
         model.addAttribute("view", "login");
         return "layout";
     }
@@ -110,6 +111,7 @@ public class CustomUserController {
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("title", "Etusivu");
+        model.addAttribute("description", "Lukuvinkkien säilöntään soveltuva palvelu.");
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("view", "index");

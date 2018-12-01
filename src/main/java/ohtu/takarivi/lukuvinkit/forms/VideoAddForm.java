@@ -47,13 +47,11 @@ public class VideoAddForm {
     /**
      * Checks if the given URL is valid.
      *
-     * @param url The value that is checked.
-     * @param regex Regex for validating URLs that begin with http:// or https://.
+     * @param url The value that is checked
      * @return Return true if the given input is a valid URL and false if it is not.
      */
     public static boolean isValidURL(String url) {
-        String regex = "^https?://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
-        return url.matches(regex);
+        return LinkAddForm.isValidURL(url);
     }
 
 }
