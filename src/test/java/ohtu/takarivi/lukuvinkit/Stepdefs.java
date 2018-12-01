@@ -29,7 +29,7 @@ import org.springframework.test.annotation.DirtiesContext;
 public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
     private static final int SLEEPING_TIME = 200;
-    private static final int FETCH_TIMEOUT = 3000;
+    private static final int FETCH_TIMEOUT = 5000;
     private static final int PAGE_LOAD_TIMEOUT = 15;
     private static final int ELEMENT_LOAD_TIMEOUT = 15;
 
@@ -145,7 +145,7 @@ public class Stepdefs extends SpringBootTestBase {
         openTipWithTitle(title);
     }
     
-    @When("selecting tip with title \"([^\"]*)\" and browsing is selected")
+    @When("^selecting tip with title \"([^\"]*)\" and browsing is selected$")
     public void select_tip_and_browse_selected(String title) throws Throwable {
         waitForElementWithId("loadfinish");
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
@@ -154,7 +154,7 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/selected");
     }
     
-    @When("selecting tip with title \"([^\"]*)\" and exportText is selected")
+    @When("^selecting tip with title \"([^\"]*)\" and exportText is selected$")
     public void select_tip_and_exportText_selected(String title) throws Throwable {
         waitForElementWithId("loadfinish");
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
@@ -362,7 +362,7 @@ public class Stepdefs extends SpringBootTestBase {
         waitForPageChange();
     }
     
-    @When("fetching information from our own login page")
+    @When("^fetching information from our own login page$")
     public void autolink_fetch_from_self() throws Throwable {
         driver.findElement(By.name("url")).sendKeys(getBaseUrl() + "/login");
         Thread.sleep(SLEEPING_TIME);
