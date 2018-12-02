@@ -49,8 +49,6 @@ public class ApiController {
             
             String title = "";
             String description = "";
-            
-            System.out.println(responseBody);
 
             // get the text between title tags if ones exist
             if (responseBodyLower.contains("<title>")) {
@@ -58,13 +56,18 @@ public class ApiController {
                 title = responseBody.substring(titleStart, responseBodyLower.indexOf("</title>", titleStart)).replace('\n', ' ');
             }
 
+            System.out.println("desc check");
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
+                System.out.println("meta with name quotes");
                 int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\">", descStart)).replace('\n', ' ');
+                System.out.println("found desc : " + description);
             } else if (responseBodyLower.contains("<meta name=description content=\"")) {
+                System.out.println("meta without name quotes");
                 int descStart = responseBodyLower.indexOf("<meta name=description content=\"") + "<meta name=description content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\">", descStart)).replace('\n', ' ');
+                System.out.println("found desc : " + description);
             }
             
             return title + "\n" + description;
