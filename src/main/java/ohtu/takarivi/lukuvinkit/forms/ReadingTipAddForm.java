@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class ReadingTipAddForm {
+public class ReadingTipAddForm implements AddForm {
 
     private static final int TITLE_MIN_LENGTH = 1;
     private static final int TITLE_MAX_LENGTH = 255;
@@ -43,6 +43,7 @@ public class ReadingTipAddForm {
      *
      * @param result The BindingResult that value rejections are submitted to.
      */
+    @Override
     public void validateRest(BindingResult result) {
         ReadingTipCategory readingTipCategory = ReadingTipCategory.getByName(category);
         if (readingTipCategory == ReadingTipCategory.BOOK) {
