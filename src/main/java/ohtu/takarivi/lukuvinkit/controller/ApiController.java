@@ -49,6 +49,8 @@ public class ApiController {
             
             String title = "";
             String description = "";
+            
+            System.out.println(responseBody);
 
             // get the text between title tags if ones exist
             if (responseBodyLower.contains("<title>")) {
