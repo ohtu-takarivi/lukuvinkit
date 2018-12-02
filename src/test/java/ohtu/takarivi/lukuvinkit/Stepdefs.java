@@ -468,12 +468,9 @@ public class Stepdefs extends SpringBootTestBase {
         assertNull(btn.getAttribute("disabled"));
     }
 
-    @Then("^fetched title contains \"([^\"]*)\" and description contains \"([^\"]*)\"$")
-    public void autofill_title_description(String title, String description) throws Throwable {
+    @Then("^fetched title contains \"([^\"]*)\"$")
+    public void autofill_title(String title) throws Throwable {
         assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
-        // textarea tags cause some issues
-        assertTrue(driver.findElement(By.name("description")).getText().contains(description)
-                || driver.findElement(By.name("description")).getAttribute("value").contains(description));
     }
 
     @Then("^fetched title contains \"([^\"]*)\" and author contains \"([^\"]*)\" or there is an alert$")
