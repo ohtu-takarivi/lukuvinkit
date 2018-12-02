@@ -28,7 +28,7 @@ $(document).ready(function () {
                         var record = obj['records'][0];
                         // get title if found
                         if (record['title'])
-                            document.getElementById('title').value = record['title'];
+                            $('#title').val(record['title']);
                         // get authors if found
                         if (record['authors']) {
                             var authors = [];
@@ -39,7 +39,7 @@ $(document).ready(function () {
                                     authors.push(author);
                                 });
                             });
-                            document.getElementById('author').value = authors.join('; ');
+                            $('#author').val(authors.join('; '));
                         }
                     }
                 } else {

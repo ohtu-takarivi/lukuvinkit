@@ -13,9 +13,9 @@ $(document).ready(function () {
                     var desc = obj['description'];
                     // decodeURIComponent(escape(...)) fixes Unicode
                     if (title)
-                        document.getElementById('title').value = decodeURIComponent(escape(title));
+                        $('#title').val(decodeURIComponent(escape(title)));
                     if (desc)
-                        document.getElementById('description').value = decodeURIComponent(escape(desc));
+                        $('#description').val(decodeURIComponent(escape(desc)));
                 } else {
                     alert("Kyseisestä osoitteesta ei kyetty hakemaan otsikkoa tai kuvausta.");
                 }

@@ -69,7 +69,6 @@ public class ApiController {
             JSONObject obj = new JSONObject();
             obj.put("title", title);
             obj.put("description", description);
-            System.out.println("JSON: " + obj.toString());///DEBUG REMOVE ON MASTER
             return obj.toString();
         } catch (Exception ex) {
             ex.printStackTrace();
