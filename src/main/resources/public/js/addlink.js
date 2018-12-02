@@ -7,9 +7,10 @@ $(document).ready(function () {
             complete: function(data) {
                 $('#buttonautofilllink').prop('disabled', false);
                 if (data.responseText) {
-                    // the returned text is title and description on two separate lines
-                    var title = data.responseText.split('\n')[0];
-                    var desc = data.responseText.split('\n')[1];
+                    // {"title": "title", "description": "description"}
+                    var obj = JSON.parse(data.responseText);
+                    var title = obj['title'];
+                    var desc = obj['description'];
                     // decodeURIComponent(escape(...)) fixes Unicode
                     if (title)
                         document.getElementById('title').value = decodeURIComponent(escape(title));
