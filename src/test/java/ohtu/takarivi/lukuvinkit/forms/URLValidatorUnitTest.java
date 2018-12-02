@@ -11,6 +11,11 @@ public class URLValidatorUnitTest {
         String url = "https://example.com/";
         assertTrue(LinkAddForm.isValidURL(url));
     }
+    @Test
+    public void acceptsValidURLWithSubdomain() {
+        String url = "https://www.example.com/";
+        assertTrue(LinkAddForm.isValidURL(url));
+    }
     
     @Test
     public void acceptsValidURLWithPort() {

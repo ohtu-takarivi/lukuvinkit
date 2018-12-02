@@ -5,6 +5,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import ohtu.takarivi.lukuvinkit.controller.MiscController;
+
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -130,6 +132,15 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(SLEEPING_TIME);
     }
 
+    @Given("^test data entry is enabled$")
+    public void test_data_entry_is_enabled() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        Thread.sleep(SLEEPING_TIME);
+        MiscController.enableTestdataEntry();
+    }
+
     @When("^browsing book tips$")
     public void browse_book_tips() throws Throwable {
         browseTo("/readingTips/books");
@@ -172,6 +183,15 @@ public class Stepdefs extends SpringBootTestBase {
         
         Thread.sleep(SLEEPING_TIME);
         browseTo("/readingTips/exportText");
+    }
+    
+    @When("^selecting tip with title \"([^\"]*)\" and exportHTML is selected$")
+    public void select_tip_and_exportHTML_selected(String title) throws Throwable {
+        waitForElementWithId("loadfinish");
+        driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonselect")).click();
+        
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/exportHTML");
     }
 
     @When("^creating a book tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
@@ -389,6 +409,12 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(FETCH_TIMEOUT);
     }
 
+    @When("^adding test data$")
+    public void adding_test_data() throws Throwable {
+        browseTo("/testDataInsert");
+        Thread.sleep(SLEEPING_TIME);
+    }
+
     @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
     public void new_book_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/books");
@@ -539,6 +565,12 @@ public class Stepdefs extends SpringBootTestBase {
     @Then("^ISBN can be clicked$")
     public void isbn_clickable() throws Throwable {
         assertTrue(driver.findElement(By.id("tipisbn")).getTagName().equalsIgnoreCase("a"));
+    }
+    
+    @Then("^test data is added successfully$")
+    public void test_data_added() throws Throwable {
+        waitForPageChange();
+        assertTrue(driver.getCurrentUrl().contains("login"));
     }
 
     /* helper methods */

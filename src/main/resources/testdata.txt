@@ -1,0 +1,28 @@
+LINK
+Google-haku
+Google
+Google Inc. on yhdysvaltalainen vuonna 1998 perustettu yhtiö, joka tarjoaa etupäässä nettipalveluita.
+https://www.google.fi/
+
+LINK
+Wikipedia (suomenkielinen)
+Wikipedia-yhteisö
+Wikipedia on Internetissä julkaistava ilmainen vapaan sisällön tietosanakirja, joka perustuu MediaWiki-tekniikkaan.
+https://fi.wikipedia.org/
+
+BOOK
+Iso suomen kielioppi
+Suomalaisen Kirjallisuuden Seura
+Ohittamattomaksi käsikirjaksi asemansa vakiinnuttanut Iso suomen kielioppi on kirjoitettuun ja puhuttuun 1900-luvun jälkipuoliskolla käytettyyn kieleen pohjautuva kuvaus suomen kielen rakenteista ja ilmiöistä.
+978-951-746-557-1
+
+VIDEO
+A new way to share on YouTube
+YouTube Help
+Sharing videos just got a lot more fun on the YouTube app. 
+https://www.youtube.com/watch?v=feBF_IY-HI8
+
+ARTICLE
+New Directions in Cryptography
+Whitfield Diffie; Martin E. Hellman
+IEEE Transactions on Information Theory, November 1976

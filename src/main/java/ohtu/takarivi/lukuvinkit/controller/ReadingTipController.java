@@ -183,6 +183,69 @@ public class ReadingTipController {
     }
 
     /**
+     * The page that displays the HTML listing of selected reading tips.
+     *
+     * @param auth An Authentication object representing the currently authenticated user.
+     * @return The text listing.
+     */
+    @GetMapping(value = "/readingTips/exportHTML")
+    @ResponseBody
+    public String exporthTMLListingOfSelected(Authentication auth, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<Long> tipIds = selectedTipsMap.getOrDefault(customUser.getId(), new ArrayList<Long>());
+        List<ReadingTip> tips = new ArrayList<ReadingTip>();
+        Iterator<Long> tipIdIterator = tipIds.iterator();
+        
+        while (tipIdIterator.hasNext()) {
+            Long id = tipIdIterator.next();
+            ReadingTip readingTip = readingTipRepository.getOne(id);
+            
+            if (readingTip == null) {
+                // remove invalid IDs from the list automatically
+                tipIdIterator.remove(); 
+            } else {
+                tips.add(readingTip);
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append("<!DOCTYPE html>\n"
+                    + "<html>\n"
+                    + "  <head>\n"
+                    + "    <title>Lukuvinkkilistaus</title>\n"
+                    + "    <meta charset=\"utf-8\">\n"
+                    + "  </head>\n"
+                    + "  <body>\n");
+        result.append("    <h1>Lukuvinkkilistaus</h1>\n");
+        result.append("    <p>Yhteensä valittuja lukuvinkkejä: " + tips.size() + "</p>\n");
+        result.append("    <table border=\"1\">\n");
+        result.append("      <tr>\n");
+        result.append("        <th>Otsikko</th>\n");
+        result.append("        <th>Tekijä(t)</th>\n");
+        result.append("        <th>Linkki tai ISBN</th>\n");
+        result.append("        <th>Kuvaus</th>\n");
+        result.append("      </tr>\n");
+        for (ReadingTip rtip: tips) {
+            String detail = "";
+            if (rtip.getCategory() == ReadingTipCategory.BOOK) {
+                detail = rtip.getIsbn();
+            } else if (rtip.getCategory() == ReadingTipCategory.LINK || rtip.getCategory() == ReadingTipCategory.VIDEO) {
+                detail = rtip.getUrl();
+            }
+            result.append("      <tr>\n");
+            result.append("        <td>" + rtip.getTitle() + "</td>\n");
+            result.append("        <td>" + rtip.getAuthor() + "</td>\n");
+            result.append("        <td>" + detail + "</td>\n");
+            result.append("        <td>" + rtip.getDescription() + "</td>\n");
+            result.append("      </tr>\n");
+        }
+        result.append("    </table>\n");
+        result.append("  </body>\n"
+                    + "</html>");
+        return result.toString();
+    }
+
+    /**
      * The form submit page that allows an user to mark a reading tip as having been read.
      *
      * @param request      The HTTP request used to access this controller.
