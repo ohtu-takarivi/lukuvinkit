@@ -62,7 +62,6 @@ public class ApiController {
                 int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
             } else if (responseBodyLower.contains("<meta name=description content=\"")) {
-                System.out.println("meta without name quotes");
                 int descStart = responseBodyLower.indexOf("<meta name=description content=\"") + "<meta name=description content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
             }
@@ -70,6 +69,7 @@ public class ApiController {
             JSONObject obj = new JSONObject();
             obj.put("title", title);
             obj.put("description", description);
+            System.out.println("JSON: " + obj.toString());///DEBUG REMOVE ON MASTER
             return obj.toString();
         } catch (Exception ex) {
             ex.printStackTrace();

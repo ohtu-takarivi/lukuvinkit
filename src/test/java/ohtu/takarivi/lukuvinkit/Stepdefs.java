@@ -470,6 +470,8 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Then("^fetched title contains \"([^\"]*)\" and description contains \"([^\"]*)\"$")
     public void autofill_title_description(String title, String description) throws Throwable {
+        System.out.println("TITLE: " + driver.findElement(By.name("title")).getAttribute("value"));///DEBUG REMOVE ON MASTER
+        System.out.println("DESC: " + driver.findElement(By.name("description")).getAttribute("value"));///DEBUG REMOVE ON MASTER
         assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
         assertTrue(driver.findElement(By.name("description")).getAttribute("value").contains(description));
     }
