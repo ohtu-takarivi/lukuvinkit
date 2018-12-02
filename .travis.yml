@@ -9,7 +9,4 @@ before_install:
   - tar -xzf geckodriver-v0.23.0-linux64.tar.gz
   - mv geckodriver lib/geckodriver
 script:
-  - xvfb-run ./gradlew check --info
-  - ./gradlew jacocoTestReport
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - xvfb-run ./gradlew check --info -Dcucumber.options="src/test/resources/ohtu/takarivi/lukuvinkit/autofetch.feature"
