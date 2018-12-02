@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -106,6 +107,16 @@ public class Stepdefs extends SpringBootTestBase {
         logInWith("nolla", "yksi");
         Thread.sleep(SLEEPING_TIME);
         browseTo("/readingTips/books");
+        Thread.sleep(SLEEPING_TIME);
+    }
+
+    @Given("^test user is logged in and creating a book tip$")
+    public void test_user_is_logged_in_creating_book_tip() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        Thread.sleep(SLEEPING_TIME);
+        logInWith("nolla", "yksi");
+        Thread.sleep(SLEEPING_TIME);
+        browseTo("/readingTips/books/add");
         Thread.sleep(SLEEPING_TIME);
     }
 
@@ -369,6 +380,14 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonautofilllink")).click();
         Thread.sleep(FETCH_TIMEOUT);
     }
+    
+    @When("^fetching information from ISBN \"([^\"]*)\"$")
+    public void autofill_book_isbn(String isbn) throws Throwable {
+        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        Thread.sleep(SLEEPING_TIME);
+        driver.findElement(By.id("buttonautofillbook")).click();
+        Thread.sleep(FETCH_TIMEOUT);
+    }
 
     @Then("^new book tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" is created$")
     public void new_book_tip_is_created(String title, String description, String author) throws Throwable {
@@ -449,10 +468,18 @@ public class Stepdefs extends SpringBootTestBase {
         assertNull(btn.getAttribute("disabled"));
     }
 
-    @Then("^fetched title contains \"([^\"]*)\" and description contains \"([^\"]*)\"$")
-    public void autofill_title_description(String title, String description) throws Throwable {
+    @Then("^fetched title contains \"([^\"]*)\"$")
+    public void autofill_title(String title) throws Throwable {
         assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
-        assertTrue(driver.findElement(By.name("description")).getAttribute("value").contains(description));
+    }
+
+    @Then("^fetched title contains \"([^\"]*)\" and author contains \"([^\"]*)\" or there is an alert$")
+    public void autofill_title_author(String title, String author) throws Throwable {
+        try {
+            assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
+            assertTrue(driver.findElement(By.name("author")).getAttribute("value").contains(author));
+        } catch (UnhandledAlertException ex) {
+        }
     }
 
     @Then("^user is logged in$")
