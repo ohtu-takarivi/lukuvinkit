@@ -66,17 +66,21 @@ public class ReadingTip extends AbstractPersistable<Long> {
     public String toString() {
         if (this.category == ReadingTipCategory.ARTICLE) {
             return "Artikkeli: " + this.title + "\n"
+                        + "Tekijä(t): " + this.author + "\n"
                         + this.description;
         } else if (this.category == ReadingTipCategory.BOOK) {
             return "Kirja: " + this.title + "\n"
+                        + "Tekijä(t): " + this.author + "\n"
                         + "ISBN-tunnus: " + this.isbn + "\n"
                         + this.description;
         } else if (this.category == ReadingTipCategory.LINK) {
             return "Verkkosivu: " + this.title + "\n"
+                        + "Tekijä(t): " + this.author + "\n"
                         + "Linkki: " + this.url + "\n"
                         + this.description;
         } else if (this.category == ReadingTipCategory.VIDEO) {
             return "Video: " + this.title + "\n"
+                        + "Tekijä(t): " + this.author + "\n"
                         + "Linkki: " + this.url + "\n"
                         + this.description;
         } else {
