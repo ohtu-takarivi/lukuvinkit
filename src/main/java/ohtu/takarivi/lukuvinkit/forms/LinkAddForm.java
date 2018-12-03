@@ -7,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
+
 @Getter
 @Setter
 public class LinkAddForm {
@@ -35,26 +37,13 @@ public class LinkAddForm {
 
     /**
      * Used to run additional validation for this form.
-     * 
+     *
      * @param result The BindingResult that value rejections are submitted to.
      */
     public void validateRest(BindingResult result) {
         if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "Huono url");
         }
-    }
-
-    /**
-     * Checks if the given URL is valid.
-     *
-     * @param url The value that is checked.
-     * @param regex Regex for validating URLs that begin with http:// or https://.
-     * @return Return true if the given input is a valid URL and false if it is not.
-     */
-    public static boolean isValidURL(String url) {
-        // test input against regex
-        String regex = "^(http|https|ftp):\\/\\/([a-zA-Z0-9_\\.\\-]+\\.([A-Za-z]{2,20})|localhost)(:[0-9]{1,5})?[a-zA-Z0-9_\\/\\&\\?\\=\\.\\~\\%\\-]*";
-        return url.matches(regex);
     }
 
 }

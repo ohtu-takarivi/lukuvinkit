@@ -10,6 +10,9 @@ import org.springframework.validation.BindingResult;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidISBN;
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
+
 @Getter
 @Setter
 public class ReadingTipAddForm {
@@ -20,7 +23,7 @@ public class ReadingTipAddForm {
     private static final int DESCRIPTION_MAX_LENGTH = 255;
     private static final int AUTHOR_MIN_LENGTH = 1;
     private static final int AUTHOR_MAX_LENGTH = 255;
-    private static final int ISBN_MIN_LENGTH = 13;
+    private static final int ISBN_MIN_LENGTH = 10;
     private static final int ISBN_MAX_LENGTH = 17;
     private static final int URL_MIN_LENGTH = 1;
     private static final int URL_MAX_LENGTH = 255;
@@ -47,16 +50,16 @@ public class ReadingTipAddForm {
         ReadingTipCategory readingTipCategory = ReadingTipCategory.getByName(category);
         if (readingTipCategory == ReadingTipCategory.BOOK) {
             if (isbn.length() < ISBN_MIN_LENGTH || isbn.length() > ISBN_MAX_LENGTH) {
-                result.rejectValue("isbn", "", "ISBN-13 pituus välimerkkeinen 13-17 merkkiä");
+                result.rejectValue("isbn", "", "ISBN pituus välimerkkeinen 10-17 merkkiä");
             }
-            if (!BookAddForm.isValidISBN(this.isbn)) {
+            if (!isValidISBN(this.isbn)) {
                 result.rejectValue("isbn", "", "Huono ISBN");
             }
         } else if ((readingTipCategory == ReadingTipCategory.LINK || readingTipCategory == ReadingTipCategory.VIDEO)) {
             if (url.length() < URL_MIN_LENGTH || url.length() > URL_MAX_LENGTH) {
                 result.rejectValue("url", "", "Urlin pituus 1-255 merkkiä");
             }
-            if (!LinkAddForm.isValidURL(this.url)) {
+            if (!isValidURL(this.url)) {
                 result.rejectValue("url", "", "Huono url");
             }
         }
@@ -64,7 +67,7 @@ public class ReadingTipAddForm {
 
     /**
      * Creates a ReadinGTip object from the values of this form.
-     * 
+     *
      * @param customUser The CustomUser representing the currently authenticated user.
      * @return The ReadingTip instance.
      */

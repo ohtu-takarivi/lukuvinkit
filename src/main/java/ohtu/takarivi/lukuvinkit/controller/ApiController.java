@@ -1,7 +1,5 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.forms.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +12,8 @@ import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
 
 /**
  * The Spring controller for API-related activity, such as fetching the title of a page.
@@ -31,7 +31,7 @@ public class ApiController {
     @GetMapping("/api/getLinkInfo")
     @ResponseBody
     public String getLinkInfo(Authentication auth, @RequestParam String url) {
-        if (!LinkAddForm.isValidURL(url)) {
+        if (!isValidURL(url)) {
             return "{}";
         }
         

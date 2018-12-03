@@ -7,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
+
 @Getter
 @Setter
 public class VideoAddForm {
@@ -42,16 +44,6 @@ public class VideoAddForm {
         if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "Huono url");
         }
-    }
-
-    /**
-     * Checks if the given URL is valid.
-     *
-     * @param url The value that is checked
-     * @return Return true if the given input is a valid URL and false if it is not.
-     */
-    public static boolean isValidURL(String url) {
-        return LinkAddForm.isValidURL(url);
     }
 
 }

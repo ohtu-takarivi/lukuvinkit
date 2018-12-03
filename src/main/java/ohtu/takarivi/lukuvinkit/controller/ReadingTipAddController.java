@@ -34,31 +34,33 @@ public class ReadingTipAddController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
-    
+
     @Autowired
     private Map<Long, List<Long>> selectedTipsMap;
 
     /**
-     * The endpoint for adding a reading tip. 
-     * 
-     * @param auth An Authentication object representing the currently authenticated user.
+     * The endpoint for adding a reading tip.
+     *
+     * @param auth              An Authentication object representing the currently authenticated user.
      * @param readingTipAddForm The form used to add the reading tip.
-     * @param result The BindingResult of the reading tip form.
-     * @param attributes The attributes for the redirect.
+     * @param result            The BindingResult of the reading tip form.
+     * @param attributes        The attributes for the redirect.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/add")
-    public String addReadingTip(Authentication auth, @Valid @ModelAttribute ReadingTipAddForm readingTipAddForm,
-                                BindingResult result, RedirectAttributes attributes) {
-        readingTipAddForm.validateRest(result);
+    public String addReadingTip(Authentication auth, HttpServletRequest request,
+                                @Valid @ModelAttribute ReadingTipAddForm readingTipAddForm, BindingResult result,
+                                RedirectAttributes attributes) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        String referer = request.getHeader("Referer");
+        readingTipAddForm.validateRest(result);
         if (result.hasErrors()) {
             attributes.addFlashAttribute("org.springframework.validation.BindingResult.readingTipAddForm", result);
             attributes.addFlashAttribute("readingTipAddForm", readingTipAddForm);
-            return "redirect:/";
+            return "redirect:" + (referer == null ? "/" : referer);
         }
         readingTipRepository.save(readingTipAddForm.createReadingTip(customUser));
-        return "redirect:/";
+        return "redirect:" + (referer == null ? "/" : referer);
     }
 
     /**
@@ -113,7 +115,7 @@ public class ReadingTipAddController {
     /**
      * The page containing the form that allows the user to create a new book reading tip.
      *
-     * @param auth           An Authentication object representing the currently authenticated user.
+     * @param auth        An Authentication object representing the currently authenticated user.
      * @param model       The model to feed the information into.
      * @param bookAddForm The instance of the form.
      * @return The action to be taken by this controller.
@@ -164,7 +166,7 @@ public class ReadingTipAddController {
      *
      * @param auth        An Authentication object representing the currently authenticated user.
      * @param model       The model to feed the information into.
-     * @param bookAddForm The instance of the form.
+     * @param linkAddForm The instance of the form.
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/links/add")

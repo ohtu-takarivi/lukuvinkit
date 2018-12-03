@@ -30,7 +30,7 @@ public class ArticleAddForm {
 
     /**
      * Used to run additional validation for this form.
-     * 
+     *
      * @param result The BindingResult that value rejections are submitted to.
      */
     public void validateRest(BindingResult result) {

@@ -106,9 +106,6 @@ public class CustomUserController {
      */
     @GetMapping("/")
     public String index(Authentication auth, Model model) {
-        if(!model.containsAttribute("readingTipAddForm")) {
-            model.addAttribute("readingTipAddForm", new ReadingTipAddForm());
-        }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("title", "Etusivu");
         model.addAttribute("description", "Lukuvinkkien säilöntään soveltuva palvelu.");
