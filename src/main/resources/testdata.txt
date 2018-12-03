@@ -10,11 +10,71 @@ Wikipedia-yhteisö
 Wikipedia on Internetissä julkaistava ilmainen vapaan sisällön tietosanakirja, joka perustuu MediaWiki-tekniikkaan.
 https://fi.wikipedia.org/
 
+LINK
+Helsingin Yliopisto
+Helsingin Yliopisto
+Suomen suurin ja vanhin tiedekorkeakoulu, joka on perustettu v. 1640.
+https://www.helsinki.fi/fi
+
+LINK
+GitHub
+Tom Preston-Werner, Chris Wanstrath ja PJ Hyett
+GitHub on verkossa toimiva palvelu, joka tarjoaa mahdollisuuden Git-versionhallinnalle. GitHubin käyttö on ilmaista julkisille projekteille.
+https://github.com/
+
+LINK
+Travis CI
+Travis CI community
+Travis on verkossa toimiva palvelu, joka tarjoaa ilmaista (ja maksullista) palvelua GitHubissa olevien ohjelmistojen rakentamiseen ja testaamiseen.
+https://travis-ci.org/
+
 BOOK
 Iso suomen kielioppi
 Suomalaisen Kirjallisuuden Seura
 Ohittamattomaksi käsikirjaksi asemansa vakiinnuttanut Iso suomen kielioppi on kirjoitettuun ja puhuttuun 1900-luvun jälkipuoliskolla käytettyyn kieleen pohjautuva kuvaus suomen kielen rakenteista ja ilmiöistä.
 978-951-746-557-1
+
+BOOK
+Ohjelmoinnin perusteet : Java
+Arto Sainio
+Ohjlmoinnin aloittamiseen liittyvä kirja, jossa käsitellään perusteita Java-kielellä.
+952-5210-28-6
+
+BOOK
+Tuntematon sotilas
+Väinö Linna
+Vuonna 1954 ilmestynyt, suomen ehkä tunnetuin sotaromaani. Kirja perustuu Linnan omiin kokemuksiin sodassa.
+978-951-0-36762-9
+
+BOOK
+Gekko
+Reijo Mäki
+Vares-sarjaan kuuluva kirja, jossa Jussi Vares etsii kadonnutta kuvataiteilijaa.
+978-951-1-32584-0
+
+BOOK
+Darwinin seitti
+Taavi Soininvaara
+Trilleri jossa jännitetään Suomen ja koko lännen tilannetta Venäjän ulkomaantiedustelun tuhoisan Värisuora-ohjelman johdosta.
+9789511310440
+
+BOOK
+Risto Räppääjä ja juonikas Julia
+Sinikka Nopola, Tiina Nopola ja Christel Rönns
+Tunnetun lastenkirjasarjan uusi tulokas, jossa Risto ja Nello tutustuvat Juliaan.
+9789520401405
+
+BOOK
+Guinness World Records 2019 : Suuri ennätyskirja 2019
+Sanoma Media Finland Ltd
+Uusin painos Guinessin ennätysten kirjasta, sisältäen taas mitä sekopäisimpiä ennätyksiä.
+9789513246587
+
+BOOK
+Puhdistus
+Sofi Oksanen
+Romaani naisten kokemuksista Viron vaietussa lähihistoriassa.
+978-951-0-33973-2
 
 VIDEO
 A new way to share on YouTube
@@ -22,7 +82,58 @@ YouTube Help
 Sharing videos just got a lot more fun on the YouTube app. 
 https://www.youtube.com/watch?v=feBF_IY-HI8
 
+VIDEO
+Learn Java 8 - Full Tutorial for Beginners
+freeCodeCamp.org
+Hyvin pitkä Java tutoriaali.
+https://www.youtube.com/watch?v=grEKMHGYyns
+
+VIDEO
+10 Strangest Planets In Space
+Thoughty2
+Video mielenkiintoisista planeetoista universumissamme. 
+https://www.youtube.com/watch?v=6KZ1kvIUFrU
+
+VIDEO
+Your kids might live on Mars. Here's how they'll survive | Stephen Petranek
+TED
+Stephen Petranek pohtii ihmiskunnan selviytymiskeinoja, sekä mahdollisuuksia asuttaa Mars.
+https://www.youtube.com/watch?v=t9c7aheZxls
+
+VIDEO
+How Will Artificial Intelligence Affect Your Life | Jeff Dean | TEDxLA
+TEDx Talks
+Jeff Dean käy läpi tekoälyä ja sen tuomia mahdollisuuksia ja vaikutuksia tulevaisuudessa.
+https://www.youtube.com/watch?v=t9c7aheZxls
+
+VIDEO
+AAMUPALAVINKKI VIHERAHON MALLIIN
+Pasi Viheraho
+Pasi Viheraho tekee aamupalaa, ei näytä herkulliselta.
+https://www.youtube.com/watch?v=TJW4gc7a8Dk
+
+VIDEO
+LITTLE BIG – SKIBIDI (official music video)
+Little Big
+Mielenkiintoinen kappale ja musiikkivideo.
+https://www.youtube.com/watch?v=mDFBTdToRmw
+
 ARTICLE
 New Directions in Cryptography
 Whitfield Diffie; Martin E. Hellman
 IEEE Transactions on Information Theory, November 1976
+
+ARTICLE
+Why a CEO should think like a Scrum Master
+Alistair Davidson & Laura Klemme
+Discuss how CEOs could improve the effectiveness of the companys innovation initiatives from the Scrum Master role, January 2016 at Strategy & Leadership
+
+ARTICLE
+On the security of consumer wearable devices in the Internet of Things
+Hasan Tahir , Ruhma Tahir & Klaus McDonald-Maier
+Miniaturization of computer hardware and the demand for network capable devices has resulted in the emergence of a new class of technology called wearable computing, April 2018 at Plos One journal
+
+ARTICLE
+Quantum machine learning
+Jacob Biamonte, Peter Wittek, Nicola Pancotti, Patrick Rebentrost, Nathan Wiebe & Seth Lloyd
+Fuelled by increasing computer power and algorithmic advances, machine learning techniques have become powerful tools for finding patterns in data, 2017 at Nature journal
