@@ -36,7 +36,9 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long>, J
      * @return The list of reading tips; unread tips are before the read tips.
      */
     List<ReadingTip> findByCustomUserIdAndCategoryOrderByIsReadAsc(Long customUserId, ReadingTipCategory category);
-    
+
+    List<ReadingTip> findByCustomUserIdAndIsSelectedTrue(Long customUserId);
+
     /*
      * List<ReadingTip> findByCustomUserIdAndTitleContaining(Long customUserId, String title);
      * 

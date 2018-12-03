@@ -2,7 +2,6 @@ package ohtu.takarivi.lukuvinkit.controller;
 
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.forms.CustomUserRegisterForm;
-import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -36,9 +31,6 @@ public class CustomUserController {
 
     @Autowired
     private PasswordEncoder encoder;
-    
-    @Autowired
-    private Map<Long, List<Long>> selectedTipsMap;
 
     /**
      * The default mapping, used for pages that cannot be found.
@@ -67,7 +59,7 @@ public class CustomUserController {
     /**
      * The register page, allowing users to create an account.
      *
-     * @param model The Model that the task information will be fit into.
+     * @param model                  The Model that the task information will be fit into.
      * @param customUserRegisterForm The custom registration form.
      * @return The action to be taken by this controller.
      */
@@ -92,7 +84,7 @@ public class CustomUserController {
         model.addAttribute("title", "Profiili");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "profile");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -112,18 +104,18 @@ public class CustomUserController {
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("view", "index");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
     /**
      * The page used by users to register an account.
      *
-     * @param auth           An Authentication object representing the currently
-     *                       authenticated user.
-     * @param registerForm   The registration form.
-     * @param result         The binding result of the given form.
-     * @param model          The model to set the data into.
+     * @param auth         An Authentication object representing the currently
+     *                     authenticated user.
+     * @param registerForm The registration form.
+     * @param result       The binding result of the given form.
+     * @param model        The model to set the data into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/register")

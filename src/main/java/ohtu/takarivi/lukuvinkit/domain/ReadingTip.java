@@ -30,6 +30,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String author;
     private String isbn;
     private Boolean isRead;
+    private Boolean isSelected;
     @ManyToOne
     private CustomUser customUser;
 
@@ -59,6 +60,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
         this.author = author;
         this.isbn = isbn;
         this.isRead = false;
+        this.isSelected = false;
         this.customUser = customUser;
     }
 
@@ -86,6 +88,10 @@ public class ReadingTip extends AbstractPersistable<Long> {
         } else {
             return super.toString();
         }
+    }
+
+    public void toggleIsSelected() {
+        isSelected = !isSelected;
     }
     
 }

@@ -1,6 +1,6 @@
 <div class="d-flex flex-row justify-content-end" th:fragment="read_delete">
   <form class="mr-2" th:action="@{/readingTips/toggleSelect/{id}(id=${readingTip.id})}" method="POST">
-    <button class="btn btn-secondary btn-sm buttonselect" type="submit" th:text="${selected != null && selected.contains(readingTip.id)} ? 'Poista valinta' : 'Valitse'"></button>
+    <button class="btn btn-secondary btn-sm buttonselect" type="submit" th:text="${readingTip.isSelected} ? 'Poista valinta' : 'Valitse'"></button>
   </form>
   <form class="mr-2" th:action="@{/readingTips/markAsRead/{id}(id=${readingTip.id})}" method="POST">
     <button class="btn btn-primary btn-sm buttonread" type="submit" th:attr="disabled=${readingTip.isRead ? 'disabled' : null}" th:text="${readingTip.isRead} ? 'Luettu!' : 'Merkitse luetuksi'"></button>

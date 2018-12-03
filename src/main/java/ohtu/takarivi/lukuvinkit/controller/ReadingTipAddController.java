@@ -3,25 +3,21 @@ package ohtu.takarivi.lukuvinkit.controller;
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
 import ohtu.takarivi.lukuvinkit.forms.*;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The Spring controller for activity relating to adding reading tips.
@@ -34,9 +30,6 @@ public class ReadingTipAddController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
-
-    @Autowired
-    private Map<Long, List<Long>> selectedTipsMap;
 
     /**
      * The endpoint for adding a reading tip.
@@ -77,7 +70,7 @@ public class ReadingTipAddController {
         model.addAttribute("title", "Lisää artikkeli");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addarticle");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -99,7 +92,8 @@ public class ReadingTipAddController {
             model.addAttribute("title", "Lisää artikkeli");
             model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addarticle");
-            model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+            model.addAttribute("selected",
+                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(articleAddForm.getTitle(),
@@ -126,7 +120,7 @@ public class ReadingTipAddController {
         model.addAttribute("title", "Lisää kirja");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addbook");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -148,7 +142,8 @@ public class ReadingTipAddController {
             model.addAttribute("title", "Lisää kirja");
             model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addbook");
-            model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+            model.addAttribute("selected",
+                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(bookAddForm.getTitle(),
@@ -175,7 +170,7 @@ public class ReadingTipAddController {
         model.addAttribute("title", "Lisää linkki");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addlink");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -197,7 +192,8 @@ public class ReadingTipAddController {
             model.addAttribute("title", "Lisää linkki");
             model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addlink");
-            model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+            model.addAttribute("selected",
+                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(linkAddForm.getTitle(),
@@ -224,7 +220,7 @@ public class ReadingTipAddController {
         model.addAttribute("title", "Lisää video");
         model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addvideo");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -246,7 +242,8 @@ public class ReadingTipAddController {
             model.addAttribute("title", "Lisää video");
             model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addvideo");
-            model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+            model.addAttribute("selected",
+                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(videoAddForm.getTitle(),
@@ -258,4 +255,5 @@ public class ReadingTipAddController {
                 customUser));
         return "redirect:/";
     }
+
 }

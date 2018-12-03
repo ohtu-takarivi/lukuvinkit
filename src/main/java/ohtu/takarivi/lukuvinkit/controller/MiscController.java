@@ -37,9 +37,6 @@ public class MiscController {
     @Autowired
     private PasswordEncoder encoder;
     
-    @Autowired
-    private Map<Long, List<Long>> selectedTipsMap;
-    
     /**
      * Enables the test data entry form; this is only used by testing code.
      */
@@ -60,7 +57,6 @@ public class MiscController {
             return "redirect:/";
         }
         
-        selectedTipsMap.clear();
         readingTipRepository.deleteAll();
         customUserRepository.deleteAll();
         

@@ -36,9 +36,6 @@ public class ReadingTipController {
     @Autowired
     private ReadingTipRepository readingTipRepository;
     
-    @Autowired
-    private Map<Long, List<Long>> selectedTipsMap;
-
     /**
      * The page that allows an user to view the details of a reading tip.
      *
@@ -59,7 +56,7 @@ public class ReadingTipController {
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTip", tip);
         model.addAttribute("view", "viewtip");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -78,7 +75,7 @@ public class ReadingTipController {
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -107,7 +104,7 @@ public class ReadingTipController {
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", tips);
         model.addAttribute("view", "category");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -122,28 +119,12 @@ public class ReadingTipController {
     @GetMapping("/readingTips/selected")
     public String viewSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<Long> tipIds = selectedTipsMap.getOrDefault(customUser.getId(), new ArrayList<Long>());
-        List<ReadingTip> tips = new ArrayList<ReadingTip>();
-        Iterator<Long> tipIdIterator = tipIds.iterator();
-        
-        while (tipIdIterator.hasNext()) {
-            Long id = tipIdIterator.next();
-            ReadingTip readingTip = readingTipRepository.getOne(id);
-            
-            if (readingTip == null) {
-                // remove invalid IDs from the list automatically
-                tipIdIterator.remove(); 
-            } else {
-                tips.add(readingTip);
-            }
-        }
-
         model.addAttribute("title", "Valitut lukuvinkit");
         model.addAttribute("nav", "navbar");
         model.addAttribute("customUser", customUser);
-        model.addAttribute("readingTips", tips);
+        model.addAttribute("readingTips", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         model.addAttribute("view", "selected");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -157,22 +138,7 @@ public class ReadingTipController {
     @ResponseBody
     public String exportTextListingOfSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<Long> tipIds = selectedTipsMap.getOrDefault(customUser.getId(), new ArrayList<Long>());
-        List<ReadingTip> tips = new ArrayList<ReadingTip>();
-        Iterator<Long> tipIdIterator = tipIds.iterator();
-        
-        while (tipIdIterator.hasNext()) {
-            Long id = tipIdIterator.next();
-            ReadingTip readingTip = readingTipRepository.getOne(id);
-            
-            if (readingTip == null) {
-                // remove invalid IDs from the list automatically
-                tipIdIterator.remove(); 
-            } else {
-                tips.add(readingTip);
-            }
-        }
-
+        List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
         result.append("\nYhteensä valittuja lukuvinkkejä: " + tips.size() + "\n");
         for (ReadingTip rtip: tips) {
@@ -192,22 +158,7 @@ public class ReadingTipController {
     @ResponseBody
     public String exporthTMLListingOfSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        List<Long> tipIds = selectedTipsMap.getOrDefault(customUser.getId(), new ArrayList<Long>());
-        List<ReadingTip> tips = new ArrayList<ReadingTip>();
-        Iterator<Long> tipIdIterator = tipIds.iterator();
-        
-        while (tipIdIterator.hasNext()) {
-            Long id = tipIdIterator.next();
-            ReadingTip readingTip = readingTipRepository.getOne(id);
-            
-            if (readingTip == null) {
-                // remove invalid IDs from the list automatically
-                tipIdIterator.remove(); 
-            } else {
-                tips.add(readingTip);
-            }
-        }
-
+        List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
         result.append("<!DOCTYPE html>\n"
                     + "<html>\n"
@@ -288,13 +239,8 @@ public class ReadingTipController {
             // the only user that can select or de-select a reading tip is the one who added it
             throw new AccessDeniedException("Access denied");
         }
-        selectedTipsMap.putIfAbsent(customUser.getId(), new ArrayList<Long>());
-        List<Long> selectedList = selectedTipsMap.get(customUser.getId());
-        if (selectedList.contains(readingTipId)) {
-            selectedList.remove(readingTipId);
-        } else {
-            selectedList.add(readingTipId);
-        }
+        readingTip.toggleIsSelected();
+        readingTipRepository.save(readingTip);
         return "redirect:" + (referer == null ? "/" : referer);
     }
 
@@ -339,7 +285,7 @@ public class ReadingTipController {
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list1);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";        
     }
 
@@ -368,7 +314,7 @@ public class ReadingTipController {
         model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", selectedTipsMap.get(customUser.getId()));
+        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -383,4 +329,5 @@ public class ReadingTipController {
         //CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         return "redirect:/";
     }
+
 }
