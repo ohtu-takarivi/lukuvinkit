@@ -32,7 +32,6 @@ public class ReadingTipController {
     /**
      * The page that allows an user to view the details of a reading tip.
      *
-     * @param auth         An Authentication object representing the currently authenticated user.
      * @param readingTipId The ID of the reading tip to view.
      * @param model        The model to feed the information into.
      * @return The action to be taken by this controller.
@@ -52,7 +51,6 @@ public class ReadingTipController {
     /**
      * The page that displays the search form to the user.
      *
-     * @param auth  An Authentication object representing the currently authenticated user.
      * @param model The model to feed the information into.
      * @return The action to be taken by this controller.
      */
@@ -66,9 +64,9 @@ public class ReadingTipController {
     /**
      * The page that displays reading tips of that category.
      *
-     * @param auth     An Authentication object representing the currently authenticated user.
-     * @param category The name of the reading tip to view.
-     * @param model    The model to feed the information into.
+     * @param auth         An Authentication object representing the currently authenticated user.
+     * @param categoryText The name of the reading tip to view.
+     * @param model        The model to feed the information into.
      * @return The action to be taken by this controller.
      */
 
@@ -112,7 +110,7 @@ public class ReadingTipController {
      */
     @GetMapping(value = "/readingTips/exportText", produces = "text/plain")
     @ResponseBody
-    public String exportTextListingOfSelected(Authentication auth, Model model) {
+    public String exportTextListingOfSelected(Authentication auth) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
@@ -132,7 +130,7 @@ public class ReadingTipController {
      */
     @GetMapping(value = "/readingTips/exportHTML")
     @ResponseBody
-    public String exporthTMLListingOfSelected(Authentication auth, Model model) {
+    public String exporthTMLListingOfSelected(Authentication auth) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();

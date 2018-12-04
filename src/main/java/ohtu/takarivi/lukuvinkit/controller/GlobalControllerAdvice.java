@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
+/**
+ * Class for defining global model attributes.
+ */
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
@@ -22,11 +25,21 @@ public class GlobalControllerAdvice {
     @Autowired
     private ReadingTipRepository readingTipRepository;
 
+    /**
+     * A form for the sidebar.
+     *
+     * @return form
+     */
     @ModelAttribute("readingTipAddForm")
     public ReadingTipAddForm populateReadingTipAddForm() {
         return new ReadingTipAddForm();
     }
 
+    /**
+     * A list of user's selected tips.
+     *
+     * @return list
+     */
     @ModelAttribute("selectedReadingTips")
     public List<ReadingTip> populateSelectedReadingTips() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -37,6 +50,11 @@ public class GlobalControllerAdvice {
         return readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
     }
 
+    /**
+     * The current user.
+     *
+     * @return customUser
+     */
     @ModelAttribute("customUser")
     public CustomUser populateCustomUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -46,6 +64,11 @@ public class GlobalControllerAdvice {
         return customUserRepository.findByUsername(auth.getName());
     }
 
+    /**
+     * To check if a navbar is needed.
+     *
+     * @return string
+     */
     @ModelAttribute("nav")
     public String populateNav() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

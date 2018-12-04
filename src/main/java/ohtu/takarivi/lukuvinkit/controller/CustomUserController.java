@@ -73,8 +73,6 @@ public class CustomUserController {
     /**
      * The profile page for a given user.
      *
-     * @param auth  An Authentication object representing the currently
-     *              authenticated user.
      * @param model The Model that the profile information will be fit into.
      * @return The action to be taken by this controller.
      */
@@ -88,8 +86,6 @@ public class CustomUserController {
     /**
      * The index page or front page.
      *
-     * @param auth  An Authentication object representing the currently
-     *              authenticated user.
      * @param model The Model that the task information will be fit into.
      * @return The action to be taken by this controller.
      */

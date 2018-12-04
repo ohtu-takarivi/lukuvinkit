@@ -59,7 +59,6 @@ public class ReadingTipAddController {
     /**
      * The page containing the form that allows the user to create a new article reading tip.
      *
-     * @param auth           An Authentication object representing the currently authenticated user.
      * @param model          The model to feed the information into.
      * @param articleAddForm The instance of the form.
      * @return The action to be taken by this controller.
@@ -103,7 +102,6 @@ public class ReadingTipAddController {
     /**
      * The page containing the form that allows the user to create a new book reading tip.
      *
-     * @param auth        An Authentication object representing the currently authenticated user.
      * @param model       The model to feed the information into.
      * @param bookAddForm The instance of the form.
      * @return The action to be taken by this controller.
@@ -147,7 +145,6 @@ public class ReadingTipAddController {
     /**
      * The page containing the form that allows the user to create a new book reading tip.
      *
-     * @param auth        An Authentication object representing the currently authenticated user.
      * @param model       The model to feed the information into.
      * @param linkAddForm The instance of the form.
      * @return The action to be taken by this controller.
@@ -191,7 +188,6 @@ public class ReadingTipAddController {
     /**
      * The page containing the form that allows the user to create a new video reading tip.
      *
-     * @param auth         An Authentication object representing the currently authenticated user.
      * @param model        The model to feed the information into.
      * @param videoAddForm The instance of the form.
      * @return The action to be taken by this controller.
