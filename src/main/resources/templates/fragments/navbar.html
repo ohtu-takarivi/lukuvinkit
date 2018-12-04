@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:fragment="navbar">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top border-bottom" th:fragment="navbar">
   <a class="navbar-brand" href="/">Lukuvinkit</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
     <span class="navbar-toggler-icon"></span>
@@ -37,10 +37,15 @@
       <li class="nav-item">
         <a class="nav-link" href="/readingTips/selected" th:inline="text">Valitut ([[${selectedReadingTips.size()}]])</a>
       </li>
+      <li class="nav-item">
+        <a class="btn btn-success my-2 my-md-0 ml-2" href="#">
+          <i class="fa fa-plus"></i>
+        </a>
+      </li>
     </div>
-    <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">
+    <form class="form-inline mx-md-3" th:action="@{/searchTips}" method="POST">
       <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Pikahaku" required>
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="buttonquicksearch">Hae</button>
+      <button class="btn btn-outline-info my-2 my-md-0" type="submit" id="buttonquicksearch">Hae</button>
     </form>
 
     <form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="POST">
