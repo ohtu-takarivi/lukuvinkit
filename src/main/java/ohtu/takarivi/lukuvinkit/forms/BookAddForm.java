@@ -42,7 +42,7 @@ public class BookAddForm {
      */
     public void validateRest(BindingResult result) {
         if (!isValidISBN(this.isbn)) {
-            result.rejectValue("isbn", "", "Huono ISBN");
+            result.rejectValue("isbn", "", "ISBN ei kelpaa");
         }
     }
 

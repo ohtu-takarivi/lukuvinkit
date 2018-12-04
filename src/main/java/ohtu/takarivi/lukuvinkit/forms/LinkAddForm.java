@@ -42,7 +42,7 @@ public class LinkAddForm {
      */
     public void validateRest(BindingResult result) {
         if (!isValidURL(this.url)) {
-            result.rejectValue("url", "", "Huono url");
+            result.rejectValue("url", "", "URL ei kelpaa");
         }
     }
 

@@ -50,17 +50,17 @@ public class ReadingTipAddForm {
         ReadingTipCategory readingTipCategory = ReadingTipCategory.getByName(category);
         if (readingTipCategory == ReadingTipCategory.BOOK) {
             if (isbn.length() < ISBN_MIN_LENGTH || isbn.length() > ISBN_MAX_LENGTH) {
-                result.rejectValue("isbn", "", "ISBN pituus välimerkkeinen 10-17 merkkiä");
+                result.rejectValue("isbn", "", "ISBN:n pituus välimerkkeineen 10-17 merkkiä");
             }
             if (!isValidISBN(this.isbn)) {
-                result.rejectValue("isbn", "", "Huono ISBN");
+                result.rejectValue("isbn", "", "ISBN ei kelpaa");
             }
         } else if ((readingTipCategory == ReadingTipCategory.LINK || readingTipCategory == ReadingTipCategory.VIDEO)) {
             if (url.length() < URL_MIN_LENGTH || url.length() > URL_MAX_LENGTH) {
-                result.rejectValue("url", "", "Urlin pituus 1-255 merkkiä");
+                result.rejectValue("url", "", "URL:n pituus 1-255 merkkiä");
             }
             if (!isValidURL(this.url)) {
-                result.rejectValue("url", "", "Huono url");
+                result.rejectValue("url", "", "URL ei kelpaa");
             }
         }
     }
