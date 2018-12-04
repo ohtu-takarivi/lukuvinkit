@@ -159,7 +159,7 @@ Fuelled by increasing computer power and algorithmic advances, machine learning 
 ARTICLE
 On the translation of languages from left to right
 Donald Knuth
-In this paper, we define LR(k) grammars, which are perhaps the most general ones of this type, and they provide the basis for understanding all of the special tricks which have been used in the construction of parsing algorithms for languages with simple structure, e.g. algebraic languages. Information and Control. 8 (6): 607–639. doi:10.1016/S0019-9958(65)90426-2
+In this paper, we define LR(k) grammars, which are perhaps the most general ones of this type...
 
 ARTICLE
 Go To Statement Considered Harmful
