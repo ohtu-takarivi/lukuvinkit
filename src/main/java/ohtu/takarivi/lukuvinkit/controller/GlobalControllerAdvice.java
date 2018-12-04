@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +48,9 @@ public class GlobalControllerAdvice {
             return null;
         }
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        if (customUser == null) {
+            return new ArrayList<ReadingTip>();
+        }
         return readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
     }
 
