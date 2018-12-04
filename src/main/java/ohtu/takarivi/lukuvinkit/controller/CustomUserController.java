@@ -79,12 +79,9 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/profile")
-    public String profile(Authentication auth, Model model) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String profile(Model model) {
         model.addAttribute("title", "Profiili");
-        model.addAttribute("nav", "navbar");
         model.addAttribute("view", "profile");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -97,14 +94,10 @@ public class CustomUserController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/")
-    public String index(Authentication auth, Model model) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String index(Model model) {
         model.addAttribute("title", "Etusivu");
         model.addAttribute("description", "Lukuvinkkien säilöntään soveltuva palvelu.");
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("view", "index");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 

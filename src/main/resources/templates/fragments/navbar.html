@@ -35,7 +35,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/readingTips/selected" th:inline="text">Valitut ([[${selected.size()}]])</a>
+        <a class="nav-link" href="/readingTips/selected" th:inline="text">Valitut ([[${selectedReadingTips.size()}]])</a>
       </li>
     </div>
     <form class="form-inline mr-sm-3" th:action="@{/searchTips}" method="POST">

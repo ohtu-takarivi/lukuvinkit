@@ -4,7 +4,7 @@
       <div th:replace="fragments/table :: table"></div>
     </div>
   </section>
-  <section class="container" th:if="${selected != null && selected.size() > 0}">
+  <section class="container" th:if="${selectedReadingTips.size() > 0}">
     <p class="pt-2">
       <a href="/readingTips/exportText" class="btn btn-success btn-lg mx-1">Lista tekstimuodossa</a>
       <a href="/readingTips/exportHTML" class="btn btn-success btn-lg mx-1">Lista HTML-muodossa</a>

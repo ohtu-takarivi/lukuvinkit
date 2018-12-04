@@ -65,12 +65,9 @@ public class ReadingTipAddController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/articles/add")
-    public String viewAddArticle(Authentication auth, Model model, @ModelAttribute ArticleAddForm articleAddForm) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String viewAddArticle(Model model, @ModelAttribute ArticleAddForm articleAddForm) {
         model.addAttribute("title", "Lisää artikkeli");
-        model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addarticle");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -90,10 +87,7 @@ public class ReadingTipAddController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää artikkeli");
-            model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addarticle");
-            model.addAttribute("selected",
-                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(articleAddForm.getTitle(),
@@ -115,12 +109,9 @@ public class ReadingTipAddController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/books/add")
-    public String viewAddBook(Authentication auth, Model model, @ModelAttribute BookAddForm bookAddForm) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String viewAddBook(Model model, @ModelAttribute BookAddForm bookAddForm) {
         model.addAttribute("title", "Lisää kirja");
-        model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addbook");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -140,10 +131,7 @@ public class ReadingTipAddController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää kirja");
-            model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addbook");
-            model.addAttribute("selected",
-                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(bookAddForm.getTitle(),
@@ -165,12 +153,9 @@ public class ReadingTipAddController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/links/add")
-    public String viewAddLink(Authentication auth, Model model, @ModelAttribute LinkAddForm linkAddForm) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String viewAddLink(Model model, @ModelAttribute LinkAddForm linkAddForm) {
         model.addAttribute("title", "Lisää linkki");
-        model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addlink");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -190,10 +175,7 @@ public class ReadingTipAddController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää linkki");
-            model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addlink");
-            model.addAttribute("selected",
-                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(linkAddForm.getTitle(),
@@ -215,12 +197,9 @@ public class ReadingTipAddController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/videos/add")
-    public String viewAddVideo(Authentication auth, Model model, @ModelAttribute VideoAddForm videoAddForm) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String viewAddVideo(Model model, @ModelAttribute VideoAddForm videoAddForm) {
         model.addAttribute("title", "Lisää video");
-        model.addAttribute("nav", "navbar");
         model.addAttribute("view", "addvideo");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -240,10 +219,7 @@ public class ReadingTipAddController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         if (result.hasErrors()) {
             model.addAttribute("title", "Lisää video");
-            model.addAttribute("nav", "navbar");
             model.addAttribute("view", "addvideo");
-            model.addAttribute("selected",
-                    readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
             return "layout";
         }
         readingTipRepository.save(new ReadingTip(videoAddForm.getTitle(),

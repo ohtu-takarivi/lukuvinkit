@@ -4,7 +4,6 @@ import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
-import ohtu.takarivi.lukuvinkit.forms.*;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +11,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
- * The Spring controller for reading tip related activity. Handlers for adding reading tips are under ReadingTipAddController.
+ * The Spring controller for reading tip related activity. Handlers for adding reading tips are under
+ * ReadingTipAddController.
  */
 @Controller
 public class ReadingTipController {
@@ -35,7 +28,7 @@ public class ReadingTipController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
-    
+
     /**
      * The page that allows an user to view the details of a reading tip.
      *
@@ -45,18 +38,14 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/readingTips/view/{readingTipId}")
-    public String viewReadingTip(Authentication auth, @PathVariable Long readingTipId, Model model) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+    public String viewReadingTip(@PathVariable Long readingTipId, Model model) {
         ReadingTip tip = readingTipRepository.getOne(readingTipId);
         if (tip == null) {
             return "redirect:/";
         }
         model.addAttribute("title", "Lukuvinkki");
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("readingTip", tip);
         model.addAttribute("view", "viewtip");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -68,14 +57,9 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
     @GetMapping("/search")
-    public String viewSearch(Authentication auth, Model model) {
-        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
-        
+    public String viewSearch(Model model) {
         model.addAttribute("title", "Haku");
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -87,32 +71,27 @@ public class ReadingTipController {
      * @param model    The model to feed the information into.
      * @return The action to be taken by this controller.
      */
-    
+
     @GetMapping("/readingTips/{categoryText}")
     public String viewCategory(Authentication auth, @PathVariable String categoryText, Model model) {
         ReadingTipCategory category = ReadingTipCategory.getByName(categoryText.toUpperCase());
         if (category == null) {
             return "redirect:/";
         }
-
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndCategoryOrderByIsReadAsc(customUser.getId(),
                 category);
-
         model.addAttribute("title", "Kategoria");
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", tips);
         model.addAttribute("view", "category");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
     /**
      * The page that displays the list of reading tips that the user has selected.
      *
-     * @param auth     An Authentication object representing the currently authenticated user.
-     * @param model    The model to feed the information into.
+     * @param auth  An Authentication object representing the currently authenticated user.
+     * @param model The model to feed the information into.
      * @return The action to be taken by this controller.
      */
 
@@ -120,11 +99,8 @@ public class ReadingTipController {
     public String viewSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         model.addAttribute("title", "Valitut lukuvinkit");
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         model.addAttribute("view", "selected");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -141,7 +117,7 @@ public class ReadingTipController {
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
         result.append("\nYhteensä valittuja lukuvinkkejä: " + tips.size() + "\n");
-        for (ReadingTip rtip: tips) {
+        for (ReadingTip rtip : tips) {
             result.append("\n=====================\n");
             result.append(rtip.toString() + "\n");
         }
@@ -161,12 +137,12 @@ public class ReadingTipController {
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
         result.append("<!DOCTYPE html>\n"
-                    + "<html>\n"
-                    + "  <head>\n"
-                    + "    <title>Lukuvinkkilistaus</title>\n"
-                    + "    <meta charset=\"utf-8\">\n"
-                    + "  </head>\n"
-                    + "  <body>\n");
+                + "<html>\n"
+                + "  <head>\n"
+                + "    <title>Lukuvinkkilistaus</title>\n"
+                + "    <meta charset=\"utf-8\">\n"
+                + "  </head>\n"
+                + "  <body>\n");
         result.append("    <h1>Lukuvinkkilistaus</h1>\n");
         result.append("    <p>Yhteensä valittuja lukuvinkkejä: " + tips.size() + "</p>\n");
         result.append("    <table border=\"1\">\n");
@@ -176,7 +152,7 @@ public class ReadingTipController {
         result.append("        <th>Linkki tai ISBN</th>\n");
         result.append("        <th>Kuvaus</th>\n");
         result.append("      </tr>\n");
-        for (ReadingTip rtip: tips) {
+        for (ReadingTip rtip : tips) {
             String detail = "";
             if (rtip.getCategory() == ReadingTipCategory.BOOK) {
                 detail = rtip.getIsbn();
@@ -192,7 +168,7 @@ public class ReadingTipController {
         }
         result.append("    </table>\n");
         result.append("  </body>\n"
-                    + "</html>");
+                + "</html>");
         return result.toString();
     }
 
@@ -231,7 +207,7 @@ public class ReadingTipController {
      */
     @PostMapping("/readingTips/toggleSelect/{readingTipId}")
     public String toggleReadingTipSelect(HttpServletRequest request, Authentication auth,
-                                       @PathVariable Long readingTipId) {
+                                         @PathVariable Long readingTipId) {
         String referer = request.getHeader("Referer");
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         ReadingTip readingTip = readingTipRepository.getOne(readingTipId);
@@ -281,17 +257,14 @@ public class ReadingTipController {
         // do a simple keyword search
         List<ReadingTip> list1 = ReadingTipSearch.searchSimple(readingTipRepository, customUser.getUsername(),
                 customUser.getId(), keyword);
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list1);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
-        return "layout";        
+        return "layout";
     }
 
     /**
      * The form search page that allows searching tips by keywords by using the search form.
-     * 
+     *
      * @param auth        An Authentication object representing the currently authenticated user.
      * @param title       Keyword given to search the title or empty.
      * @param description Keyword given to search the description or empty.
@@ -301,20 +274,18 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
     @PostMapping("/search")
-    public String searchReadingTipWithFullForm(Authentication auth, @RequestParam String title, @RequestParam String description,
-                            @RequestParam String url, @RequestParam String author,
-                            @RequestParam("category") List<String> category,
-                            @RequestParam("unreadstatus") List<String> unreadstatus,
-                            Model model) {
+    public String searchReadingTipWithFullForm(Authentication auth, @RequestParam String title,
+                                               @RequestParam String description,
+                                               @RequestParam String url, @RequestParam String author,
+                                               @RequestParam("category") List<String> category,
+                                               @RequestParam("unreadstatus") List<String> unreadstatus,
+                                               Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         // do an advanced search
         List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId(),
                 title, description, url, author, category, unreadstatus);
-        model.addAttribute("nav", "navbar");
-        model.addAttribute("customUser", customUser);
         model.addAttribute("readingTips", list2);
         model.addAttribute("view", "search");
-        model.addAttribute("selected", readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId()));
         return "layout";
     }
 
@@ -326,7 +297,6 @@ public class ReadingTipController {
      */
     @PostMapping("/resetSearch")
     public String resetSearch(Authentication auth) {
-        //CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         return "redirect:/";
     }
 
