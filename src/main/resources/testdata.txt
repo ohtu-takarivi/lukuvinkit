@@ -28,6 +28,12 @@ Travis CI community
 Travis on verkossa toimiva palvelu, joka tarjoaa ilmaista (ja maksullista) palvelua GitHubissa olevien ohjelmistojen rakentamiseen ja testaamiseen.
 https://travis-ci.org/
 
+LINK
+Geoguessr
+Geoguessr
+Peli, jossa pitää päätellä sijainti pelkästään Google Street View -palvelun katukuvien perusteella.
+https://geoguessr.com/
+
 BOOK
 Iso suomen kielioppi
 Suomalaisen Kirjallisuuden Seura
@@ -67,7 +73,7 @@ Tunnetun lastenkirjasarjan uusi tulokas, jossa Risto ja Nello tutustuvat Juliaan
 BOOK
 Guinness World Records 2019 : Suuri ennätyskirja 2019
 Sanoma Media Finland Ltd
-Uusin painos Guinessin ennätysten kirjasta, sisältäen taas mitä sekopäisimpiä ennätyksiä.
+Uusin painos Guinnessin ennätysten kirjasta, sisältäen taas mitä sekopäisimpiä ennätyksiä.
 9789513246587
 
 BOOK
@@ -75,6 +81,12 @@ Puhdistus
 Sofi Oksanen
 Romaani naisten kokemuksista Viron vaietussa lähihistoriassa.
 978-951-0-33973-2
+
+BOOK
+The C Programming Language
+Brian Kernighan, Dennis Ritchie
+Ensimmäinen C-kielestä kirjoitettu kirja, joka toimi kielen standardina ja jonka nimeen yhä monet C-ohjelmoijat vannovat. Yksi ohjelmoinnin historian tärkeimmistä teoksista.
+0-13-110163-3
 
 VIDEO
 A new way to share on YouTube
@@ -118,6 +130,12 @@ Little Big
 Mielenkiintoinen kappale ja musiikkivideo.
 https://www.youtube.com/watch?v=mDFBTdToRmw
 
+VIDEO
+If Educational Videos Were Filmed Like Music Videos
+Tom Scott
+There's a reason music videos look strange. I could just talk about framerate, cuts and continuity... or I could get an actual music video director. And a leaf blower.
+https://www.youtube.com/watch?v=G025oxyWv0E
+
 ARTICLE
 New Directions in Cryptography
 Whitfield Diffie; Martin E. Hellman
@@ -137,3 +155,13 @@ ARTICLE
 Quantum machine learning
 Jacob Biamonte, Peter Wittek, Nicola Pancotti, Patrick Rebentrost, Nathan Wiebe & Seth Lloyd
 Fuelled by increasing computer power and algorithmic advances, machine learning techniques have become powerful tools for finding patterns in data, 2017 at Nature journal
+
+ARTICLE
+On the translation of languages from left to right
+Donald Knuth
+In this paper, we define LR(k) grammars, which are perhaps the most general ones of this type, and they provide the basis for understanding all of the special tricks which have been used in the construction of parsing algorithms for languages with simple structure, e.g. algebraic languages. Information and Control. 8 (6): 607–639. doi:10.1016/S0019-9958(65)90426-2
+
+ARTICLE
+Go To Statement Considered Harmful
+Edsger Dijkstra
+Don't use goto – the beginning of structured programming. Communications of the ACM, 11(3):147–148, March 1968
