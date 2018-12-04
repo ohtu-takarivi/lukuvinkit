@@ -26,7 +26,7 @@ public class MiscController {
      * When this is set to true, /testDataInsert is allowed to clear all data and replace it with test data.
      * This should always be set to false in production code!
      */
-    public static boolean ENABLE_TESTDATA_ENTRY = false;
+    public static boolean ENABLE_TESTDATA_ENTRY = true;
 
     @Autowired
     private CustomUserRepository customUserRepository;
