@@ -11,7 +11,7 @@ import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
 
 @Getter
 @Setter
-public class VideoAddForm {
+public class VideoAddForm implements AddForm {
 
     private static final int TITLE_MIN_LENGTH = 1;
     private static final int TITLE_MAX_LENGTH = 255;
@@ -40,6 +40,7 @@ public class VideoAddForm {
      * 
      * @param result The BindingResult that value rejections are submitted to.
      */
+    @Override
     public void validateRest(BindingResult result) {
         if (!isValidURL(this.url)) {
             result.rejectValue("url", "", "URL ei kelpaa");
