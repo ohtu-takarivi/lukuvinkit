@@ -33,8 +33,8 @@ public class Stepdefs extends SpringBootTestBase {
     WebDriver driver;
     private static final int SLEEPING_TIME = 200;
     private static final int FETCH_TIMEOUT = 5000;
-    private static final int PAGE_LOAD_TIMEOUT = 15;
-    private static final int ELEMENT_LOAD_TIMEOUT = 15;
+    private static final int PAGE_LOAD_TIMEOUT = 30;
+    private static final int ELEMENT_LOAD_TIMEOUT = 30;
 
     public Stepdefs() {
 
