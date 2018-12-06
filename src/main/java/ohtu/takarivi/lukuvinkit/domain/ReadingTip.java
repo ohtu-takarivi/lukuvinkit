@@ -69,27 +69,43 @@ public class ReadingTip extends AbstractPersistable<Long> {
     @Override
     public String toString() {
         if (this.category == ReadingTipCategory.ARTICLE) {
-            return "Artikkeli: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + this.description;
+            return articleToString();
         } else if (this.category == ReadingTipCategory.BOOK) {
-            return "Kirja: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "ISBN-tunnus: " + this.isbn + "\n"
-                    + this.description;
+            return bookToString();
         } else if (this.category == ReadingTipCategory.LINK) {
-            return "Verkkosivu: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n"
-                    + this.description;
+            return linkToString();
         } else if (this.category == ReadingTipCategory.VIDEO) {
-            return "Video: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n"
-                    + this.description;
+            return videoToString();
         } else {
             return super.toString();
         }
+    }
+    
+    private String articleToString() {
+       return "Artikkeli: " + this.title + "\n"
+                    + "Tekijä(t): " + this.author + "\n"
+                    + this.description; 
+    }
+    
+    private String bookToString() {
+        return "Kirja: " + this.title + "\n"
+                    + "Tekijä(t): " + this.author + "\n"
+                    + "ISBN-tunnus: " + this.isbn + "\n"
+                    + this.description;
+    }
+    
+    private String linkToString() {
+        return "Verkkosivu: " + this.title + "\n"
+                    + "Tekijä(t): " + this.author + "\n"
+                    + "Linkki: " + this.url + "\n"
+                    + this.description;
+    }
+    
+    private String videoToString() {
+        return "Video: " + this.title + "\n"
+                    + "Tekijä(t): " + this.author + "\n"
+                    + "Linkki: " + this.url + "\n"
+                    + this.description;
     }
 
     /**
