@@ -9,7 +9,7 @@ before_install:
   - tar -xzf geckodriver-v0.23.0-linux64.tar.gz
   - mv geckodriver lib/geckodriver
 script:
-  - xvfb-run ./gradlew check
+  - xvfb-run travis_wait 30 ./gradlew check
   - ./gradlew jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
