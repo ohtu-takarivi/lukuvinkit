@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 /**
@@ -25,6 +26,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String title;
     @Enumerated(EnumType.STRING)
     private ReadingTipCategory category;
+    @Lob
     private String description;
     private String url;
     private String author;

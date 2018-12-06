@@ -15,29 +15,14 @@ import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
 
 @Getter
 @Setter
-public class ReadingTipAddForm implements AddForm {
+public class ReadingTipAddForm extends AddForm {
 
-    private static final int TITLE_MIN_LENGTH = 1;
-    private static final int TITLE_MAX_LENGTH = 255;
-    private static final int DESCRIPTION_MIN_LENGTH = 1;
-    private static final int DESCRIPTION_MAX_LENGTH = 255;
-    private static final int AUTHOR_MIN_LENGTH = 1;
-    private static final int AUTHOR_MAX_LENGTH = 255;
     private static final int ISBN_MIN_LENGTH = 10;
     private static final int ISBN_MAX_LENGTH = 17;
     private static final int URL_MIN_LENGTH = 1;
     private static final int URL_MAX_LENGTH = 255;
 
     private String category;
-    @NotEmpty
-    @Size(min = TITLE_MIN_LENGTH, max = TITLE_MAX_LENGTH, message = "Otsikon pituus 1-255 merkkiä")
-    private String title;
-    @NotEmpty
-    @Size(min = DESCRIPTION_MIN_LENGTH, max = DESCRIPTION_MAX_LENGTH, message = "Kuvauksen pituus 1-255 merkkiä")
-    private String description;
-    @NotEmpty
-    @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
-    private String author;
     private String isbn;
     private String url;
 

@@ -98,12 +98,38 @@ public class ReadingTipAddFormTest {
     }
     
     @Test
+    public void cannotCreateBooksWithInvalidISBNLengthThroughForm() {
+        rtaf.setCategory("BOOK");
+        rtaf.setTitle("title");
+        rtaf.setDescription("description");
+        rtaf.setAuthor("author");
+        rtaf.setIsbn("978-3-16-1484165630-4");
+        
+        rtaf.validateRest(br);
+        assertTrue(br.hasErrors());
+    }
+    
+    @Test
     public void cannotCreateLinksWithInvalidURLThroughForm() {
         rtaf.setCategory("LINK");
         rtaf.setTitle("title");
         rtaf.setDescription("description");
         rtaf.setAuthor("author");
         rtaf.setUrl("URL");
+        
+        rtaf.validateRest(br);
+        assertTrue(br.hasErrors());
+    }
+    
+    @Test
+    public void cannotCreateLinksWithInvalidURLLengthThroughForm() {
+        final String LONG_STRING = "AAAAAAAAAAAAAAAAAAAAAAAA".replace("A","AAAAAAAAAAAAAAAAAAAAAAAA");
+        
+        rtaf.setCategory("LINK");
+        rtaf.setTitle("title");
+        rtaf.setDescription("description");
+        rtaf.setAuthor("author");
+        rtaf.setUrl(LONG_STRING);
         
         rtaf.validateRest(br);
         assertTrue(br.hasErrors());
