@@ -223,6 +223,11 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttondelete")).click();
     }
 
+    @When("^listing all tips with the tag \"([^\"]*)\"$")
+    public void list_all_tips_with_tag(String tag) throws Throwable {
+        browseTo("/tag/" + tag);
+    }
+
     @When("^searching for tips with \"([^\"]*)\"$")
     public void search_keyword(String keyword) throws Throwable {
         driver.findElement(By.id("keyword")).sendKeys(keyword);
@@ -488,6 +493,11 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonlogout")).click();
         logInWith("nolla", "yksi");
         assertFalse(driver.findElements(By.id("buttonlogout")).isEmpty());
+    }
+
+    @Then("^there are (\\d+) tips listed$")
+    public void total_tips_listed(int total) throws Throwable {
+        assertEquals(total, driver.findElements(By.cssSelector(".searchresult")).size());
     }
 
     @Then("^there are no search results$")

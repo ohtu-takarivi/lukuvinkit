@@ -182,7 +182,7 @@ public class ReadingTipController {
      * @param model        The model to feed the information into.
      * @return The action to be taken by this controller.
      */
-    @GetMapping("/tags/{tagName}")
+    @GetMapping("/tag/{tagName}")
     public String viewTag(Authentication auth, @PathVariable String tagName, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndTags_Name(customUser.getId(), tagName);

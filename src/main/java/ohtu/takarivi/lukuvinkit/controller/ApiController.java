@@ -63,9 +63,6 @@ public class ApiController {
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
                 int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
                 description = responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
-            } else if (responseBodyLower.contains("<meta name=description content=\"")) {
-                int descStart = responseBodyLower.indexOf("<meta name=description content=\"") + "<meta name=description content=\"".length();
-                description = responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
             }
             
             JSONObject obj = new JSONObject();

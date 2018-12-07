@@ -20,7 +20,7 @@
           <p>
             <div class="tiptags" th:if="${readingTip.tags.size() > 0}">
               <b>Tagit</b>: 
-              <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}" th:href="@{/tags/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
+              <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}" th:href="@{/tag/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
             </div>
           </p>
           
