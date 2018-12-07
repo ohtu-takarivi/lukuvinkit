@@ -23,8 +23,11 @@ public enum ReadingTipCategory {
             case "links":
                 return LINK;
             default:
-                try { return ReadingTipCategory.valueOf(category.toUpperCase()); } 
-                catch (IllegalArgumentException ex) { return null; }    
+                try { 
+                    return ReadingTipCategory.valueOf(category.toUpperCase()); 
+                } catch (IllegalArgumentException ex) { 
+                    return null; 
+                }    
         }
     }
 }
