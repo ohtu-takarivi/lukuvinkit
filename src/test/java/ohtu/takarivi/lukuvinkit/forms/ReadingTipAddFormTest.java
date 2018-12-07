@@ -1,26 +1,32 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
-import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
 
 public class ReadingTipAddFormTest {
-    
+
+    Set<ReadingTipTag> emptyTags;
     ReadingTipAddForm rtaf;
     CustomUser cu;
     BindingResult br;
     
     @Before
     public void setUp() {
+        emptyTags = new HashSet<>();
         rtaf = new ReadingTipAddForm();
         cu = new CustomUser("user", "password", "name");
         br = new BeanPropertyBindingResult(rtaf, "");
@@ -28,69 +34,54 @@ public class ReadingTipAddFormTest {
     
     @Test
     public void canCreateBooksWithCorrectInformationThroughForm() {
-        rtaf.setCategory("BOOK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "BOOK", "title", "description", "author", "");
         rtaf.setIsbn("978-3-16-148410-0");
         
         rtaf.validateRest(br);
         assertFalse(br.hasErrors());
         
-        ReadingTip rt = rtaf.createReadingTip(cu);
-        assertEquals(new ReadingTip("title", ReadingTipCategory.BOOK, "description", "", "author", "978-3-16-148410-0", cu).toString(), rt.toString());
+        ReadingTip rt = rtaf.createReadingTip(cu, null);
+        assertEquals(new ReadingTip("title", ReadingTipCategory.BOOK, "description", "", "author", "978-3-16-148410-0", emptyTags, cu).toString(), rt.toString());
     }
     
     @Test
     public void canCreateLinksWithCorrectInformationThroughForm() {
-        rtaf.setCategory("LINK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "LINK", "title", "description", "author", "");
         rtaf.setUrl("https://example.com/");
         
         rtaf.validateRest(br);
         assertFalse(br.hasErrors());
         
-        ReadingTip rt = rtaf.createReadingTip(cu);
-        assertEquals(new ReadingTip("title", ReadingTipCategory.LINK, "description", "https://example.com/", "author", "", cu).toString(), rt.toString());
+        ReadingTip rt = rtaf.createReadingTip(cu, null);
+        assertEquals(new ReadingTip("title", ReadingTipCategory.LINK, "description", "https://example.com/", "author", "", emptyTags, cu).toString(), rt.toString());
     }
     
     @Test
     public void canCreateVideosWithCorrectInformationThroughForm() {
-        rtaf.setCategory("VIDEO");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "VIDEO", "title", "description", "author", "");
         rtaf.setUrl("https://example.com/");
         
         rtaf.validateRest(br);
         assertFalse(br.hasErrors());
         
-        ReadingTip rt = rtaf.createReadingTip(cu);
-        assertEquals(new ReadingTip("title", ReadingTipCategory.VIDEO, "description", "https://example.com/", "author", "", cu).toString(), rt.toString());
+        ReadingTip rt = rtaf.createReadingTip(cu, null);
+        assertEquals(new ReadingTip("title", ReadingTipCategory.VIDEO, "description", "https://example.com/", "author", "", emptyTags, cu).toString(), rt.toString());
     }
     
     @Test
     public void canCreateArticlesWithCorrectInformationThroughForm() {
-        rtaf.setCategory("ARTICLE");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "ARTICLE", "title", "description", "author", "");
         
         rtaf.validateRest(br);
         assertFalse(br.hasErrors());
         
-        ReadingTip rt = rtaf.createReadingTip(cu);
-        assertEquals(new ReadingTip("title", ReadingTipCategory.ARTICLE, "description", "", "author", "", cu).toString(), rt.toString());
+        ReadingTip rt = rtaf.createReadingTip(cu, null);
+        assertEquals(new ReadingTip("title", ReadingTipCategory.ARTICLE, "description", "", "author", "", emptyTags, cu).toString(), rt.toString());
     }
     
     @Test
     public void cannotCreateBooksWithInvalidISBNThroughForm() {
-        rtaf.setCategory("BOOK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "BOOK", "title", "description", "author", "");
         rtaf.setIsbn("978-3-16-148410-4");
         
         rtaf.validateRest(br);
@@ -99,10 +90,7 @@ public class ReadingTipAddFormTest {
     
     @Test
     public void cannotCreateBooksWithInvalidISBNLengthThroughForm() {
-        rtaf.setCategory("BOOK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "BOOK", "title", "description", "author", "");
         rtaf.setIsbn("978-3-16-1484165630-4");
         
         rtaf.validateRest(br);
@@ -111,10 +99,7 @@ public class ReadingTipAddFormTest {
     
     @Test
     public void cannotCreateLinksWithInvalidURLThroughForm() {
-        rtaf.setCategory("LINK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+        setCategoryTitleDescriptionAuthorTags(rtaf, "LINK", "title", "description", "author", "");
         rtaf.setUrl("URL");
         
         rtaf.validateRest(br);
@@ -124,15 +109,21 @@ public class ReadingTipAddFormTest {
     @Test
     public void cannotCreateLinksWithInvalidURLLengthThroughForm() {
         final String LONG_STRING = "AAAAAAAAAAAAAAAAAAAAAAAA".replace("A","AAAAAAAAAAAAAAAAAAAAAAAA");
-        
-        rtaf.setCategory("LINK");
-        rtaf.setTitle("title");
-        rtaf.setDescription("description");
-        rtaf.setAuthor("author");
+
+        setCategoryTitleDescriptionAuthorTags(rtaf, "LINK", "title", "description", "author", "");
         rtaf.setUrl(LONG_STRING);
         
         rtaf.validateRest(br);
         assertTrue(br.hasErrors());
+    }
+
+    private void setCategoryTitleDescriptionAuthorTags(ReadingTipAddForm rtaf, String category, String title,
+            String description, String author, String tags) {
+        rtaf.setCategory(category);
+        rtaf.setTitle(title);
+        rtaf.setDescription(description);
+        rtaf.setAuthor(author);
+        rtaf.setTags(tags);
     }
     
 }

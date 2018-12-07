@@ -2,10 +2,12 @@ package ohtu.takarivi.lukuvinkit.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -25,9 +27,8 @@ public class ReadingTipSearch {
      * @return The reading tips found with this search.
      */
     public static List<ReadingTip> searchSimple(ReadingTipRepository readingTipRepository, String username, Long id, String keyword) {
-        return readingTipRepository.findAll(getSpecSearchSimple(id, username, keyword.toLowerCase()));
-        
-        
+        Specification<ReadingTip> specRt = getSpecSearchSimple(id, username, keyword.toLowerCase());
+        return readingTipRepository.findAll(specRt);
     }
 
     private static Specification<ReadingTip> getSpecSearchSimple(Long id, String username, String keyword) {
@@ -53,6 +54,17 @@ public class ReadingTipSearch {
                                                             builder.literal("")), 
                                                             "%" + keyword.replace("-", "") + "%"));
                 allowed = builder.or(allowed, builder.like(root.get("url"), "%" + keyword + "%"));
+                
+                // tags
+                Path<Set<String>> tagsPath = root.join("tags", JoinType.LEFT);
+                Predicate tagsMatch = builder.disjunction();
+                for (String word: keyword.split(" ")) {
+                    if (!word.trim().isEmpty()) {
+                        tagsMatch = builder.or(tagsMatch, builder.like(builder.lower(tagsPath.get("name")), "%" + word.trim() + "%"));
+                    }
+                }
+                allowed = builder.or(allowed, tagsMatch);
+
                 predicates.add(allowed);
 
                 return builder.and(predicates.toArray(new Predicate[]{}));
@@ -73,17 +85,18 @@ public class ReadingTipSearch {
      * @param url The URL to search for, or empty if URL isn't searched for.
      * @param author The author to search for, or empty if author isn't searched
      * for.
+     * @param tags The tags to search for, separated with spaces.
      * @param category List of allowed categories for the search results.
      * @param unreadstatus List of allowed unread/read statuses for the search
      * results.
      * @return The reading tips found with this search.
      */
     public static List<ReadingTip> searchAdvanced(ReadingTipRepository readingTipRepository, CustomUser customUser, Long id, String title,
-            String description, String url, String author, List<String> category, List<String> unreadstatus) {
-        return readingTipRepository.findAll(getSpec(customUser, id, title, description, url, author, category, unreadstatus));
+            String description, String url, String author, String tags, List<String> category, List<String> unreadstatus) {
+        return readingTipRepository.findAll(getSpec(customUser, id, title, description, url, author, tags, category, unreadstatus));
     }
 
-    private static Specification<ReadingTip> getSpec(CustomUser customUser, Long id, String title, String description, String url, String author, List<String> category, List<String> unreadstatus) {
+    private static Specification<ReadingTip> getSpec(CustomUser customUser, Long id, String title, String description, String url, String author, String tags, List<String> category, List<String> unreadstatus) {
         return new Specification<ReadingTip>() {
             private static final long serialVersionUID = 1L;
 
@@ -128,6 +141,18 @@ public class ReadingTipSearch {
                 }
                 if (!unreadstatus.contains("read")) { // must not be read
                     predicates.add(builder.isFalse(root.get("isRead")));
+                }
+
+                // tags
+                if (!tags.trim().isEmpty()) {
+                    Path<Set<String>> tagsPath = root.join("tags", JoinType.LEFT);
+                    Predicate tagsMatch = builder.disjunction();
+                    for (String word: tags.split(" ")) {
+                        if (!word.trim().isEmpty()) {
+                            tagsMatch = builder.or(tagsMatch, builder.like(builder.lower(tagsPath.get("name")), "%" + word.trim() + "%"));
+                        }
+                    }
+                    predicates.add(tagsMatch);
                 }
 
                 return builder.and(predicates.toArray(new Predicate[]{}));

@@ -1,18 +1,16 @@
 package ohtu.takarivi.lukuvinkit.config;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 
 /**
  * Represents an user details service for Spring Data JPA. This handles users that are defined as CustomUser instances.

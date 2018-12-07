@@ -39,3 +39,8 @@ Feature: After logging in, I can search for tips
     Given test user is logged in
     When searching for read tips only
     Then there are no search results
+
+  Scenario: user can search for tips by tags with the search form
+    Given test user is logged in
+    When searching for tips with tag "testing123"
+    Then there are 2 search results and one of them is "Book Tip Alpha 3"

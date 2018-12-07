@@ -22,7 +22,12 @@
                  required/>
           <p class="alert alert-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></strong></p>
         </div>
-        <button class="btn btn-primary" type="submit" id="buttonadd">Lisää</button>
+        <div class="form-group">
+          <label for="tags">Tagit</label>
+          <input type="text" id="tags" name="tags" th:field="*{tags}" class="form-control" placeholder="Erota välilyönneillä" />
+          <p class="alert alert-danger" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></strong></p>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit" id="buttonadd">Lisää</button>
       </form>
     </div>
   </div>

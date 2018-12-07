@@ -1,20 +1,26 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * The Spring controller for reading tip related activity. Handlers for adding reading tips are under
@@ -69,7 +75,6 @@ public class ReadingTipController {
      * @param model        The model to feed the information into.
      * @return The action to be taken by this controller.
      */
-
     @GetMapping("/readingTips/{categoryText}")
     public String viewCategory(Authentication auth, @PathVariable String categoryText, Model model) {
         ReadingTipCategory category = ReadingTipCategory.getByName(categoryText.toUpperCase());
@@ -92,7 +97,6 @@ public class ReadingTipController {
      * @param model The model to feed the information into.
      * @return The action to be taken by this controller.
      */
-
     @GetMapping("/readingTips/selected")
     public String viewSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
@@ -170,6 +174,25 @@ public class ReadingTipController {
         return result.toString();
     }
 
+    /**
+     * The page that displays reading tips with a given tag.
+     *
+     * @param auth         An Authentication object representing the currently authenticated user.
+     * @param tagName      The name of the tag.
+     * @param model        The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
+    @GetMapping("/tags/{tagName}")
+    public String viewTag(Authentication auth, @PathVariable String tagName, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndTags_Name(customUser.getId(), tagName);
+        model.addAttribute("title", "Tagi");
+        model.addAttribute("readingTips", tips);
+        model.addAttribute("tagName", tagName);
+        model.addAttribute("view", "tag");
+        return "layout";
+    }
+    
     /**
      * The form submit page that allows an user to mark a reading tip as having been read.
      *
@@ -263,25 +286,29 @@ public class ReadingTipController {
     /**
      * The form search page that allows searching tips by keywords by using the search form.
      *
-     * @param auth        An Authentication object representing the currently authenticated user.
-     * @param title       Keyword given to search the title or empty.
-     * @param description Keyword given to search the description or empty.
-     * @param url         Keyword given to search the URL or empty.
-     * @param author      Keyword given to search the author or empty.
-     * @param model       The model to feed the information into.
+     * @param auth          An Authentication object representing the currently authenticated user.
+     * @param title         Keyword given to search the title or empty.
+     * @param description   Keyword given to search the description or empty.
+     * @param url           Keyword given to search the URL or empty.
+     * @param author        Keyword given to search the author or empty.
+     * @param tags          Keyword given to search the tags or empty.
+     * @param category      Allowed categories for reading tips.
+     * @param unreadstatus  Allowed unread/read statuses for reading tips.
+     * @param model         The model to feed the information into.
      * @return The action to be taken by this controller.
      */
     @PostMapping("/search")
     public String searchReadingTipWithFullForm(Authentication auth, @RequestParam String title,
                                                @RequestParam String description,
                                                @RequestParam String url, @RequestParam String author,
+                                               @RequestParam String tags,
                                                @RequestParam("category") List<String> category,
                                                @RequestParam("unreadstatus") List<String> unreadstatus,
                                                Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         // do an advanced search
         List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId(),
-                title, description, url, author, category, unreadstatus);
+                title, description, url, author, tags, category, unreadstatus);
         model.addAttribute("readingTips", list2);
         model.addAttribute("view", "search");
         return "layout";

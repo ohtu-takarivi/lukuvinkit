@@ -1,10 +1,15 @@
 package ohtu.takarivi.lukuvinkit;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import static ohtu.takarivi.lukuvinkit.controller.MiscController.enableTestdataEntry;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
@@ -13,11 +18,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static ohtu.takarivi.lukuvinkit.controller.MiscController.enableTestdataEntry;
-import static org.junit.Assert.*;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 @DirtiesContext
 public class Stepdefs extends SpringBootTestBase {
@@ -202,6 +207,12 @@ public class Stepdefs extends SpringBootTestBase {
         createArticleTip(title, description, author);
     }
 
+    @When("^creating an article tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)" +
+            "\" and tags \"([^\"]*) are given$")
+    public void article_tip_with_valid_information_and_tags_is_given(String title, String description, String author, String tags) throws Throwable {
+        createArticleTip(title, description, author, tags);
+    }
+
     @When("^book tip with title \"([^\"]*)\" is marked as read$")
     public void tip_mark_as_read(String title) throws Throwable {
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttonread")).click();
@@ -236,6 +247,13 @@ public class Stepdefs extends SpringBootTestBase {
     public void search_advanced_author(String author) throws Throwable {
         browseTo("/search");
         driver.findElement(By.id("author")).sendKeys(author);
+        driver.findElement(By.id("buttonsearch")).click();
+    }
+    
+    @When("^searching for tips with tag \"([^\"]*)\"$")
+    public void search_advanced_tags(String tags) throws Throwable {
+        browseTo("/search");
+        driver.findElement(By.id("tags")).sendKeys(tags);
         driver.findElement(By.id("buttonsearch")).click();
     }
 
@@ -366,6 +384,12 @@ public class Stepdefs extends SpringBootTestBase {
     public void new_article_tip_is_created(String title, String description, String author) throws Throwable {
         browseTo("/readingTips/articles");
         verifyTipInfo(title, description, author);
+    }
+
+    @Then("^new article tip with title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)\" and tag \"([^\"]*)\" is created$")
+    public void new_article_tip_with_tag_is_created(String title, String description, String author, String tag) throws Throwable {
+        browseTo("/readingTips/articles");
+        verifyTipInfo(title, description, author, tag);
     }
 
     @Then("^new book tip with \"([^\"]*)\" and \"([^\"]*)\" is not created$")
@@ -571,6 +595,16 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonadd")).click();
     }
 
+    private void createArticleTip(String title, String description, String author, String tags) throws InterruptedException {
+        browseTo("/readingTips/articles/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("description")).sendKeys(description);
+        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.name("tags")).sendKeys(tags);
+        driver.findElement(By.id("buttonadd")).click();
+    }
+
     private void createLinkTip(String title, String description, String url, String author) throws InterruptedException {
         browseTo("/readingTips/links/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
@@ -603,6 +637,11 @@ public class Stepdefs extends SpringBootTestBase {
         assertEquals(title, driver.findElement(By.id("tiptitle")).getText());
         assertEquals(description, driver.findElement(By.id("tipdescription")).getText());
         assertEquals(author, driver.findElement(By.id("tipauthor")).getText());
+    }
+
+    private void verifyTipInfo(String title, String description, String author, String tag) throws InterruptedException {
+        verifyTipInfo(title, description, author);
+        
     }
 
 }

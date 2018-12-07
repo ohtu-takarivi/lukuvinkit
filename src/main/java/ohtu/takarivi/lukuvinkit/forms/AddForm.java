@@ -18,6 +18,8 @@ public abstract class AddForm {
     protected static final int DESCRIPTION_MAX_LENGTH = 2000;
     protected static final int AUTHOR_MIN_LENGTH = 1;
     protected static final int AUTHOR_MAX_LENGTH = 255;
+    protected static final int TAGS_MIN_LENGTH = 0;
+    protected static final int TAGS_MAX_LENGTH = 1000;
 
     @NotEmpty
     @Size(min = TITLE_MIN_LENGTH, max = TITLE_MAX_LENGTH, message = "Otsikon pituus 1-255 merkkiä")
@@ -28,6 +30,8 @@ public abstract class AddForm {
     @NotEmpty
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     protected String author;
+    @Size(min = TAGS_MIN_LENGTH, max = TAGS_MAX_LENGTH, message = "Tagi-merkkijonon pituus 1-1000 merkkiä")
+    protected String tags;
     
     /**
      * Used to run additional validation for this form.

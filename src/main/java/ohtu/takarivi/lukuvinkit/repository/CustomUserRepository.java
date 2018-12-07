@@ -1,8 +1,9 @@
 package ohtu.takarivi.lukuvinkit.repository;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 
 /**
  * The JPA Repository for CustomUser instances.

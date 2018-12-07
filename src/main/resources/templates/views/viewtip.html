@@ -15,8 +15,15 @@
             <div class="tipisbn" th:remove="${readingTip.isbn} ? none : all">
                 <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20 (isbn=${readingTip.isbn})}" id="tipisbn" th:text=" ${readingTip.isbn}"></a>   
             </div>
-            
           </p>
+          
+          <p>
+            <div class="tiptags" th:if="${readingTip.tags.size() > 0}">
+              <b>Tagit</b>: 
+              <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}" th:href="@{/tags/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
+            </div>
+          </p>
+          
           <div class="card-body" th:insert="fragments/read_delete :: read_delete"></div>
           </div>
         </div>

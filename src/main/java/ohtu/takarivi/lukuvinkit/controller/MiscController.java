@@ -1,21 +1,23 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 /**
  * The Spring controller for miscellaneous pages.
@@ -59,6 +61,8 @@ public class MiscController {
         
         readingTipRepository.deleteAll();
         customUserRepository.deleteAll();
+
+        Set<ReadingTipTag> emptyTags = new HashSet<>();
         
         CustomUser user = new CustomUser("testuser", encoder.encode("testuser"), "testuser");
         customUserRepository.save(user);
@@ -101,7 +105,7 @@ public class MiscController {
                     isbn = scanner.nextLine();
                 }
                 
-                ReadingTip tip = new ReadingTip(title, category, description, url, author, isbn, user);
+                ReadingTip tip = new ReadingTip(title, category, description, url, author, isbn, emptyTags, user);
                 readingTipRepository.save(tip);
             }
 

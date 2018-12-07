@@ -1,18 +1,19 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.ArrayList;
-import java.util.List;
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
 /**
  * Class for defining global model attributes.

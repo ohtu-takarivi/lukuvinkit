@@ -1,10 +1,10 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
-import org.junit.Test;
-
 import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class URLValidatorUnitTest {
 

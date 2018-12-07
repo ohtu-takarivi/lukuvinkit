@@ -1,10 +1,12 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
-import org.junit.Test;
-
-import static ohtu.takarivi.lukuvinkit.forms.FormUtils.*;
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidISBN;
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidISBN10;
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidISBN13;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class ISBNValidatorUnitTest {
 

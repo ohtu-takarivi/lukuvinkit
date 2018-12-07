@@ -1,11 +1,11 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.domain.CustomUser;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
-import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
-import ohtu.takarivi.lukuvinkit.forms.*;
-import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
-import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,8 +16,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import ohtu.takarivi.lukuvinkit.domain.CustomUser;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
+import ohtu.takarivi.lukuvinkit.forms.ArticleAddForm;
+import ohtu.takarivi.lukuvinkit.forms.BookAddForm;
+import ohtu.takarivi.lukuvinkit.forms.FormUtils;
+import ohtu.takarivi.lukuvinkit.forms.LinkAddForm;
+import ohtu.takarivi.lukuvinkit.forms.ReadingTipAddForm;
+import ohtu.takarivi.lukuvinkit.forms.VideoAddForm;
+import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipTagRepository;
 
 /**
  * The Spring controller for activity relating to adding reading tips.
@@ -30,6 +41,19 @@ public class ReadingTipAddController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
+
+    @Autowired
+    private ReadingTipTagRepository readingTipTagRepository;
+
+    /**
+     * Prepares a ReadingTipTag Set for instantiating a ReadingTip instance.
+     * 
+     * @param tagNames The array containing tag names.
+     * @return The Set containing the tags.
+     */
+    public Set<ReadingTipTag> prepareTags(String[] tagNames) {
+        return FormUtils.prepareTags(readingTipTagRepository, tagNames);
+    }
 
     /**
      * The endpoint for adding a reading tip.
@@ -52,7 +76,7 @@ public class ReadingTipAddController {
             attributes.addFlashAttribute("readingTipAddForm", readingTipAddForm);
             return "redirect:" + (referer == null ? "/" : referer);
         }
-        readingTipRepository.save(readingTipAddForm.createReadingTip(customUser));
+        readingTipRepository.save(readingTipAddForm.createReadingTip(customUser, readingTipTagRepository));
         return "redirect:" + (referer == null ? "/" : referer);
     }
 
@@ -95,6 +119,7 @@ public class ReadingTipAddController {
                 "",
                 articleAddForm.getAuthor(),
                 "",
+                prepareTags(articleAddForm.getTags().split(" ")),
                 customUser));
         return "redirect:/";
     }
@@ -138,6 +163,7 @@ public class ReadingTipAddController {
                 "",
                 bookAddForm.getAuthor(),
                 bookAddForm.getIsbn(),
+                prepareTags(bookAddForm.getTags().split(" ")),
                 customUser));
         return "redirect:/";
     }
@@ -181,6 +207,7 @@ public class ReadingTipAddController {
                 linkAddForm.getUrl(),
                 linkAddForm.getAuthor(),
                 "",
+                prepareTags(linkAddForm.getTags().split(" ")),
                 customUser));
         return "redirect:/";
     }
@@ -224,6 +251,7 @@ public class ReadingTipAddController {
                 videoAddForm.getUrl(),
                 videoAddForm.getAuthor(),
                 "",
+                prepareTags(videoAddForm.getTags().split(" ")),
                 customUser));
         return "redirect:/";
     }
