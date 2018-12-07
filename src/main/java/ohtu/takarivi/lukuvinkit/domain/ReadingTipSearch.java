@@ -122,17 +122,11 @@ public class ReadingTipSearch {
 
                 Predicate allowedTypes = builder.disjunction();
                 // set allowed types based on checkbox values
-                if (category.contains("books")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.BOOK));
-                }
-                if (category.contains("articles")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.ARTICLE));
-                }
-                if (category.contains("videos")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.VIDEO));
-                }
-                if (category.contains("links")) {
-                    allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.LINK));
+                final String[] validCategories = new String[] {"books", "articles", "videos", "links"};
+                for (String validCategory: validCategories) {
+                    if (category.contains(validCategory)) {
+                        allowedTypes = builder.or(allowedTypes, builder.equal(root.<ReadingTipCategory>get("category"), ReadingTipCategory.getByName(validCategory)));
+                    }
                 }
                 predicates.add(allowedTypes);
 

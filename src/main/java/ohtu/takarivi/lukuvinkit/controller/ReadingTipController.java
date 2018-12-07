@@ -118,6 +118,7 @@ public class ReadingTipController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
+        
         result.append("\nYhteensä valittuja lukuvinkkejä: " + tips.size() + "\n");
         for (ReadingTip rtip : tips) {
             result.append("\n=====================\n");
@@ -138,22 +139,23 @@ public class ReadingTipController {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         StringBuilder result = new StringBuilder();
-        result.append("<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "  <head>\n"
-                + "    <title>Lukuvinkkilistaus</title>\n"
-                + "    <meta charset=\"utf-8\">\n"
-                + "  </head>\n"
-                + "  <body>\n");
-        result.append("    <h1>Lukuvinkkilistaus</h1>\n");
-        result.append("    <p>Yhteensä valittuja lukuvinkkejä: " + tips.size() + "</p>\n");
-        result.append("    <table border=\"1\">\n");
-        result.append("      <tr>\n");
-        result.append("        <th>Otsikko</th>\n");
-        result.append("        <th>Tekijä(t)</th>\n");
-        result.append("        <th>Linkki tai ISBN</th>\n");
-        result.append("        <th>Kuvaus</th>\n");
-        result.append("      </tr>\n");
+        
+        result.append(    "<!DOCTYPE html>\n"
+                        + "<html>\n"
+                        + "  <head>\n"
+                        + "    <title>Lukuvinkkilistaus</title>\n"
+                        + "    <meta charset=\"utf-8\">\n"
+                        + "  </head>\n"
+                        + "  <body>\n");
+        result.append(    "    <h1>Lukuvinkkilistaus</h1>\n");
+        result.append(    "    <p>Yhteensä valittuja lukuvinkkejä: " + tips.size() + "</p>\n");
+        result.append(    "    <table border=\"1\">\n");
+        result.append(    "      <tr>\n");
+        result.append(    "        <th>Otsikko</th>\n");
+        result.append(    "        <th>Tekijä(t)</th>\n");
+        result.append(    "        <th>Linkki tai ISBN</th>\n");
+        result.append(    "        <th>Kuvaus</th>\n");
+        result.append(    "      </tr>\n");
         for (ReadingTip rtip : tips) {
             String detail = "";
             if (rtip.getCategory() == ReadingTipCategory.BOOK) {
@@ -168,9 +170,9 @@ public class ReadingTipController {
             result.append("        <td>" + rtip.getDescription() + "</td>\n");
             result.append("      </tr>\n");
         }
-        result.append("    </table>\n");
-        result.append("  </body>\n"
-                + "</html>");
+        result.append(    "    </table>\n");
+        result.append(    "  </body>\n"
+                        + "</html>");
         return result.toString();
     }
 

@@ -6,12 +6,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -82,6 +84,13 @@ public class Stepdefs extends SpringBootTestBase {
         driver.get(getBaseUrl() + "/login");
         logInWith("nolla", "yksi");
         browseTo("/readingTips/books");
+    }
+
+    @Given("^test user is logged in and browsing link tips$")
+    public void test_user_is_logged_in_on_link_tip_list() throws Throwable {
+        driver.get(getBaseUrl() + "/login");
+        logInWith("nolla", "yksi");
+        browseTo("/readingTips/links");
     }
 
     @Given("^test user is logged in and creating a book tip$")
@@ -355,6 +364,13 @@ public class Stepdefs extends SpringBootTestBase {
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
 
+    @When("^fetching information from URL \"([^\"]*)\"$")
+    public void autolink_fetch_url(String url) throws Throwable {
+        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.id("buttonautofilllink")).click();
+        Thread.sleep(FETCH_TIMEOUT_MILLIS);
+    }
+
     @When("^fetching information from ISBN \"([^\"]*)\"$")
     public void autofill_book_isbn(String isbn) throws Throwable {
         driver.findElement(By.name("isbn")).sendKeys(isbn);
@@ -459,8 +475,24 @@ public class Stepdefs extends SpringBootTestBase {
         assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
     }
 
+    @Then("^there is an alert$")
+    public void autofill_alert() throws Throwable {
+        try {
+            driver.findElement(By.name("title")).getAttribute("value");
+            fail("no alert found when one was expected");
+        } catch (UnhandledAlertException ex) {
+        }
+    }
+
     @Then("^fetched title contains \"([^\"]*)\" and author contains \"([^\"]*)\" or there is an alert$")
     public void autofill_title_author(String title, String author) throws Throwable {
+        // if there is an alert, return to signal success
+        try {
+            driver.switchTo().alert();
+            return;
+        } catch (NoAlertPresentException ex) {
+        }
+        
         try {
             assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
             assertTrue(driver.findElement(By.name("author")).getAttribute("value").contains(author));
