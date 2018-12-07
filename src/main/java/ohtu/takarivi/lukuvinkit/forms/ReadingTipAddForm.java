@@ -60,16 +60,17 @@ public class ReadingTipAddForm extends AddForm {
      */
     public ReadingTip createReadingTip(CustomUser customUser, ReadingTipTagRepository readingTipTagRepository) {
         ReadingTipCategory readingTipCategory = ReadingTipCategory.getByName(category);
-        if (readingTipCategory == ReadingTipCategory.ARTICLE) {
-            return new ReadingTip(title, readingTipCategory, description, "", author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
-        } else if (readingTipCategory == ReadingTipCategory.BOOK) {
-            return new ReadingTip(title, readingTipCategory, description, "", author, isbn, FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
-        } else if (readingTipCategory == ReadingTipCategory.LINK) {
-            return new ReadingTip(title, readingTipCategory, description, url, author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
-        } else if (readingTipCategory == ReadingTipCategory.VIDEO) {
-            return new ReadingTip(title, readingTipCategory, description, url, author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
-        } else {
-            return null;
+        switch (readingTipCategory) {
+            case ARTICLE:
+                return new ReadingTip(title, readingTipCategory, description, "", author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
+            case BOOK:
+                return new ReadingTip(title, readingTipCategory, description, "", author, isbn, FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
+            case LINK:
+                return new ReadingTip(title, readingTipCategory, description, url, author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
+            case VIDEO:
+                return new ReadingTip(title, readingTipCategory, description, url, author, "", FormUtils.prepareTags(readingTipTagRepository, tags.split(" ")), customUser);
+            default:
+                return null;
         }
     }
 
