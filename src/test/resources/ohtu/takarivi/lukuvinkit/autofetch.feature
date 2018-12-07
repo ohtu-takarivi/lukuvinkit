@@ -5,6 +5,16 @@ Feature: When I am adding a link reading tip, I can get the information from a l
     When fetching information from our own login page
     Then fetched title contains "Lukuvinkit"
 
+  Scenario: user cannot get URL information automatically from invalid URL
+    Given test user is logged in and creating a link tip
+    When fetching information from URL "invalid url"
+    Then there is an alert
+
+  Scenario: user cannot get URL information automatically from valid URL but invalid domain
+    Given test user is logged in and creating a link tip
+    When fetching information from URL "http://example.invalid/"
+    Then there is an alert
+
   Scenario: user can get ISBN information automatically
     Given test user is logged in and creating a book tip
     When fetching information from ISBN "951-1-14445-6"

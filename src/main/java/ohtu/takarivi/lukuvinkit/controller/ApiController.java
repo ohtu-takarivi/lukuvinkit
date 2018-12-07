@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class ApiController {
+    
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";
 
     /**
      * The page that fetches the title and description of a remote URL.
@@ -34,17 +36,18 @@ public class ApiController {
     @ResponseBody
     public String getLinkInfo(Authentication auth, @RequestParam String url) {
         if (!isValidURL(url)) {
-            return "{}";
+            return "";
         }
         
         InputStream response = null;
         
         try {
+         // we have to fake the user agent since some pages do not like the automatically generated one
             System.setProperty("http.agent", "");
+            
             URLConnection conn = new URL(url).openConnection();
             
-            // we have to fake the user agent since some pages do not like the automatically generated one
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36");
+            conn.setRequestProperty("User-Agent", USER_AGENT);
             response = conn.getInputStream();
             
             String responseBody = new BufferedReader(new InputStreamReader(response)).lines().collect(Collectors.joining("\n"));
@@ -71,7 +74,7 @@ public class ApiController {
             return obj.toString();
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "{}";
+            return "";
         } finally {
             if (response != null) {
                 try {

@@ -30,7 +30,7 @@ public class GlobalControllerAdvice {
     /**
      * A form for the sidebar.
      *
-     * @return form
+     * @return The ReadingTipAddForm used for the sidebar.
      */
     @ModelAttribute("readingTipAddForm")
     public ReadingTipAddForm populateReadingTipAddForm() {
@@ -40,7 +40,7 @@ public class GlobalControllerAdvice {
     /**
      * A list of user's selected tips.
      *
-     * @return list
+     * @return The list of reading tips the user has selected.
      */
     @ModelAttribute("selectedReadingTips")
     public List<ReadingTip> populateSelectedReadingTips() {
@@ -58,7 +58,7 @@ public class GlobalControllerAdvice {
     /**
      * The current user.
      *
-     * @return customUser
+     * @return The instance of the current user or null if not authenticated.
      */
     @ModelAttribute("customUser")
     public CustomUser populateCustomUser() {
@@ -72,7 +72,7 @@ public class GlobalControllerAdvice {
     /**
      * To check if a navbar is needed.
      *
-     * @return string
+     * @return Returns the name of the fragment representing the navbar.
      */
     @ModelAttribute("nav")
     public String populateNav() {

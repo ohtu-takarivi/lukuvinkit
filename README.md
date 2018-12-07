@@ -16,3 +16,6 @@ Taski on valmis, kun sitä vastaava koodi on dokumentoitu, vastaa user storya, s
 * [Heroku demo](https://takarivi-lukuvinkit.herokuapp.com/) (päivitetään toisinaan, yleensä ainakin sprinttien lopussa)
 * [Cucumber-testit](https://github.com/ohtu-takarivi/lukuvinkit/tree/master/src/test/resources/ohtu/takarivi/lukuvinkit)
 
+
+
+

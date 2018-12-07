@@ -24,12 +24,15 @@ public abstract class AddForm {
     @NotEmpty
     @Size(min = TITLE_MIN_LENGTH, max = TITLE_MAX_LENGTH, message = "Otsikon pituus 1-255 merkkiä")
     protected String title;
+    
     @NotEmpty
     @Size(min = DESCRIPTION_MIN_LENGTH, max = DESCRIPTION_MAX_LENGTH, message = "Kuvauksen pituus 1-2000 merkkiä")
     protected String description;
+    
     @NotEmpty
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     protected String author;
+    
     @Size(min = TAGS_MIN_LENGTH, max = TAGS_MAX_LENGTH, message = "Tagi-merkkijonon pituus 1-1000 merkkiä")
     protected String tags;
     

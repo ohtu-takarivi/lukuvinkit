@@ -13,19 +13,21 @@ public enum ReadingTipCategory {
      * @return The correct ReadingTipCategory value, or null if no such category was found.
      */
     public static ReadingTipCategory getByName(String category) {
-        if (category.equalsIgnoreCase("books")) {
-            return BOOK;
-        } else if (category.equalsIgnoreCase("articles")) {
-            return ARTICLE;
-        } else if (category.equalsIgnoreCase("videos")) {
-            return VIDEO;
-        } else if (category.equalsIgnoreCase("links")) {
-            return LINK;
-        }
-        try {
-            return ReadingTipCategory.valueOf(category.toUpperCase());
-        } catch (IllegalArgumentException ex) {
-            return null;
+        switch (category.toLowerCase()) {
+            case "books":
+                return BOOK;
+            case "articles":
+                return ARTICLE;
+            case "videos":
+                return VIDEO;
+            case "links":
+                return LINK;
+            default:
+                try { 
+                    return ReadingTipCategory.valueOf(category.toUpperCase()); 
+                } catch (IllegalArgumentException ex) { 
+                    return null; 
+                }    
         }
     }
 }
