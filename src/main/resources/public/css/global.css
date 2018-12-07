@@ -1,3 +1,22 @@
 .javascript-only {
   display: none;
 }
+
+.bottom-right-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+@media (min-width: 800px) {
+  .bottom-right-button {
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+  }
+}
