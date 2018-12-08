@@ -21,7 +21,7 @@
         <div class="form-group">
           <label for="description">Kuvaus</label>
           <textarea type="text" id="description" name="description" th:field="*{description}" class="form-control"
-                    placeholder="Kuvaus" required>
+                    placeholder="Kuvaus" required></textarea>
           <p class="alert alert-danger" th:if="${#fields.hasErrors('description')}"
              th:errors="*{description}"></p>
         </div>
