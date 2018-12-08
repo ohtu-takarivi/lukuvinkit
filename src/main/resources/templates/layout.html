@@ -21,27 +21,20 @@
   </head>
 
   <body th:style="${ nav } ? 'padding-top: 3.5rem;'">
-
     <!-- Pre-content framework -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous">
     </script>
 
-    <!-- Content view -->
     <th:block th:if="${ view == 'login' or view == 'register' }">
-        <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+      <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
     </th:block>
 
     <div th:unless="${ view == 'login' or view == 'register' }" id="wrapper">
-      <!-- Navbar & Sidebar -->
-      <th:block th:if="${ nav }">
-        <div th:replace="@{'fragments/' + ${ nav }} :: ${ nav }"></div>
-        <div th:replace="@{'fragments/sidebar'} :: ${ sidebar }"></div>
-      </th:block>
-    
-      <!-- Content -->
+      <div th:replace="@{'fragments/sidebar'} :: 'sidebar'"></div>
       <div id="page-content-wrapper">
+        <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
         <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
       </div>
     </div>
@@ -57,6 +50,5 @@
     <span id="loadfinish"> </span>
     <br />
     <br />
-
   </body>
 </html>
