@@ -1,20 +1,20 @@
 $(document).ready(function () {
-    $('#category').on('change', function () {
+    // remove javascript-only class to show JS-only content
+    $('.javascript-only').removeClass('javascript-only');
+
+    // for the sidebar form
+    $('#sidebarcategory').on('change', function () {
         if (this.value == 'articles') {
-            $("#isbn-div").hide();
-            $("#url-div").hide();
+            $("#sidebarisbn-div").hide();
+            $("#sidebarurl-div").hide();
         } else if (this.value == 'books') {
-            $("#isbn-div").show();
-            $("#url-div").hide();
-        } else if (this.value == 'links') {
-            $("#isbn-div").hide();
-            $("#url-div").show();
-        } else if (this.value == 'videos') {
-            $("#isbn-div").hide();
-            $("#url-div").show();
+            $("#sidebarisbn-div").show();
+            $("#sidebarurl-div").hide();
+        } else if (this.value == 'links' || this.value == 'videos') {
+            $("#sidebarisbn-div").hide();
+            $("#sidebarurl-div").show();
         }
     }).change();
-    $('.javascript-only').removeClass('javascript-only');
 
     // Sidebar toggle
     $("#menu-toggle").click(function(e) {

@@ -18,6 +18,9 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.test.annotation.DirtiesContext;
 
 import cucumber.api.java.After;
@@ -30,6 +33,7 @@ import cucumber.api.java.en.When;
 public class Stepdefs extends SpringBootTestBase {
 
     private static final int FETCH_TIMEOUT_MILLIS = 5000;
+    private static final int SIDEBAR_OPEN_TIMEOUT = 5;
     private static final int WAIT_TIMEOUT = 10;
 
     WebDriver driver = new HtmlUnitDriver(true);
@@ -220,6 +224,32 @@ public class Stepdefs extends SpringBootTestBase {
             "\" and tags \"([^\"]*) are given$")
     public void article_tip_with_valid_information_and_tags_is_given(String title, String description, String author, String tags) throws Throwable {
         createArticleTip(title, description, author, tags);
+    }
+
+    @When("^creating a book tip through the sidebar and correct title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and " +
+            "author \"([^\"]*)\" and isbn \"([^\"]*)\" are given$")
+    public void book_tip_through_sidebar(String title, String description, String url, String author,
+                                                         String isbn) throws Throwable {
+        createBookTipWithSidebar(title, description, url, author, isbn);
+    }
+
+    @When("^creating an article tip through the sidebar and correct title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)" +
+            "\" are given$")
+    public void article_tip_through_sidebar(String title, String description, String author) throws Throwable {
+        createArticleTipWithSidebar(title, description, author);
+    }
+
+    @When("^creating a link tip through the sidebar and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author \"([^\"]*)" +
+            "\" are given$")
+    public void link_tip_through_sidebar(String title, String description, String url, String author) throws Throwable {
+        createLinkTipWithSidebar(title, description, url, author);
+    }
+
+    @When("^creating a video tip through the sidebar and title \"([^\"]*)\" and description \"([^\"]*)\" and url \"([^\"]*)\" and author " +
+            "\"([^\"]*)\" are given$")
+    public void video_tip_through_sidebar(String title, String description, String url,
+                                                          String author) throws Throwable {
+        createVideoTipWithSidebar(title, description, url, author);
     }
 
     @When("^book tip with title \"([^\"]*)\" is marked as read$")
@@ -601,17 +631,6 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonlogin")).click();
     }
 
-    private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
-        browseTo("/readingTips/books/add");
-        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        //driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
-        driver.findElement(By.name("isbn")).sendKeys(isbn);
-        driver.findElement(By.id("buttonadd")).click();
-    }
-
     private void check(WebElement checkBox) throws InterruptedException {
         if (!checkBox.isSelected()) {
             checkBox.click();
@@ -628,21 +647,37 @@ public class Stepdefs extends SpringBootTestBase {
         driver.findElement(By.id("buttonselect")).click();
     }
 
-    private void createArticleTip(String title, String description, String author) throws InterruptedException {
-        browseTo("/readingTips/articles/add");
-        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+    private void fillGenericFormValues(String title, String description, String author) {
         driver.findElement(By.name("title")).sendKeys(title);
         driver.findElement(By.name("description")).sendKeys(description);
         driver.findElement(By.name("author")).sendKeys(author);
+    }
+
+    private void fillGenericFormValuesSideBar(String title, String description, String author) {
+        driver.findElement(By.id("sidebartitle")).sendKeys(title);
+        driver.findElement(By.id("sidebardescription")).sendKeys(description);
+        driver.findElement(By.id("sidebarauthor")).sendKeys(author);
+    }
+
+    private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
+        browseTo("/readingTips/books/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        fillGenericFormValues(title, description, author);
+        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        driver.findElement(By.id("buttonadd")).click();
+    }
+
+    private void createArticleTip(String title, String description, String author) throws InterruptedException {
+        browseTo("/readingTips/articles/add");
+        assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
+        fillGenericFormValues(title, description, author);
         driver.findElement(By.id("buttonadd")).click();
     }
 
     private void createArticleTip(String title, String description, String author, String tags) throws InterruptedException {
         browseTo("/readingTips/articles/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("author")).sendKeys(author);
+        fillGenericFormValues(title, description, author);
         driver.findElement(By.name("tags")).sendKeys(tags);
         driver.findElement(By.id("buttonadd")).click();
     }
@@ -650,21 +685,63 @@ public class Stepdefs extends SpringBootTestBase {
     private void createLinkTip(String title, String description, String url, String author) throws InterruptedException {
         browseTo("/readingTips/links/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
+        fillGenericFormValues(title, description, author);
         driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
     }
 
     private void createVideoTip(String title, String description, String url, String author) throws InterruptedException {
         browseTo("/readingTips/videos/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
+        fillGenericFormValues(title, description, author);
         driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
+    }
+    
+    private void openSidebar() throws InterruptedException {
+        driver.findElement(By.id("menu-toggle")).click();
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarcategory")));
+    }
+
+    private void createBookTipWithSidebar(String title, String description, String url, String author, String isbn) throws InterruptedException {
+        openSidebar();
+        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("books");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarisbn")));
+        assertTrue(driver.findElement(By.id("sidebarisbn")).isDisplayed());
+        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        fillGenericFormValuesSideBar(title, description, author);
+        driver.findElement(By.id("sidebarisbn")).sendKeys(isbn);
+        driver.findElement(By.id("sidebarbuttonadd")).click();
+    }
+
+    private void createArticleTipWithSidebar(String title, String description, String author) throws InterruptedException {
+        openSidebar();
+        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("articles");
+        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        fillGenericFormValuesSideBar(title, description, author);
+        driver.findElement(By.id("sidebarbuttonadd")).click();
+    }
+
+    private void createLinkTipWithSidebar(String title, String description, String url, String author) throws InterruptedException {
+        openSidebar();
+        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("links");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarurl")));
+        assertTrue(driver.findElement(By.id("sidebarurl")).isDisplayed());
+        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        fillGenericFormValuesSideBar(title, description, author);
+        driver.findElement(By.id("sidebarurl")).sendKeys(url);
+        driver.findElement(By.id("sidebarbuttonadd")).click();
+    }
+
+    private void createVideoTipWithSidebar(String title, String description, String url, String author) throws InterruptedException {
+        openSidebar();
+        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("videos");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarurl")));
+        assertTrue(driver.findElement(By.id("sidebarurl")).isDisplayed());
+        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        fillGenericFormValuesSideBar(title, description, author);
+        driver.findElement(By.id("sidebarurl")).sendKeys(url);
+        driver.findElement(By.id("sidebarbuttonadd")).click();
     }
 
     private void openTipWithTitle(String title) throws InterruptedException {

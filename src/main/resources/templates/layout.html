@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title th:inline="text">[[${ title }]] | Lukuvinkit</title>
-  <meta name="description" th:if="${description != null}" th:content="${description}">
+    <title th:inline="text">[[${ title }]] | Lukuvinkit</title>
+    <meta name="description" th:if="${description != null}" th:content="${description}">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link href="css/global.css" th:href="@{'~/css/global.css'}" rel="stylesheet" type="text/css">
-  <link href="style.css" th:href="@{'~/css/' + ${ view } + '.css'}" rel="stylesheet" type="text/css">
+    <link href="css/global.css" th:href="@{'~/css/global.css'}" rel="stylesheet" type="text/css">
+    <link href="style.css" th:href="@{'~/css/' + ${ view } + '.css'}" rel="stylesheet" type="text/css">
 
-</head>
+  </head>
 
-<body th:style="${ nav } ? 'padding-top: 3.5rem;'">
-<!-- Pre-content framework -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-</script>
+  <body th:style="${ nav } ? 'padding-top: 3.5rem;'">
 
-<th:block th:if="${ view == 'login' or view == 'register' }">
-    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
-</th:block>
+    <!-- Pre-content framework -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
 
-<div th:unless="${ view == 'login' or view == 'register' }" id="wrapper">
-  <!-- Navbar & Sidebar -->
-  <th:block th:if="${ nav }">
-    <div th:replace="@{'fragments/' + ${ nav }} :: ${ nav }"></div>
-    <div th:replace="@{'fragments/sidebar'} :: ${ sidebar }"></div>
-  </th:block>
+    <!-- Content view -->
+    <th:block th:if="${ view == 'login' or view == 'register' }">
+        <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+    </th:block>
 
-  <!-- Content -->
-  <div id="page-content-wrapper">
-    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
-  </div>
-</div>
+    <div th:unless="${ view == 'login' or view == 'register' }" id="wrapper">
+      <!-- Navbar & Sidebar -->
+      <th:block th:if="${ nav }">
+        <div th:replace="@{'fragments/' + ${ nav }} :: ${ nav }"></div>
+        <div th:replace="@{'fragments/sidebar'} :: ${ sidebar }"></div>
+      </th:block>
+    
+      <!-- Content -->
+      <div id="page-content-wrapper">
+        <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+      </div>
+    </div>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous">
+    </script>
+    <script th:src="@{'~/js/code.js'}"></script>
 
-<!-- Scripts -->
-<script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous">
-</script>
-<script th:src="@{'~/js/code.js'}"></script>
+    <span id="loadfinish"> </span>
+    <br />
+    <br />
 
-<span id="loadfinish"> </span>
-<br />
-<br />
-</body>
+  </body>
 </html>

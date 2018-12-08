@@ -59,3 +59,23 @@ Feature: After logging in, I can create tips with valid information
     Given test user is logged in
     When creating a video tip and title "Best Title" and description "Super description" and url "https://<b>mustread.com" and author "John Doe" are given
     Then new link tip with "Best title" and "I wonder" is not created 
+@quick
+  Scenario: user can create a book tip with valid information through the sidebar
+    Given test user is logged in
+    When creating a book tip through the sidebar and correct title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" and isbn "978-3-16-148410-0" are given
+    Then new book tip with title "Best Title" and description "Super description" and author "John Doe" is created
+@quick
+  Scenario: user can create an article tip with valid information through the sidebar
+    Given test user is logged in
+    When creating an article tip through the sidebar and correct title "Best Title" and description "Super description" and author "John Doe" are given
+    Then new article tip with title "Best Title" and description "Super description" and author "John Doe" is created
+@quick
+  Scenario: user can create a link tip with valid information through the sidebar
+    Given test user is logged in
+    When creating a link tip through the sidebar and title "Best Title" and description "Super description" and url "http://www.mustread.com" and author "John Doe" are given
+    Then new link tip with title "Best Title" and description "Super description" and author "John Doe" is created
+@quick
+  Scenario: user can create a video tip with valid information through the sidebar
+    Given test user is logged in
+    When creating a video tip through the sidebar and title "Best Title" and description "Super description" and url "http://www.youtube.com/watch?v=" and author "John Doe" are given
+    Then new video tip with title "Best Title" and description "Super description" and author "John Doe" is created
