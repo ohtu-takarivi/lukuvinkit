@@ -15,10 +15,14 @@ $(document).ready(function () {
         }
     }).change();
     $('.javascript-only').removeClass('javascript-only');
-
-    // Sidebar toggle
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 });
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("sidebar").style.width = "350px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("sidebar").style.width = "0";
+}

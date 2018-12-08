@@ -23,64 +23,55 @@
   }
 }
 
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
-
-#wrapper {
-  padding: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+ /* The side navigation menu */
+ .sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0; /* change 'right' to 'left' if sidebar needs to be on the left */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 3.5em;
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  left: 400px;
-  width: 0;
-  height: 100%;
-  margin-left: -400px;
-  overflow-y: auto;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+.sidenav > .sidebar-content {
+  padding-top: 4em;
+  min-width: 350px;
 }
 
-#wrapper.toggled #sidebar-wrapper {
-  width: 400px;
-  padding: 2em;
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
 }
 
-#page-content-wrapper {
-  width: 100%;
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
   position: absolute;
+  right: 20px;
+  font-size: 36px;
+  margin-left: 50px;
 }
 
-#wrapper.toggled #page-content-wrapper {
-  position: absolute;
-  margin-right: -400px;
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
 }
 
-@media(min-width:768px) {
-  #wrapper {
-    padding-left: 0;
-  }
-  #sidebar-wrapper {
-    width: 0;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    width: 400px;
-    padding: 2em;
-  }
-  #page-content-wrapper {
-    position: relative;
-  }
-  #wrapper.toggled #page-content-wrapper {
-    margin-right: 0;
-  }
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
 }

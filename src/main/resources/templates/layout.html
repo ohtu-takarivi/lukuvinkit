@@ -31,13 +31,11 @@
     <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
   </th:block>
 
-  <div th:unless="${ view == 'login' or view == 'register' }" id="wrapper">
+  <th:block th:unless="${ view == 'login' or view == 'register' }">
     <div th:replace="@{'fragments/sidebar'} :: 'sidebar'"></div>
-    <div id="page-content-wrapper">
-      <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
-      <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
-    </div>
-  </div>
+    <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
+    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+  </th:block>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
