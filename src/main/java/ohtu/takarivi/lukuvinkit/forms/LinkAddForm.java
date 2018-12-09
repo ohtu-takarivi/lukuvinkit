@@ -1,13 +1,14 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.validation.BindingResult;
+import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import static ohtu.takarivi.lukuvinkit.forms.FormUtils.isValidURL;
+import org.springframework.validation.BindingResult;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

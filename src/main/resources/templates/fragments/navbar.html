@@ -37,11 +37,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/readingTips/selected" th:inline="text">Valitut ([[${selectedReadingTips.size()}]])</a>
       </li>
-      <li class="nav-item">
-        <a class="btn btn-success my-2 my-md-0 ml-2" href="#">
-          <i class="fa fa-plus"></i>
-        </a>
-      </li>
     </div>
     <form class="form-inline mx-md-3" th:action="@{/searchTips}" method="POST">
       <input type="text" id="keyword" name="keyword" class="form-control mr-sm-2" placeholder="Pikahaku" required>
@@ -52,4 +47,8 @@
       <button class="btn btn-primary" type="submit" id="buttonlogout">Kirjaudu ulos</button>
     </form>
   </div>
+
+  <a id="menu-toggle" href="javascript:void(0)" onclick="openNav()" class="btn btn-success bottom-right-button shadow">
+    <i class="fa fa-plus"></i>
+  </a>
 </nav>

@@ -1,8 +1,9 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
+import org.springframework.validation.BindingResult;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.validation.BindingResult;
 
 @Getter
 @Setter

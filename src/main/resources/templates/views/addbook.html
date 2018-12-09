@@ -7,29 +7,34 @@
           <label for="title">Otsikko</label>
           <input type="text" id="title" name="title" th:field="*{title}" class="form-control" placeholder="Otsikko"
                  required autofocus/>
-          <p class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></strong></p>
+          <p class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         </div>
         <div class="form-group">
           <label for="description">Kuvaus</label>
           <textarea type="text" id="description" name="description" th:field="*{description}" class="form-control"
                  placeholder="Kuvaus" required/>
           <p class="alert alert-danger" th:if="${#fields.hasErrors('description')}"
-             th:errors="*{description}"></strong></p>
+             th:errors="*{description}"></p>
         </div>
         <div class="form-group">
           <label for="author">Tekijä</label>
           <input type="text" id="author" name="author" th:field="*{author}" class="form-control" placeholder="Tekijä"
                  required/>
-          <p class="alert alert-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></strong></p>
+          <p class="alert alert-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></p>
+        </div>
+        <div class="form-group">
+          <label for="tags">Tagit</label>
+          <input type="text" id="tags" name="tags" th:field="*{tags}" class="form-control" placeholder="Erota välilyönneillä" />
+          <p class="alert alert-danger" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></p>
         </div>
         <div class="form-group">
           <label for="isbn">ISBN</label>
           <input type="text" id="isbn" name="isbn" th:field="*{isbn}" class="form-control" placeholder="ISBN" required/>
-          <p class="alert alert-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></strong></p>
-          <button class="btn btn-secondary btn-sm javascript-only" type="button" id="buttonautofillbook">Hae otsikko ja tekijät</button>
+          <p class="alert alert-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></p>
+          <button class="btn btn-secondary btn-sm" type="button" id="buttonautofillbook">Hae otsikko ja tekijät</button>
+          <script th:src="@{'~/js/addbook.js'}"></script>
         </div>
-        <script th:src="@{'~/js/addbook.js'}"></script>
-        <button class="btn btn-primary" type="submit" id="buttonadd">Lisää</button>
+        <button class="btn btn-primary btn-block" type="submit" id="buttonadd">Lisää</button>
       </form>
     </div>
   </div>

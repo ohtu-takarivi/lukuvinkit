@@ -5,10 +5,34 @@ Google Inc. on yhdysvaltalainen vuonna 1998 perustettu yhtiö, joka tarjoaa etup
 https://www.google.fi/
 
 LINK
+Twitter
+Twitter Inc.
+Twitter on yhdysvaltalainen vuonna 2006 perustettu sosiaalisen median mikroblogipalvelu, jossa viestin, eli twiitin pituus voi olla 280 merkkiä.
+https://twitter.com/?lang=fi
+
+LINK
+Twitch
+Amazon Inc.
+Twitch on vuonna 2011 perustettu suoratoistopalvelu, jolla on nykyisin yli 15 miljoonaa päivittäistä katsojaa.
+https://www.twitch.tv/
+
+LINK
+Facebook
+Facebook Inc.
+Facebook on vuonna 2004 perustettu mainosrahoitteinen yhteisöpalvelu yli 2 miljardilla käyttäjällä.
+https://fi-fi.facebook.com/
+
+LINK
 Wikipedia (suomenkielinen)
 Wikipedia-yhteisö
 Wikipedia on Internetissä julkaistava ilmainen vapaan sisällön tietosanakirja, joka perustuu MediaWiki-tekniikkaan.
 https://fi.wikipedia.org/
+
+LINK
+Lukuvinkit app
+Takarivi-group
+Lukuvinkit app on Ohjelmistotuotanto-kurssin aikana toteutettu miniprojekti, johon on mahdollista säilöä erilaisia vinkkejä.
+https://takarivi-lukuvinkit.herokuapp.com/
 
 LINK
 Helsingin Yliopisto
@@ -83,6 +107,12 @@ Romaani naisten kokemuksista Viron vaietussa lähihistoriassa.
 978-951-0-33973-2
 
 BOOK
+Perikato
+Ilkka Remes
+Salainen konservatiivinen verkosto yrittää rajoittaa Euroopassa havaitsemaansa islamisoitumista.
+9789510434420
+
+BOOK
 The C Programming Language
 Brian Kernighan, Dennis Ritchie
 Ensimmäinen C-kielestä kirjoitettu kirja, joka toimi kielen standardina ja jonka nimeen yhä monet C-ohjelmoijat vannovat. Yksi ohjelmoinnin historian tärkeimmistä teoksista.
@@ -116,7 +146,25 @@ VIDEO
 How Will Artificial Intelligence Affect Your Life | Jeff Dean | TEDxLA
 TEDx Talks
 Jeff Dean käy läpi tekoälyä ja sen tuomia mahdollisuuksia ja vaikutuksia tulevaisuudessa.
-https://www.youtube.com/watch?v=t9c7aheZxls
+https://www.youtube.com/watch?v=BfDQNrVphLQ
+
+VIDEO
+If Educational Videos Were Filmed Like Music Videos
+Tom Scott
+There's a reason music videos look strange. I could just talk about framerate, cuts and continuity... or I could get an actual music video director. And a leaf blower.
+https://www.youtube.com/watch?v=G025oxyWv0E
+
+VIDEO
+NASA Live: Earth Views from the Space Station
+Nasa
+Nasa's live feed from ISS. 
+https://www.youtube.com/watch?v=Va0tdqjZz-c
+
+VIDEO
+Kuinka Avataan Tölkki Ilman Avaajaa - Zombie-selvitytymisvinkki #20
+CrazyRussianHacker
+Vinkki miten saa tonnikalapurkin auki, kun purkinavaaja on kadoksissa eikä kaapeissa ole muuta syötävää.
+https://www.youtube.com/watch?v=oH2NahLjx-Y
 
 VIDEO
 AAMUPALAVINKKI VIHERAHON MALLIIN
@@ -129,12 +177,6 @@ LITTLE BIG – SKIBIDI (official music video)
 Little Big
 Mielenkiintoinen kappale ja musiikkivideo.
 https://www.youtube.com/watch?v=mDFBTdToRmw
-
-VIDEO
-If Educational Videos Were Filmed Like Music Videos
-Tom Scott
-There's a reason music videos look strange. I could just talk about framerate, cuts and continuity... or I could get an actual music video director. And a leaf blower.
-https://www.youtube.com/watch?v=G025oxyWv0E
 
 ARTICLE
 New Directions in Cryptography
@@ -165,5 +207,25 @@ ARTICLE
 Go To Statement Considered Harmful
 Edsger Dijkstra
 Don't use goto – the beginning of structured programming. Communications of the ACM, 11(3):147–148, March 1968
+
+ARTICLE
+Artificial Intelligence to Boost Liquid Biopsies
+Claire Asher
+Machine-learning algorithms tuned to detecting cancer DNA in the blood could pave the way for personalized cancer care. The Scientist, Jun 2018
+
+ARTICLE
+Virtual Reality May Revolutionize Brain Science
+Ashley Yeager
+New technology could open doors for researchers studying animals’ most complex organ. The Scientist, Feb 2018
+
+ARTICLE
+Donald Trump has no grasp of what it means to be president
+Jon Berkley
+Discussing Trump's actions and his supposed achievements. Economist, Aug 2017
+
+ARTICLE
+The world’s most dangerous cities
+Economist 
+Short, but informative article about the most dangerous cities and reasons. The Economist, Mar 2017
 
 

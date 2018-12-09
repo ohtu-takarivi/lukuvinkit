@@ -1,9 +1,10 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
-import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 
 public class ReadingTipCategoryTest {
 

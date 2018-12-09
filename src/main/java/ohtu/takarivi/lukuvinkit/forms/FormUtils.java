@@ -1,5 +1,11 @@
 package ohtu.takarivi.lukuvinkit.forms;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipTagRepository;
+
 public class FormUtils {
 
     private static final String ISBN_10_CHECK = "0123456789X";
@@ -83,6 +89,33 @@ public class FormUtils {
         String regex = "^(http|https|ftp):\\/\\/([a-zA-Z0-9_\\.\\-]+\\.([A-Za-z]{2,20})|localhost)(:[0-9]{1,5})" +
                 "?[a-zA-Z0-9_\\/\\&\\?\\=\\.\\~\\%\\-]*";
         return url.matches(regex);
+    }
+
+    /**
+     * Prepares a ReadingTipTag Set for instantiating a ReadingTip instance.
+     * 
+     * @param readingTipTagRepository The ReadingTipTag repository.
+     * @param tagNames The array containing tag names.
+     * @return The Set containing the tags.
+     */
+    public static Set<ReadingTipTag> prepareTags(ReadingTipTagRepository readingTipTagRepository, String[] tagNames) {
+        Set<ReadingTipTag> tags = new HashSet<>();
+        if (readingTipTagRepository == null) {
+            return tags;
+        }
+        
+        for (String rawTagName: tagNames) {
+            String tagName = rawTagName.trim();
+            if (!tagName.isEmpty()) {
+                ReadingTipTag tag = readingTipTagRepository.findByName(tagName);
+                if (tag == null) {
+                    tag = new ReadingTipTag(tagName);
+                    readingTipTagRepository.save(tag);
+                }
+                tags.add(tag);
+            }
+        }
+        return tags;
     }
 
 }

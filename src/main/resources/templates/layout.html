@@ -20,29 +20,33 @@
 
 </head>
 
-<body th:style="${ nav } ? 'padding-top: 4rem;'">
-<!-- Navbar -->
-<th:block th:if="${ nav }">
-  <div th:replace="@{'fragments/' + ${ nav }} :: ${ nav }"></div>
-</th:block>
+<body th:style="${ nav } ? 'padding-top: 3.5rem;'">
+  <!-- Pre-content framework -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous">
+  </script>
 
-<!-- Pre-content framework -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+  <th:block th:if="${ view == 'login' or view == 'register' }">
+    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+  </th:block>
 
-<!-- Content -->
-<div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+  <th:block th:unless="${ view == 'login' or view == 'register' }">
+    <div th:replace="@{'fragments/sidebar'} :: 'sidebar'"></div>
+    <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
+    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
+  </th:block>
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-<script th:src="@{'~/js/code.js'}"></script>
+  <!-- Scripts -->
+  <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+          integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+          crossorigin="anonymous">
+  </script>
+  <script th:src="@{'~/js/sidebar.js'}"></script>
 
-<span id="loadfinish"> </span>
+  <span id="loadfinish"> </span>
+  <br />
+  <br />
 </body>
 </html>
