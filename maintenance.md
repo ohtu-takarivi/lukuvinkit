@@ -50,7 +50,7 @@ Tietokantakaaviossa on kuvattu tietokantaan talletetut luokat ja niiden suhteet.
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/documentation/maintenance/tietokantakaavio.png" width="500">
 
 
-##Tarkistukset
+## Tarkistukset
 Sovellukseen on luotu tarkistukset ISBN-numerosarjoille, sekä URL-osoitteille. Nämä löytyvät polusta (/src/main/java/ohtu/takarivi/lukuvinkit/forms/FormUtils.java).
 
 ### ISBN Tarkistus
