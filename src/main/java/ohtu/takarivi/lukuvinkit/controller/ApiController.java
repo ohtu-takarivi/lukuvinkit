@@ -58,12 +58,12 @@ public class ApiController {
 
             // get the text between title tags if ones exist
             if (responseBodyLower.contains("<title>")) {
-                title = setTitle(responseBodyLower, responseBody);
+                title = getTitleFromHtml(responseBody);
             }
 
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
-                description = setDescription(responseBodyLower, responseBody);
+                description = getDescriptionFromHtml(responseBody);
             }
             
             JSONObject obj = new JSONObject();
@@ -84,13 +84,27 @@ public class ApiController {
         }
     }
 
-    private String setDescription(String responseBodyLower, String responseBody) {
-        int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
-        return responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
+    /**
+     * Gets the title between the <title>...</title> tags from the HTML source. The tags must be guaranteed to exist.
+     *
+     * @param html The HTML source.
+     * @return The title between <title>...</title> tags.
+     */
+    private String getTitleFromHtml(String html) {
+        String htmlLower = html.toLowerCase();
+        int titleStart = htmlLower.indexOf("<title>") + "<title>".length();
+        return html.substring(titleStart, htmlLower.indexOf("</title>", titleStart)).replace('\n', ' ');
     }
 
-    private String setTitle(String responseBodyLower, String responseBody) {
-        int titleStart = responseBodyLower.indexOf("<title>") + "<title>".length();
-        return responseBody.substring(titleStart, responseBodyLower.indexOf("</title>", titleStart)).replace('\n', ' ');
+    /**
+     * Gets the description from the value of "content" in the <meta name="description" content="..."> tag from the HTML source. The tag must be guaranteed to exist.
+     *
+     * @param html The HTML source.
+     * @return The "content" value of the between <meta name="description" content="..."> tag.
+     */
+    private String getDescriptionFromHtml(String html) {
+        String htmlLower = html.toLowerCase();
+        int descStart = htmlLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
+        return html.substring(descStart, htmlLower.indexOf("\"", descStart)).replace('\n', ' ');
     }
 }
