@@ -58,14 +58,12 @@ public class ApiController {
 
             // get the text between title tags if ones exist
             if (responseBodyLower.contains("<title>")) {
-                int titleStart = responseBodyLower.indexOf("<title>") + "<title>".length();
-                title = responseBody.substring(titleStart, responseBodyLower.indexOf("</title>", titleStart)).replace('\n', ' ');
+                title = setTitle(responseBodyLower, responseBody);
             }
 
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
-                int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
-                description = responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
+                description = setDescription(responseBodyLower, responseBody);
             }
             
             JSONObject obj = new JSONObject();
@@ -84,5 +82,15 @@ public class ApiController {
                 }
             }
         }
+    }
+
+    private String setDescription(String responseBodyLower, String responseBody) {
+        int descStart = responseBodyLower.indexOf("<meta name=\"description\" content=\"") + "<meta name=\"description\" content=\"".length();
+        return responseBody.substring(descStart, responseBodyLower.indexOf("\"", descStart)).replace('\n', ' ');
+    }
+
+    private String setTitle(String responseBodyLower, String responseBody) {
+        int titleStart = responseBodyLower.indexOf("<title>") + "<title>".length();
+        return responseBody.substring(titleStart, responseBodyLower.indexOf("</title>", titleStart)).replace('\n', ' ');
     }
 }
