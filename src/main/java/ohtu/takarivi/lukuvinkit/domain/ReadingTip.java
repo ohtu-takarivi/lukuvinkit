@@ -97,7 +97,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
     }
     
     private String articleToString() {
-       return "Artikkeli: " + this.title + "\n"
+        return "Artikkeli: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
                     + this.description; 
     }
