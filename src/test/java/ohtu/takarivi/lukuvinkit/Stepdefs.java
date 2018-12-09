@@ -1,30 +1,20 @@
 package ohtu.takarivi.lukuvinkit;
 
-import static ohtu.takarivi.lukuvinkit.controller.MiscController.enableTestdataEntry;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.UnhandledAlertException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.test.annotation.DirtiesContext;
-
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Test;
+import org.openqa.selenium.*;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.springframework.test.annotation.DirtiesContext;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static ohtu.takarivi.lukuvinkit.controller.MiscController.enableTestdataEntry;
+import static org.junit.Assert.*;
 
 @DirtiesContext
 public class Stepdefs extends SpringBootTestBase {
@@ -332,48 +322,48 @@ public class Stepdefs extends SpringBootTestBase {
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are registered$")
     public void username_password_registered(String username, String password) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.name("verifyPassword")).sendKeys(password);
-        driver.findElement(By.name("name")).sendKeys(username);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("verifyPassword")).sendKeys(password);
+        driver.findElement(By.id("name")).sendKeys(username);
         driver.findElement(By.id("buttonregister")).click();
     }
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" and verify password \"([^\"]*)\" are registered$")
     public void username_password_registered_different_verify(String username, String password, String verify) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.name("verifyPassword")).sendKeys(verify);
-        driver.findElement(By.name("name")).sendKeys(username);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("verifyPassword")).sendKeys(verify);
+        driver.findElement(By.id("name")).sendKeys(username);
         driver.findElement(By.id("buttonregister")).click();
     }
 
     @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
     public void new_password_created(String password, String verifyPassword) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonchangepassword")).isEmpty());
-        driver.findElement(By.name("newPassword")).sendKeys(password);
-        driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
+        driver.findElement(By.id("newPassword")).sendKeys(password);
+        driver.findElement(By.id("verifyNewPassword")).sendKeys(verifyPassword);
         driver.findElement(By.id("buttonchangepassword")).click();
     }
 
     @When("^fetching information from our own login page$")
     public void autolink_fetch_from_self() throws Throwable {
-        driver.findElement(By.name("url")).sendKeys(getBaseUrl() + "/login");
+        driver.findElement(By.id("url")).sendKeys(getBaseUrl() + "/login");
         driver.findElement(By.id("buttonautofilllink")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
 
     @When("^fetching information from URL \"([^\"]*)\"$")
     public void autolink_fetch_url(String url) throws Throwable {
-        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.id("url")).sendKeys(url);
         driver.findElement(By.id("buttonautofilllink")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
 
     @When("^fetching information from ISBN \"([^\"]*)\"$")
     public void autofill_book_isbn(String isbn) throws Throwable {
-        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        driver.findElement(By.id("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonautofillbook")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
@@ -472,13 +462,13 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Then("^fetched title contains \"([^\"]*)\"$")
     public void autofill_title(String title) throws Throwable {
-        assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
+        assertTrue(driver.findElement(By.id("title")).getAttribute("value").contains(title));
     }
 
     @Then("^there is an alert$")
     public void autofill_alert() throws Throwable {
         try {
-            driver.findElement(By.name("title")).getAttribute("value");
+            driver.findElement(By.id("title")).getAttribute("value");
             fail("no alert found when one was expected");
         } catch (UnhandledAlertException ex) {
         }
@@ -494,8 +484,8 @@ public class Stepdefs extends SpringBootTestBase {
         }
         
         try {
-            assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
-            assertTrue(driver.findElement(By.name("author")).getAttribute("value").contains(author));
+            assertTrue(driver.findElement(By.id("title")).getAttribute("value").contains(title));
+            assertTrue(driver.findElement(By.id("author")).getAttribute("value").contains(author));
         } catch (UnhandledAlertException ex) {
         }
     }
@@ -596,19 +586,19 @@ public class Stepdefs extends SpringBootTestBase {
 
     private void logInWith(String username, String password) throws InterruptedException {
         assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
         driver.findElement(By.id("buttonlogin")).click();
     }
 
     private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
         browseTo("/readingTips/books/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        //driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
-        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        //driver.findElement(By.id("url")).sendKeys(url);
+        driver.findElement(By.id("author")).sendKeys(author);
+        driver.findElement(By.id("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonadd")).click();
     }
 
@@ -631,39 +621,39 @@ public class Stepdefs extends SpringBootTestBase {
     private void createArticleTip(String title, String description, String author) throws InterruptedException {
         browseTo("/readingTips/articles/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
     }
 
     private void createArticleTip(String title, String description, String author, String tags) throws InterruptedException {
         browseTo("/readingTips/articles/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("author")).sendKeys(author);
-        driver.findElement(By.name("tags")).sendKeys(tags);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("author")).sendKeys(author);
+        driver.findElement(By.id("tags")).sendKeys(tags);
         driver.findElement(By.id("buttonadd")).click();
     }
 
     private void createLinkTip(String title, String description, String url, String author) throws InterruptedException {
         browseTo("/readingTips/links/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("url")).sendKeys(url);
+        driver.findElement(By.id("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
     }
 
     private void createVideoTip(String title, String description, String url, String author) throws InterruptedException {
         browseTo("/readingTips/videos/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("url")).sendKeys(url);
-        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("url")).sendKeys(url);
+        driver.findElement(By.id("author")).sendKeys(author);
         driver.findElement(By.id("buttonadd")).click();
     }
 
