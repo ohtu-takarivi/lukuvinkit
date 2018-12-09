@@ -25,6 +25,12 @@ public class FormUtils {
     /**
      * Checks if the given ISBN-10 is valid.
      *
+     * ISBN-10 format requires that the number is 10 digits. Characters are not accepted.
+     * 
+     * The first 9 numbers are each summed together. Each time the sum is calculated the sum is added to a variable called result.
+     * The result and sum are used in the following calculation (11 - ((result + sum) % 11)) % 11 which is used to fetch a result form the variable ISBN_10_CHECK.
+     * If the result isn't equal to the last digit of the isbn, then the isbn is rejected.
+     * 
      * @param isbn The value that is checked.
      * @return Return true if the given input is a valid ISBN-10 code and false if it is not.
      */
@@ -47,6 +53,13 @@ public class FormUtils {
 
     /**
      * Checks if the given ISBN-13 is valid.
+     * 
+     * ISBN-13 format requires that the number is 13 digits. Characters are not accepted.
+     * 
+     * The first 12 numbers are multiplied, the first by 1 and every other after it by 3.
+     * Then a modulo 10 division is done on the result.
+     * If the result of this doesn't equal to zero then the result is 10 minus the result of the modulo division. 
+     * If the result isn't equal to the last digit of the isbn, then the isbn is rejected.
      *
      * @param isbn The value that is checked.
      * @return Return true if the given input is a valid ISBN-13 code and false if it is not.
