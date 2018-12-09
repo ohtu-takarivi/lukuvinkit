@@ -46,6 +46,13 @@ Tietokantaan tallennettavaa luokkaa taas käytetään luokkien rajapintojen (Rep
 Tietokantakaaviossa on kuvattu tietokantaan talletetut luokat ja niiden suhteet.
 <img src="https://github.com/ohtu-takarivi/lukuvinkit/blob/master/documentation/maintenance/tietokantakaavio.png" width="500">
 
+## ISBN Tarkistus
+ISBN-10 koostuu neljästä osasta, joiden tulee koostua numeroista. ISBN-13 sisältää näiden neljän osan lisäksi numerosarjan alussa numeronsarjan 978 tai 979. Neljä yhteistä osaa ovat seuraavat: alkuperäismaa tai kieliryhmä, kustantajatunnus, julkaisutunnus ja tarkistusmerkki.
+
+ISBN-13 tarkistuksessa otetaan 12 ensimmäistä numeroa, joista lasketaan viimeinen numero eli tarkistusmerkki. Ensimmäinen numero kerrotaan yhdellä, jonka jälkeen seuraava kolmella, ja sitä seuraava taas yhdellä jatkaen kunnes kaikki numerot on kerrottu. Lopputulosta verrataan viimeiseen merkkiin. Mikäli tulos ei vastaa tarkistusmerkkiä, hylätään ISBN virheellisenä.
+
+ISBN-10 tarkistuksessa otetaan 9 ensimmäistä numeroa, joista lasketaan viimeinen numero eli tarkistusmerkki. Jokainen numero summataan yhteen. Jokaisen summauksen jälkeen summa lisätään muuttujaan summa. Lopputulos haetaan tarkistussarjasta 0123456789X. Mikäli tulos ei vastaa tarkistusmerkkiä, hylätään ISBN virheellisenä.
+
 ## Testit
 Tietokantaan saa lisättyä testidataa tiedostosta /src/main/resources/testdata.txt. Tämä testidata voidaan ottaa käyttöön menemällä osoitteeseen http://localhost:8080/testDataInsert, jolloin otetaan käyttöön käyttäjä testuser/testuser, johon testidata liitetään. Tuotantoversiossa testidatan luominen ei saa olla käytössä.
 
