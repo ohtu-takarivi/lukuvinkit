@@ -157,19 +157,24 @@ public class ReadingTipController {
         result.append(    "        <th>Tekijä(t)</th>\n");
         result.append(    "        <th>Linkki tai ISBN</th>\n");
         result.append(    "        <th>Kuvaus</th>\n");
+        result.append(    "        <th>Kommentti</th>\n");
         result.append(    "      </tr>\n");
         for (ReadingTip rtip : tips) {
             String detail = "";
             if (rtip.getCategory() == ReadingTipCategory.BOOK) {
-                detail = rtip.getIsbn();
+                detail = "<a href=\"https://helka.finna.fi/Search/Results?lookfor={ISBN}&type=AllFields&dfApplied=1&limit=20\">"
+                                .replace("{ISBN}", rtip.getIsbn().replace("\"", "%22"))
+                            + rtip.getIsbn() + "</a>";
             } else if (rtip.getCategory() == ReadingTipCategory.LINK || rtip.getCategory() == ReadingTipCategory.VIDEO) {
-                detail = rtip.getUrl();
+                detail = "<a href=\"" + rtip.getUrl().replace("\"", "%22") + "\">"
+                            + rtip.getUrl() + "</a>";
             }
             result.append("      <tr>\n");
             result.append("        <td>" + rtip.getTitle() + "</td>\n");
             result.append("        <td>" + rtip.getAuthor() + "</td>\n");
             result.append("        <td>" + detail + "</td>\n");
             result.append("        <td>" + rtip.getDescription() + "</td>\n");
+            result.append("        <td>" + rtip.getComment() + "</td>\n");
             result.append("      </tr>\n");
         }
         result.append(    "    </table>\n");
@@ -279,7 +284,9 @@ public class ReadingTipController {
      * @return The action to be taken by this controller.
      */
     @PostMapping("/readingTips/delete/{readingTipId}")
-    public String deleteReadingTip(Authentication auth, @PathVariable Long readingTipId) {
+    public String deleteReadingTip(HttpServletRequest request, Authentication auth, 
+                                   @PathVariable Long readingTipId) {
+        String referer = request.getHeader("Referer");
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         ReadingTip readingTip = readingTipRepository.getOne(readingTipId);
         if (readingTip.getCustomUser().getId() != customUser.getId()) {
@@ -287,7 +294,8 @@ public class ReadingTipController {
             throw new AccessDeniedException("Access denied");
         }
         readingTipRepository.deleteById(readingTipId);
-        return "redirect:/";
+        return "redirect:" + (referer == null || referer.contains("/view/" + readingTipId)
+                                ? "/" : referer);
     }
 
     /**
@@ -329,29 +337,18 @@ public class ReadingTipController {
     @PostMapping("/search")
     public String searchReadingTipWithFullForm(Authentication auth, @RequestParam String title,
                                                @RequestParam String description,
-                                               @RequestParam String url, @RequestParam String author,
-                                               @RequestParam String tags,
+                                               @RequestParam String url, @RequestParam String isbn,
+                                               @RequestParam String author, @RequestParam String tags,
                                                @RequestParam("category") List<String> category,
                                                @RequestParam("unreadstatus") List<String> unreadstatus,
                                                Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         // do an advanced search
         List<ReadingTip> list2 = ReadingTipSearch.searchAdvanced(readingTipRepository, customUser, customUser.getId(),
-                title, description, url, author, tags, category, unreadstatus);
+                title, description, url, isbn, author, tags, category, unreadstatus);
         model.addAttribute("readingTips", list2);
         model.addAttribute("view", "search");
         return "layout";
-    }
-
-    /**
-     * The page that resets a search.
-     *
-     * @param auth An Authentication object representing the currently authenticated user.
-     * @return The action to be taken by this controller.
-     */
-    @PostMapping("/resetSearch")
-    public String resetSearch(Authentication auth) {
-        return "redirect:/";
     }
 
 }

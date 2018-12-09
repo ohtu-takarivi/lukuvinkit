@@ -14,14 +14,14 @@ public enum ReadingTipCategory {
      */
     public static ReadingTipCategory getByName(String category) {
         switch (category.toLowerCase()) {
-            case "books":
-                return BOOK;
             case "articles":
                 return ARTICLE;
-            case "videos":
-                return VIDEO;
+            case "books":
+                return BOOK;
             case "links":
                 return LINK;
+            case "videos":
+                return VIDEO;
             default:
                 try { 
                     return ReadingTipCategory.valueOf(category.toUpperCase()); 

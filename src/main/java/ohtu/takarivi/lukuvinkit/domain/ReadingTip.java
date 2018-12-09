@@ -86,48 +86,47 @@ public class ReadingTip extends AbstractPersistable<Long> {
 
     @Override
     public String toString() {
-        if (this.category == ReadingTipCategory.ARTICLE) {
-            return articleToString();
-        } else if (this.category == ReadingTipCategory.BOOK) {
-            return bookToString();
-        } else if (this.category == ReadingTipCategory.LINK) {
-            return linkToString();
-        } else if (this.category == ReadingTipCategory.VIDEO) {
-            return videoToString();
-        } else {
-            return super.toString();
+        switch (this.category) {
+            case ARTICLE:
+                return addDescriptionAndComment(articleToString());
+            case BOOK:
+                return addDescriptionAndComment(bookToString());
+            case LINK:
+                return addDescriptionAndComment(linkToString());
+            case VIDEO:
+                return addDescriptionAndComment(videoToString());
+            default:
+                return super.toString();
         }
     }
     
-    private String articleToString() {
-        return "Artikkeli: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
+    private String addDescriptionAndComment(String string) {
+        return string
                     + this.description
                     + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
+    }
+
+    private String articleToString() {
+        return "Artikkeli: " + this.title + "\n"
+                    + "Tekijä(t): " + this.author + "\n";
     }
     
     private String bookToString() {
         return "Kirja: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
-                    + "ISBN-tunnus: " + this.isbn + "\n"
-                    + this.description
-                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
+                    + "ISBN-tunnus: " + this.isbn + "\n";
     }
     
     private String linkToString() {
         return "Verkkosivu: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n"
-                    + this.description
-                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
+                    + "Linkki: " + this.url + "\n";
     }
     
     private String videoToString() {
         return "Video: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n"
-                    + this.description
-                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
+                    + "Linkki: " + this.url + "\n";
     }
 
     /**
