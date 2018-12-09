@@ -31,9 +31,9 @@
           <label for="url">Url</label>
           <input type="text" id="url" name="url" th:field="*{url}" class="form-control" placeholder="Url" required/>
           <p class="alert alert-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></p>
+          <button class="btn btn-secondary btn-sm" type="button" id="buttonautofilllink">Hae otsikko ja kuvaus</button>
+          <script th:src="@{'~/js/addlink.js'}"></script>
         </div>
-        <button class="btn btn-secondary btn-sm" type="button" id="buttonautofilllink">Hae otsikko ja kuvaus</button>
-        <script th:src="@{'~/js/addlink.js'}"></script>
         <button class="btn btn-primary btn-block" type="submit" id="buttonadd">Lisää</button>
       </form>
     </div>
