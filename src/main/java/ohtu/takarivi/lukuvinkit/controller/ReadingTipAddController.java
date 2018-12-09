@@ -113,15 +113,17 @@ public class ReadingTipAddController {
             model.addAttribute("view", "addarticle");
             return "layout";
         }
-        readingTipRepository.save(new ReadingTip(articleAddForm.getTitle(),
-                ReadingTipCategory.ARTICLE,
-                articleAddForm.getDescription(),
-                "",
-                articleAddForm.getAuthor(),
-                "",
-                prepareTags(articleAddForm.getTags().split(" ")),
-                customUser));
-        return "redirect:/";
+        ReadingTip rtip = new ReadingTip(articleAddForm.getTitle(),
+                              ReadingTipCategory.ARTICLE,
+                              articleAddForm.getDescription(),
+                              "",
+                              articleAddForm.getAuthor(),
+                              "",
+                              prepareTags(articleAddForm.getTags().split(" ")),
+                              customUser);
+        readingTipRepository.save(rtip);
+        readingTipRepository.flush(); // flush likely necessary to get ID
+        return "redirect:/readingTips/view/" + rtip.getId();
     }
 
     /**
@@ -157,15 +159,17 @@ public class ReadingTipAddController {
             model.addAttribute("view", "addbook");
             return "layout";
         }
-        readingTipRepository.save(new ReadingTip(bookAddForm.getTitle(),
-                ReadingTipCategory.BOOK,
-                bookAddForm.getDescription(),
-                "",
-                bookAddForm.getAuthor(),
-                bookAddForm.getIsbn(),
-                prepareTags(bookAddForm.getTags().split(" ")),
-                customUser));
-        return "redirect:/";
+        ReadingTip rtip = new ReadingTip(bookAddForm.getTitle(),
+                              ReadingTipCategory.BOOK,
+                              bookAddForm.getDescription(),
+                              "",
+                              bookAddForm.getAuthor(),
+                              bookAddForm.getIsbn(),
+                              prepareTags(bookAddForm.getTags().split(" ")),
+                              customUser);
+        readingTipRepository.save(rtip);
+        readingTipRepository.flush(); // flush likely necessary to get ID
+        return "redirect:/readingTips/view/" + rtip.getId();
     }
 
     /**
@@ -201,15 +205,17 @@ public class ReadingTipAddController {
             model.addAttribute("view", "addlink");
             return "layout";
         }
-        readingTipRepository.save(new ReadingTip(linkAddForm.getTitle(),
-                ReadingTipCategory.LINK,
-                linkAddForm.getDescription(),
-                linkAddForm.getUrl(),
-                linkAddForm.getAuthor(),
-                "",
-                prepareTags(linkAddForm.getTags().split(" ")),
-                customUser));
-        return "redirect:/";
+        ReadingTip rtip = new ReadingTip(linkAddForm.getTitle(),
+                              ReadingTipCategory.LINK,
+                              linkAddForm.getDescription(),
+                              linkAddForm.getUrl(),
+                              linkAddForm.getAuthor(),
+                              "",
+                              prepareTags(linkAddForm.getTags().split(" ")),
+                              customUser);
+        readingTipRepository.save(rtip);
+        readingTipRepository.flush(); // flush likely necessary to get ID
+        return "redirect:/readingTips/view/" + rtip.getId();
     }
 
     /**
@@ -245,15 +251,17 @@ public class ReadingTipAddController {
             model.addAttribute("view", "addvideo");
             return "layout";
         }
-        readingTipRepository.save(new ReadingTip(videoAddForm.getTitle(),
-                ReadingTipCategory.VIDEO,
-                videoAddForm.getDescription(),
-                videoAddForm.getUrl(),
-                videoAddForm.getAuthor(),
-                "",
-                prepareTags(videoAddForm.getTags().split(" ")),
-                customUser));
-        return "redirect:/";
+        ReadingTip rtip = new ReadingTip(videoAddForm.getTitle(),
+                              ReadingTipCategory.VIDEO,
+                              videoAddForm.getDescription(),
+                              videoAddForm.getUrl(),
+                              videoAddForm.getAuthor(),
+                              "",
+                              prepareTags(videoAddForm.getTags().split(" ")),
+                              customUser);
+        readingTipRepository.save(rtip);
+        readingTipRepository.flush(); // flush likely necessary to get ID
+        return "redirect:/readingTips/view/" + rtip.getId();
     }
 
 }

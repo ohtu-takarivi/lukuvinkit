@@ -54,7 +54,7 @@ public class MiscController {
      * @return The JSON text returned by this API endpoint.
      */
     @GetMapping("/testDataInsert")
-    public String getLinkInfo(Authentication auth) {
+    public String testDataInsert(Authentication auth) {
         if (!ENABLE_TESTDATA_ENTRY) {
             return "redirect:/";
         }
@@ -70,43 +70,12 @@ public class MiscController {
         File file = new File(getClass().getClassLoader().getResource("testdata.txt").getFile());
         
         try (Scanner scanner = new Scanner(file, "utf-8")) {
-            while (scanner.hasNextLine()) {
-                // testdata format:
-                /// category (BOOK, LINK, VIDEO, ARTICLE)
-                /// title
-                /// author
-                /// description
-                /// URL if VIDEO or ARTICLE, ISBN if BOOK, otherwise this line does not exist
-                
-                // allow empty lines between test data entries
-                String cattext = scanner.nextLine();
-                if (cattext.trim().isEmpty()) {
-                    continue;
-                }
-                
-                ReadingTipCategory category = ReadingTipCategory.getByName(cattext);
-                // stop reading if the category is invalid
-                if (category == null) {
+            for (;;) {
+                ReadingTip rtip = getNextReadingTipFrom(scanner, emptyTags, user);
+                if (rtip == null) {
                     break;
                 }
-                
-                String title = scanner.nextLine();
-                String author = scanner.nextLine();
-                String description = scanner.nextLine();
-                String url = "";
-                String isbn = "";
-                
-                // read URL only if applicable
-                if (category == ReadingTipCategory.LINK || category == ReadingTipCategory.VIDEO) {
-                    url = scanner.nextLine();
-                }
-                // read ISBN only if applicable
-                if (category == ReadingTipCategory.BOOK) {
-                    isbn = scanner.nextLine();
-                }
-                
-                ReadingTip tip = new ReadingTip(title, category, description, url, author, isbn, emptyTags, user);
-                readingTipRepository.save(tip);
+                readingTipRepository.save(rtip);
             }
 
             scanner.close();
@@ -117,5 +86,55 @@ public class MiscController {
         auth.setAuthenticated(false);
 
         return "redirect:/login#user_and_password_is_testuser";
+    }
+
+    /**
+     * Reads the next reading tip from a Scanner providing test data.
+     * 
+     * @param scanner The Scanner to read from.
+     * @param emptyTags The Set of ReadingTipTag objects to be provided as the tags.
+     * @param customUser The CustomUser to be passed to the ReadingTip constructor.
+     * @return The next ReadingTip or null if there is no more (valid) test data.
+     */
+    private ReadingTip getNextReadingTipFrom(Scanner scanner, Set<ReadingTipTag> tags, CustomUser customUser) {
+        // testdata format:
+        /// category (BOOK, LINK, VIDEO, ARTICLE)
+        /// title
+        /// author
+        /// description
+        /// URL if VIDEO or ARTICLE, ISBN if BOOK, otherwise this line does not exist
+        
+        if (!scanner.hasNextLine()) {
+            return null;
+        }
+        
+        // allow empty lines between test data entries
+        String cattext = scanner.nextLine();
+        while (scanner.hasNextLine() && cattext.trim().isEmpty()) {
+            cattext = scanner.nextLine();
+        }
+        
+        ReadingTipCategory category = ReadingTipCategory.getByName(cattext);
+        // stop reading if the category is invalid
+        if (category == null) {
+            return null;
+        }
+        
+        String title = scanner.nextLine();
+        String author = scanner.nextLine();
+        String description = scanner.nextLine();
+        String url = "";
+        String isbn = "";
+        
+        // read URL only if applicable
+        if (category == ReadingTipCategory.LINK || category == ReadingTipCategory.VIDEO) {
+            url = scanner.nextLine();
+        }
+        // read ISBN only if applicable
+        if (category == ReadingTipCategory.BOOK) {
+            isbn = scanner.nextLine();
+        }
+        
+        return new ReadingTip(title, category, description, url, author, isbn, tags, customUser);
     }
 }

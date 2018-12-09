@@ -83,6 +83,7 @@ public class ReadingTipSearch {
      * @param description The description to search for, or empty if description
      * isn't searched for.
      * @param url The URL to search for, or empty if URL isn't searched for.
+     * @param isbn The ISBN to search for, or empty if ISBN isn't searched for.
      * @param author The author to search for, or empty if author isn't searched
      * for.
      * @param tags The tags to search for, separated with spaces.
@@ -92,11 +93,11 @@ public class ReadingTipSearch {
      * @return The reading tips found with this search.
      */
     public static List<ReadingTip> searchAdvanced(ReadingTipRepository readingTipRepository, CustomUser customUser, Long id, String title,
-            String description, String url, String author, String tags, List<String> category, List<String> unreadstatus) {
-        return readingTipRepository.findAll(getSpec(customUser, id, title, description, url, author, tags, category, unreadstatus));
+            String description, String url, String isbn, String author, String tags, List<String> category, List<String> unreadstatus) {
+        return readingTipRepository.findAll(getSpec(customUser, id, title, description, url, isbn, author, tags, category, unreadstatus));
     }
 
-    private static Specification<ReadingTip> getSpec(CustomUser customUser, Long id, String title, String description, String url, String author, String tags, List<String> category, List<String> unreadstatus) {
+    private static Specification<ReadingTip> getSpec(CustomUser customUser, Long id, String title, String description, String url, String isbn, String author, String tags, List<String> category, List<String> unreadstatus) {
         return new Specification<ReadingTip>() {
             private static final long serialVersionUID = 1L;
 
@@ -107,19 +108,42 @@ public class ReadingTipSearch {
 
                 predicates.add(builder.like(root.<String>get("customUser").get("username"), customUser.getUsername()));
 
+                addAttributePredicates(predicates, root, builder);
+                addTypePredicate(predicates, root, builder);
+                addReadStatusPredicate(predicates, root, builder);
+                addTagsPredicate(predicates, root, builder);
+
+                return builder.and(predicates.toArray(new Predicate[]{}));
+            }
+
+            // attribute predicates: title, description, author, URL, ISBN
+            private void addAttributePredicates(List<Predicate> predicates, Root<ReadingTip> root,
+                    CriteriaBuilder builder) {
                 if (!title.isEmpty()) { // title must match
                     predicates.add(builder.like(builder.lower(root.get("title")), "%" + title.toLowerCase() + "%"));
                 }
                 if (!description.isEmpty()) { // description must match
                     predicates.add(builder.like(builder.lower(root.get("description")), "%" + description.toLowerCase() + "%"));
                 }
-                if (!url.isEmpty()) { // URL must match
-                    predicates.add(builder.like(builder.lower(root.get("url")), "%" + url.toLowerCase() + "%"));
-                }
                 if (!author.isEmpty()) { // author must match
                     predicates.add(builder.like(builder.lower(root.get("author")), "%" + author.toLowerCase() + "%"));
                 }
+                if (!url.isEmpty()) { // URL must match
+                    predicates.add(builder.like(builder.lower(root.get("url")), "%" + url.toLowerCase() + "%"));
+                }
+                if (!isbn.isEmpty()) { // ISBN must match
+                    // ignore dashes/hyphens in ISBN search
+                    predicates.add(builder.like(builder.function("REPLACE", 
+                                                                String.class, 
+                                                                root.get("isbn"), 
+                                                                builder.literal("-"), 
+                                                                builder.literal("")), 
+                                                                "%" + isbn.replace("-", "") + "%"));
+                }
+            }
 
+            // type predicate: books, articles, videos, links
+            private void addTypePredicate(List<Predicate> predicates, Root<ReadingTip> root, CriteriaBuilder builder) {
                 Predicate allowedTypes = builder.disjunction();
                 // set allowed types based on checkbox values
                 final String[] validCategories = new String[] {"books", "articles", "videos", "links"};
@@ -129,15 +153,21 @@ public class ReadingTipSearch {
                     }
                 }
                 predicates.add(allowedTypes);
+            }
 
+            // read status predicate: unread, read
+            private void addReadStatusPredicate(List<Predicate> predicates, Root<ReadingTip> root,
+                    CriteriaBuilder builder) {
                 if (!unreadstatus.contains("unread")) { // must not be unread
                     predicates.add(builder.isTrue(root.get("isRead")));
                 }
                 if (!unreadstatus.contains("read")) { // must not be read
                     predicates.add(builder.isFalse(root.get("isRead")));
                 }
+            }
 
-                // tags
+            // tags
+            private void addTagsPredicate(List<Predicate> predicates, Root<ReadingTip> root, CriteriaBuilder builder) {
                 if (!tags.trim().isEmpty()) {
                     Path<Set<String>> tagsPath = root.join("tags", JoinType.LEFT);
                     Predicate tagsMatch = builder.disjunction();
@@ -148,8 +178,6 @@ public class ReadingTipSearch {
                     }
                     predicates.add(tagsMatch);
                 }
-
-                return builder.and(predicates.toArray(new Predicate[]{}));
             }
         };
     }
