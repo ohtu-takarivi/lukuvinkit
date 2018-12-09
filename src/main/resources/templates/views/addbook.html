@@ -31,7 +31,7 @@
           <label for="isbn">ISBN</label>
           <input type="text" id="isbn" name="isbn" th:field="*{isbn}" class="form-control" placeholder="ISBN" required/>
           <p class="alert alert-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></p>
-          <button class="btn btn-secondary btn-sm autofillbook" type="button" id="buttonautofillbook">Hae otsikko ja tekijät</button>
+          <button class="btn btn-secondary btn-sm" type="button" id="buttonautofillbook">Hae otsikko ja tekijät</button>
         </div>
         <button class="btn btn-primary btn-block" type="submit" id="buttonadd">Lisää</button>
       </form>

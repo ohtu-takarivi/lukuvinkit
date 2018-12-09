@@ -40,13 +40,13 @@
         <label for="isbn-sidebar">ISBN</label>
         <input type="text" id="isbn-sidebar" name="isbn-sidebar" th:field="*{isbn}" class="form-control" placeholder="ISBN"/>
         <p class="alert alert-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></p>
-        <button class="btn btn-secondary btn-sm autofillbook" type="button" id="buttonautofillbook-sidebar">Hae otsikko ja tekijät</button>
+        <button class="btn btn-secondary btn-sm" type="button" id="buttonautofillbook-sidebar">Hae otsikko ja tekijät</button>
       </div>
       <div class="form-group" id="url-div" style="display:none;">
         <label for="url-sidebar">URL</label>
         <input type="text" id="url-sidebar" name="url-sidebar" th:field="*{url}" class="form-control" placeholder="URL"/>
         <p class="alert alert-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></p>
-        <button class="btn btn-secondary btn-sm autofilllink" type="button" id="buttonautofilllink-sidebar">Hae otsikko ja kuvaus</button>
+        <button class="btn btn-secondary btn-sm" type="button" id="buttonautofilllink-sidebar">Hae otsikko ja kuvaus</button>
       </div>
       <button class="btn btn-primary" type="submit" id="buttonadd-sidebar">Lisää</button>
     </form>
