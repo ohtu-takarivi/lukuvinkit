@@ -207,7 +207,7 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     @When("^creating an article tip and correct title \"([^\"]*)\" and description \"([^\"]*)\" and author \"([^\"]*)" +
-            "\" and tags \"([^\"]*) are given$")
+            "\" and tags \"([^\"]*)\" are given$")
     public void article_tip_with_valid_information_and_tags_is_given(String title, String description, String author, String tags) throws Throwable {
         createArticleTip(title, description, author, tags);
     }

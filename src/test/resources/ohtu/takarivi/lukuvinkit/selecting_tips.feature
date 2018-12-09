@@ -11,7 +11,7 @@ Feature: After logging in, I can select tips, browse them and export a listing i
     Then tip with title "test reading tip 4" is visible
 
   Scenario: user can see selected tips as HTML when a link tip is selected
-    Given test user is logged in and browsing link tips
+    Given test user is logged in and browsing book tips
     When selecting tip with title "test reading tip 4" and exportHTML is selected
     Then tip with title "test reading tip 4" is visible
 
