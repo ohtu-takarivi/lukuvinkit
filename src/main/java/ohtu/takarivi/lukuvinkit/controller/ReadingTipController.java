@@ -1,6 +1,7 @@
 package ohtu.takarivi.lukuvinkit.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
+import ohtu.takarivi.lukuvinkit.forms.FormUtils;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
 
@@ -215,6 +217,31 @@ public class ReadingTipController {
             throw new AccessDeniedException("Access denied");
         }
         readingTip.setIsRead(true);
+        readingTipRepository.save(readingTip);
+        return "redirect:" + (referer == null ? "/" : referer);
+    }
+    
+    /**
+     * The form submit page that allows an user to update the comment of a reading tip.
+     *
+     * @param request      The HTTP request used to access this controller.
+     * @param auth         An Authentication object representing the currently authenticated user. The user that
+     *                     created the tip must also be the one setting it as read.
+     * @param readingTipId The ID of the reading tip to mark as read.
+     * @return The action to be taken by this controller.
+     */
+    @PostMapping("/readingTips/setComment/{readingTipId}")
+    public String setReadingTipComment(HttpServletRequest request, Authentication auth,
+                                       @PathVariable Long readingTipId, @RequestParam("comment") String comment) {
+        final int MAX_COMMENT_LENGTH = 2000;
+        String referer = request.getHeader("Referer");
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        ReadingTip readingTip = readingTipRepository.getOne(readingTipId);
+        if (readingTip.getCustomUser().getId() != customUser.getId()) {
+            // the only user that can mark a reading tip as read is the one who added it
+            throw new AccessDeniedException("Access denied");
+        }
+        readingTip.setComment(FormUtils.truncateString(Objects.toString(comment, ""), MAX_COMMENT_LENGTH));
         readingTipRepository.save(readingTip);
         return "redirect:" + (referer == null ? "/" : referer);
     }

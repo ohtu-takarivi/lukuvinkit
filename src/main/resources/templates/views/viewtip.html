@@ -23,6 +23,14 @@
                 <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}" th:href="@{/tag/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
               </div>
             </p>
+            <form action="#" th:action="@{/readingTips/setComment/{id}(id=${readingTip.id})}" method="POST">
+              <h6>Kommentti</h6>
+              <div class="form-group">
+                <textarea type="text" id="comment" name="comment" class="form-control" placeholder="(tyhjä kommentti)" 
+                          maxlength="2000" th:text="${readingTip.comment}" th:value="${readingTip.comment}" />
+              </div>
+              <button class="btn btn-secondary" type="submit" id="buttonupdatecomment">Päivitä kommentti</button>
+            </form>
           
             <div class="card-body" th:insert="fragments/read_delete :: read_delete"></div>
           </div>

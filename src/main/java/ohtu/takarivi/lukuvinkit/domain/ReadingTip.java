@@ -40,6 +40,8 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String isbn;
     private Boolean isRead;
     private Boolean isSelected;
+    @Lob
+    private String comment;
     @ManyToOne
     private CustomUser customUser;
 
@@ -78,6 +80,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
         this.isRead = false;
         this.isSelected = false;
         this.customUser = customUser;
+        this.comment = "";
         this.tags = tags;
     }
 
@@ -99,28 +102,32 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String articleToString() {
         return "Artikkeli: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
-                    + this.description; 
+                    + this.description
+                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
     }
     
     private String bookToString() {
         return "Kirja: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
                     + "ISBN-tunnus: " + this.isbn + "\n"
-                    + this.description;
+                    + this.description
+                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
     }
     
     private String linkToString() {
         return "Verkkosivu: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
                     + "Linkki: " + this.url + "\n"
-                    + this.description;
+                    + this.description
+                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
     }
     
     private String videoToString() {
         return "Video: " + this.title + "\n"
                     + "Tekijä(t): " + this.author + "\n"
                     + "Linkki: " + this.url + "\n"
-                    + this.description;
+                    + this.description
+                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
     }
 
     /**
