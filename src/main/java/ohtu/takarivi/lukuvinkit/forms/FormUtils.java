@@ -103,7 +103,11 @@ public class FormUtils {
 
     /**
      * Checks if the given URL is valid.
-     *
+     * 
+     * Must begin with http, https or ftp. Must consist of numbers or characters. Domain must be 2-20 digits long.
+     * or
+     * Must begin with 'localhost:' and be followed by 1-5 numbers.
+     * 
      * @param url   The value that is checked.
      * @param regex Regex for validating URLs that begin with http:// or https://.
      * @return Return true if the given input is a valid URL and false if it is not.
