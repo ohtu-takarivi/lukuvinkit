@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $('#buttonautofillbook').click(function() {
+    $('.autofillbook').click(function() {
         // disable the button while fetching
-        $('#buttonautofillbook').prop('disabled', true);
+        $('.autofillbook').prop('disabled', true);
         // clean up the ISBN and do some quick validation
         var isbnClean = encodeURIComponent(document.getElementById('isbn').value);
         isbnClean = isbnClean.replace(/-/g, '').replace(/ /g, '');
@@ -13,7 +13,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'https://api.finna.fi/api/v1/search?lookfor=isbn%3A' + isbnClean + '%20&type=AllFields&field[]=title&field[]=authors&sort=relevance%2Cid%20asc&page=1&limit=20&prettyPrint=false&lng=fi',
             complete: function(data) {
-                $('#buttonautofillbook').prop('disabled', false);
+                $('.autofillbook').prop('disabled', false);
                 if (data.responseText) {
                     var obj = JSON.parse(data.responseText);
                     if (obj['status'] != 'OK') {

@@ -72,49 +72,49 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Given("^test user is logged in$")
     public void test_user_is_logged_in() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
     }
 
     @Given("^test user is logged in and on the profile page$")
     public void test_user_is_logged_in_on_profile_page() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         browseTo("/profile");
     }
 
     @Given("^test user is logged in and browsing book tips$")
     public void test_user_is_logged_in_on_book_tip_list() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         browseTo("/readingTips/books");
     }
 
     @Given("^test user is logged in and browsing link tips$")
     public void test_user_is_logged_in_on_link_tip_list() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         browseTo("/readingTips/links");
     }
 
     @Given("^test user is logged in and creating a book tip$")
     public void test_user_is_logged_in_creating_book_tip() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         browseTo("/readingTips/books/add");
     }
 
     @Given("^test user is logged in and creating a link tip$")
     public void test_user_is_logged_in_creating_link_tip() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         browseTo("/readingTips/links/add");
     }
 
     @Given("^test data entry is enabled$")
     public void test_data_entry_is_enabled() throws Throwable {
-        driver.get(getBaseUrl() + "/login");
-        logInWith("nolla", "yksi");
+        driver.get(getBaseUrl());
+        logIn("nolla", "yksi");
         enableTestdataEntry();
     }
 
@@ -362,48 +362,48 @@ public class Stepdefs extends SpringBootTestBase {
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are registered$")
     public void username_password_registered(String username, String password) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.name("verifyPassword")).sendKeys(password);
-        driver.findElement(By.name("name")).sendKeys(username);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("verifyPassword")).sendKeys(password);
+        driver.findElement(By.id("name")).sendKeys(username);
         driver.findElement(By.id("buttonregister")).click();
     }
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" and verify password \"([^\"]*)\" are registered$")
     public void username_password_registered_different_verify(String username, String password, String verify) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonregister")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.name("verifyPassword")).sendKeys(verify);
-        driver.findElement(By.name("name")).sendKeys(username);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("verifyPassword")).sendKeys(verify);
+        driver.findElement(By.id("name")).sendKeys(username);
         driver.findElement(By.id("buttonregister")).click();
     }
 
     @When("^new password \"([^\"]*)\" and for verifying new password \"([^\"]*)\" are given$")
     public void new_password_created(String password, String verifyPassword) throws Throwable {
         assertFalse(driver.findElements(By.id("buttonchangepassword")).isEmpty());
-        driver.findElement(By.name("newPassword")).sendKeys(password);
-        driver.findElement(By.name("verifyNewPassword")).sendKeys(verifyPassword);
+        driver.findElement(By.id("newPassword")).sendKeys(password);
+        driver.findElement(By.id("verifyNewPassword")).sendKeys(verifyPassword);
         driver.findElement(By.id("buttonchangepassword")).click();
     }
 
     @When("^fetching information from our own login page$")
     public void autolink_fetch_from_self() throws Throwable {
-        driver.findElement(By.name("url")).sendKeys(getBaseUrl() + "/login");
+        driver.findElement(By.id("url")).sendKeys(getBaseUrl() + "/login");
         driver.findElement(By.id("buttonautofilllink")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
 
     @When("^fetching information from URL \"([^\"]*)\"$")
     public void autolink_fetch_url(String url) throws Throwable {
-        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.id("url")).sendKeys(url);
         driver.findElement(By.id("buttonautofilllink")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
 
     @When("^fetching information from ISBN \"([^\"]*)\"$")
     public void autofill_book_isbn(String isbn) throws Throwable {
-        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        driver.findElement(By.id("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonautofillbook")).click();
         Thread.sleep(FETCH_TIMEOUT_MILLIS);
     }
@@ -502,13 +502,13 @@ public class Stepdefs extends SpringBootTestBase {
 
     @Then("^fetched title contains \"([^\"]*)\"$")
     public void autofill_title(String title) throws Throwable {
-        assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
+        assertTrue(driver.findElement(By.id("title")).getAttribute("value").contains(title));
     }
 
     @Then("^there is an alert$")
     public void autofill_alert() throws Throwable {
         try {
-            driver.findElement(By.name("title")).getAttribute("value");
+            driver.findElement(By.id("title")).getAttribute("value");
             fail("no alert found when one was expected");
         } catch (UnhandledAlertException ex) {
         }
@@ -524,8 +524,8 @@ public class Stepdefs extends SpringBootTestBase {
         }
         
         try {
-            assertTrue(driver.findElement(By.name("title")).getAttribute("value").contains(title));
-            assertTrue(driver.findElement(By.name("author")).getAttribute("value").contains(author));
+            assertTrue(driver.findElement(By.id("title")).getAttribute("value").contains(title));
+            assertTrue(driver.findElement(By.id("author")).getAttribute("value").contains(author));
         } catch (UnhandledAlertException ex) {
         }
     }
@@ -624,10 +624,16 @@ public class Stepdefs extends SpringBootTestBase {
         driver.navigate().to(getBaseUrl() + string);
     }
 
+    private void logIn(String username, String password) throws InterruptedException {
+        browseTo("/login");
+        logInWith(username, password);
+    }
+
     private void logInWith(String username, String password) throws InterruptedException {
+        System.out.println(driver.getPageSource());
         assertFalse(driver.findElements(By.id("buttonlogin")).isEmpty());
-        driver.findElement(By.name("username")).sendKeys(username);
-        driver.findElement(By.name("password")).sendKeys(password);
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
         driver.findElement(By.id("buttonlogin")).click();
     }
 
@@ -648,22 +654,22 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     private void fillGenericFormValues(String title, String description, String author) {
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("description")).sendKeys(description);
-        driver.findElement(By.name("author")).sendKeys(author);
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        driver.findElement(By.id("author")).sendKeys(author);
     }
 
     private void fillGenericFormValuesSideBar(String title, String description, String author) {
-        driver.findElement(By.id("sidebartitle")).sendKeys(title);
-        driver.findElement(By.id("sidebardescription")).sendKeys(description);
-        driver.findElement(By.id("sidebarauthor")).sendKeys(author);
+        driver.findElement(By.id("title-sidebar")).sendKeys(title);
+        driver.findElement(By.id("description-sidebar")).sendKeys(description);
+        driver.findElement(By.id("author-sidebar")).sendKeys(author);
     }
 
     private void createBookTip(String title, String description, String url, String author, String isbn) throws InterruptedException {
         browseTo("/readingTips/books/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         fillGenericFormValues(title, description, author);
-        driver.findElement(By.name("isbn")).sendKeys(isbn);
+        driver.findElement(By.id("isbn")).sendKeys(isbn);
         driver.findElement(By.id("buttonadd")).click();
     }
 
@@ -678,7 +684,7 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/articles/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         fillGenericFormValues(title, description, author);
-        driver.findElement(By.name("tags")).sendKeys(tags);
+        driver.findElement(By.id("tags")).sendKeys(tags);
         driver.findElement(By.id("buttonadd")).click();
     }
 
@@ -686,7 +692,7 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/links/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         fillGenericFormValues(title, description, author);
-        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.id("url")).sendKeys(url);
         driver.findElement(By.id("buttonadd")).click();
     }
 
@@ -694,54 +700,54 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/readingTips/videos/add");
         assertFalse(driver.findElements(By.id("buttonadd")).isEmpty());
         fillGenericFormValues(title, description, author);
-        driver.findElement(By.name("url")).sendKeys(url);
+        driver.findElement(By.id("url")).sendKeys(url);
         driver.findElement(By.id("buttonadd")).click();
     }
     
     private void openSidebar() throws InterruptedException {
         driver.findElement(By.id("menu-toggle")).click();
-        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarcategory")));
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("category-sidebar")));
     }
 
     private void createBookTipWithSidebar(String title, String description, String url, String author, String isbn) throws InterruptedException {
         openSidebar();
-        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("books");
-        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarisbn")));
-        assertTrue(driver.findElement(By.id("sidebarisbn")).isDisplayed());
-        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        new Select(driver.findElement(By.id("category-sidebar"))).selectByValue("books");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("isbn-sidebar")));
+        assertTrue(driver.findElement(By.id("isbn-sidebar")).isDisplayed());
+        assertFalse(driver.findElements(By.id("buttonadd-sidebar")).isEmpty());
         fillGenericFormValuesSideBar(title, description, author);
-        driver.findElement(By.id("sidebarisbn")).sendKeys(isbn);
-        driver.findElement(By.id("sidebarbuttonadd")).click();
+        driver.findElement(By.id("isbn-sidebar")).sendKeys(isbn);
+        driver.findElement(By.id("buttonadd-sidebar")).click();
     }
 
     private void createArticleTipWithSidebar(String title, String description, String author) throws InterruptedException {
         openSidebar();
-        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("articles");
-        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        new Select(driver.findElement(By.id("category-sidebar"))).selectByValue("articles");
+        assertFalse(driver.findElements(By.id("buttonadd-sidebar")).isEmpty());
         fillGenericFormValuesSideBar(title, description, author);
-        driver.findElement(By.id("sidebarbuttonadd")).click();
+        driver.findElement(By.id("buttonadd-sidebar")).click();
     }
 
     private void createLinkTipWithSidebar(String title, String description, String url, String author) throws InterruptedException {
         openSidebar();
-        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("links");
-        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarurl")));
-        assertTrue(driver.findElement(By.id("sidebarurl")).isDisplayed());
-        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        new Select(driver.findElement(By.id("category-sidebar"))).selectByValue("links");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("url-sidebar")));
+        assertTrue(driver.findElement(By.id("url-sidebar")).isDisplayed());
+        assertFalse(driver.findElements(By.id("buttonadd-sidebar")).isEmpty());
         fillGenericFormValuesSideBar(title, description, author);
-        driver.findElement(By.id("sidebarurl")).sendKeys(url);
-        driver.findElement(By.id("sidebarbuttonadd")).click();
+        driver.findElement(By.id("url-sidebar")).sendKeys(url);
+        driver.findElement(By.id("buttonadd-sidebar")).click();
     }
 
     private void createVideoTipWithSidebar(String title, String description, String url, String author) throws InterruptedException {
         openSidebar();
-        new Select(driver.findElement(By.id("sidebarcategory"))).selectByValue("videos");
-        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("sidebarurl")));
-        assertTrue(driver.findElement(By.id("sidebarurl")).isDisplayed());
-        assertFalse(driver.findElements(By.id("sidebarbuttonadd")).isEmpty());
+        new Select(driver.findElement(By.id("category-sidebar"))).selectByValue("videos");
+        new WebDriverWait(driver, SIDEBAR_OPEN_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.id("url-sidebar")));
+        assertTrue(driver.findElement(By.id("url-sidebar")).isDisplayed());
+        assertFalse(driver.findElements(By.id("buttonadd-sidebar")).isEmpty());
         fillGenericFormValuesSideBar(title, description, author);
-        driver.findElement(By.id("sidebarurl")).sendKeys(url);
-        driver.findElement(By.id("sidebarbuttonadd")).click();
+        driver.findElement(By.id("url-sidebar")).sendKeys(url);
+        driver.findElement(By.id("buttonadd-sidebar")).click();
     }
 
     private void openTipWithTitle(String title) throws InterruptedException {

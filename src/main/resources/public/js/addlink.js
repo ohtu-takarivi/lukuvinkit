@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    $('#buttonautofilllink').click(function() {
+    $('.autofilllink').click(function() {
         // disable the button while fetching
-        $('#buttonautofilllink').prop('disabled', true);
+        $('.autofilllink').prop('disabled', true);
         $.ajax({
             url: '/api/getLinkInfo?url=' + encodeURIComponent(document.getElementById('url').value),
             complete: function(data) {
-                $('#buttonautofilllink').prop('disabled', false);
+                $('.autofilllink').prop('disabled', false);
                 if (data.responseText) {
                     // {"title": "title", "description": "description"}
                     var obj = JSON.parse(data.responseText);

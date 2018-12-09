@@ -27,17 +27,11 @@
             crossorigin="anonymous">
     </script>
 
-    <th:block th:if="${ view == 'login' or view == 'register' }">
-      <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
-    </th:block>
-
-    <div th:unless="${ view == 'login' or view == 'register' }" id="wrapper">
+    <th:block th:unless="${ view == 'login' or view == 'register' }">
       <div th:replace="@{'fragments/sidebar'} :: 'sidebar'"></div>
-      <div id="page-content-wrapper">
-        <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
-        <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
-      </div>
-    </div>
+      <div th:replace="@{'fragments/navbar'} :: 'navbar'"></div>
+    </th:block>
+    <div th:replace="@{'views/' + ${ view }} :: ${ view }"></div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
@@ -45,7 +39,9 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous">
     </script>
-    <script th:src="@{'~/js/code.js'}"></script>
+    <script th:src="@{'~/js/sidebar.js'}"></script>
+    <script th:src="@{'~/js/addbook.js'}"></script>
+    <script th:src="@{'~/js/addlink.js'}"></script>
 
     <span id="loadfinish"> </span>
     <br />
