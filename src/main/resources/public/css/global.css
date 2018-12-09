@@ -22,3 +22,29 @@
     font-size: 30px;
   }
 }
+
+ /* The side navigation menu */
+ .sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0; /* change 'right' to 'left' if sidebar needs to be on the left */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 3.5em;
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sidenav > .sidebar-content {
+  padding-top: 4em;
+  min-width: 350px;
+}
+
+/* Position and style the close button */
+.sidenav .closebtn {
+  position: absolute;
+  right: 20px;
+  font-size: 36px;
+  margin-left: 50px;
+}
