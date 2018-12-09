@@ -85,15 +85,17 @@ public abstract class SpringBootTestBase {
                            "",
                            emptyTags, 
                            testi2));
+        ReadingTip testReading3 = new ReadingTip("test reading tip 3",
+                ReadingTipCategory.LINK,
+                "description for tip 3",
+                "https://example.com/",
+                "J. Doe",
+                "",
+                emptyTags, 
+                nolla);
+        testReading3.setComment("Example of a comment!");
         readingTipRepository.save(
-            new ReadingTip("test reading tip 3",
-                           ReadingTipCategory.LINK,
-                           "description for tip 3",
-                           "https://example.com/",
-                           "J. Doe",
-                           "",
-                           emptyTags, 
-                           nolla));
+            testReading3);
         readingTipRepository.save(
             new ReadingTip("test reading tip 4",
                            ReadingTipCategory.BOOK,

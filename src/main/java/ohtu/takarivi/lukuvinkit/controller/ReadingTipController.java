@@ -343,15 +343,4 @@ public class ReadingTipController {
         return "layout";
     }
 
-    /**
-     * The page that resets a search.
-     *
-     * @param auth An Authentication object representing the currently authenticated user.
-     * @return The action to be taken by this controller.
-     */
-    @PostMapping("/resetSearch")
-    public String resetSearch(Authentication auth) {
-        return "redirect:/";
-    }
-
 }
