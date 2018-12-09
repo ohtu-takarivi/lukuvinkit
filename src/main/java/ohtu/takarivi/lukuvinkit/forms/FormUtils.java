@@ -11,6 +11,17 @@ public class FormUtils {
     private static final String ISBN_10_CHECK = "0123456789X";
 
     /**
+     * Truncates the string if it is longer than length.
+     * 
+     * @param string The string to test.
+     * @param length The maximum length allowed.
+     * @return The original string if it is shorter than length, otherwise the first length characters of the string.
+     */
+    public static String truncateString(String string, int length) {
+        return string.substring(0, Math.min(string.length(), length));
+    }
+
+    /**
      * Checks if the given code is a valid ISBN-10 or ISBN-13.
      *
      * @param isbn The value that is checked.

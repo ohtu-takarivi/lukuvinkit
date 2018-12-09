@@ -104,6 +104,12 @@ public class Stepdefs extends SpringBootTestBase {
         enableTestdataEntry();
     }
 
+    @Given("^viewing a book tip with the title \"([^\"]*)\"$")
+    public void view_book_tip_given(String title) throws Throwable {
+        browseTo("/readingTips/books");
+        openTipWithTitle(title);
+    }
+
     @When("^browsing book tips$")
     public void browse_book_tips() throws Throwable {
         browseTo("/readingTips/books");
@@ -115,7 +121,7 @@ public class Stepdefs extends SpringBootTestBase {
     }
 
     @When("^viewing the book tip with title \"([^\"]*)\"$")
-    public void view_book_tip(String title) throws Throwable {
+    public void view_book_tip_when(String title) throws Throwable {
         browseTo("/readingTips/books");
         openTipWithTitle(title);
     }
@@ -220,6 +226,14 @@ public class Stepdefs extends SpringBootTestBase {
     @When("^book tip with title \"([^\"]*)\" is deleted$")
     public void tip_is_deleted(String title) throws Throwable {
         driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../..")).findElement(By.cssSelector(".buttondelete")).click();
+    }
+
+    @When("^the comment is set to \"([^\"]*)\"$")
+    public void set_comment(String comment) throws Throwable {
+        assertFalse(driver.findElements(By.id("comment")).isEmpty());
+        driver.findElement(By.id("comment")).clear();
+        driver.findElement(By.id("comment")).sendKeys(comment);
+        driver.findElement(By.id("buttonupdatecomment")).click();
     }
 
     @When("^listing all tips with the tag \"([^\"]*)\"$")
@@ -458,6 +472,11 @@ public class Stepdefs extends SpringBootTestBase {
         WebElement btn = driver.findElement(By.xpath("//td[contains(@class,'tiptitle')]/a[text()='" + title + "']/../" +
                 "..")).findElement(By.cssSelector(".buttonread"));
         assertNull(btn.getAttribute("disabled"));
+    }
+
+    @Then("^the comment of the reading tip is \"([^\"]*)\"$")
+    public void comment_of_tip_is(String comment) throws Throwable {
+        assertTrue(driver.findElement(By.id("comment")).getAttribute("value").equals(comment));
     }
 
     @Then("^fetched title contains \"([^\"]*)\"$")
