@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.stream.Collectors;
@@ -47,11 +49,13 @@ public class ApiController {
             
             String title = "";
             String description = "";
-    
-            // get the text between title tags if ones exist
-            if (responseBodyLower.contains("<title>")) {
+
+            if (isLikelyYouTube(url) && responseBodyLower.contains("document.title")) {
+                title = getTitleFromYouTubeVideo(responseBody);
+            } else if (responseBodyLower.contains("<title>")) {
+                // get the text between title tags if ones exist
                 title = getTitleFromHtml(responseBody);
-            }
+            }    
     
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
@@ -62,7 +66,7 @@ public class ApiController {
             obj.put("title", title);
             obj.put("description", description);
             return obj.toString();
-        } catch (JSONException | IOException e) {
+        } catch (JSONException | IOException | URISyntaxException e) {
             return "";
         }
     }
@@ -98,6 +102,31 @@ public class ApiController {
         String htmlLower = html.toLowerCase();
         int titleStart = htmlLower.indexOf("<title>") + "<title>".length();
         return html.substring(titleStart, htmlLower.indexOf("</title>", titleStart)).replace('\n', ' ');
+    }
+
+    /**
+     * Tests whether the URL points to the YouTube domain.
+     * 
+     * @param url The URL to test.
+     * @return Whether the domain of the URL indicates the URL points to YouTube.
+     */
+    private boolean isLikelyYouTube(String url) throws URISyntaxException {
+        URI uri = new URI(url);
+        return uri.getHost().equalsIgnoreCase("youtube.com")
+                || uri.getHost().equalsIgnoreCase("www.youtube.com");
+    }
+    
+    /**
+     * Gets the title from document.title assignment from the JavaScript source. The tag must be guaranteed to exist.
+     *
+     * TODO This ought to use YouTube API instead one day
+     * @param html The HTML source.
+     * @return The title from document.title assignment from the JavaScript source.
+     */
+    private String getTitleFromYouTubeVideo(String html) {
+        String htmlLower = html.toLowerCase();
+        int titleStart = htmlLower.indexOf("document.title") + "document.title = '".length();
+        return html.substring(titleStart, htmlLower.indexOf('"', titleStart)).replace('\n', ' ');
     }
 
     /**
