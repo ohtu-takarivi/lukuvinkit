@@ -140,52 +140,11 @@ public class ReadingTipController {
      * @return The text listing.
      */
     @GetMapping(value = "/readingTips/exportHTML")
-    @ResponseBody
-    public String exporthTMLListingOfSelected(Authentication auth) {
+    public String exporthTMLListingOfSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
-        StringBuilder result = new StringBuilder();
-
-        result.append("<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "  <head>\n"
-                + "    <title>Lukuvinkkilistaus</title>\n"
-                + "    <meta charset=\"utf-8\">\n"
-                + "  </head>\n"
-                + "  <body>\n");
-        result.append("    <h1>Lukuvinkkilistaus</h1>\n");
-        result.append("    <p>Yhteensä valittuja lukuvinkkejä: " + tips.size() + "</p>\n");
-        result.append("    <table border=\"1\">\n");
-        result.append("      <tr>\n");
-        result.append("        <th>Otsikko</th>\n");
-        result.append("        <th>Tekijä(t)</th>\n");
-        result.append("        <th>Linkki tai ISBN</th>\n");
-        result.append("        <th>Kuvaus</th>\n");
-        result.append("        <th>Kommentti</th>\n");
-        result.append("      </tr>\n");
-        for (ReadingTip rtip : tips) {
-            String detail = "";
-            if (rtip.getCategory() == ReadingTipCategory.BOOK) {
-                detail = ("<a href=\"https://helka.finna.fi/Search/Results?lookfor={ISBN}&type=AllFields&dfApplied=1" +
-                        "&limit=20\">")
-                        .replace("{ISBN}", rtip.getIsbn().replace("\"", "%22"))
-                        + rtip.getIsbn() + "</a>";
-            } else if (rtip.getCategory() == ReadingTipCategory.LINK || rtip.getCategory() == ReadingTipCategory.VIDEO) {
-                detail = "<a href=\"" + rtip.getUrl().replace("\"", "%22") + "\">"
-                        + rtip.getUrl() + "</a>";
-            }
-            result.append("      <tr>\n");
-            result.append("        <td>" + rtip.getTitle() + "</td>\n");
-            result.append("        <td>" + rtip.getAuthor() + "</td>\n");
-            result.append("        <td>" + detail + "</td>\n");
-            result.append("        <td>" + rtip.getDescription() + "</td>\n");
-            result.append("        <td>" + rtip.getComment() + "</td>\n");
-            result.append("      </tr>\n");
-        }
-        result.append("    </table>\n");
-        result.append("  </body>\n"
-                + "</html>");
-        return result.toString();
+        model.addAttribute("tips", tips);
+        return "htmllisting";
     }
 
     /**

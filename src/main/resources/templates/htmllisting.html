@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lukuvinkkilistaus</title>
+  <meta charset="utf-8">
+</head>
+<body>
+<h1>Lukuvinkkilistaus</h1>
+<p th:inline="text">Yhteensä valittuja lukuvinkkejä: [[${#lists.size(tips)}]]!</p>
+<table border="1">
+  <tr>
+    <th>Otsikko</th>
+    <th>Tekijä(t)</th>
+    <th>Linkki tai ISBN</th>
+    <th>Kuvaus</th>
+    <th>Kommentti</th>
+  </tr>
+  <tr th:each="rtip: ${tips}">
+    <td th:text="${rtip.title}"/>
+    <td th:text="${rtip.author}"/>
+    <td th:if="${not #strings.isEmpty(rtip.isbn)}">
+      <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20(isbn=${#strings.replace(rtip.isbn,'&quot;', '%22')})}" th:inline="text">[[${rtip.isbn}]]</a>
+    </td>
+    <td th:if="${not #strings.isEmpty(rtip.url)}">
+      <a th:href="${#strings.replace(rtip.url,'&quot;', '%22')}" th:inline="text">[[${rtip.url}]]</a>
+    </td>
+    <td th:if="${#strings.isEmpty(rtip.isbn) and #strings.isEmpty(rtip.url)}"/>
+    <td th:text="${rtip.description}"/>
+    <td th:text="${rtip.comment}"/>
+  </tr>
+</table>
+</body>
+</html>
