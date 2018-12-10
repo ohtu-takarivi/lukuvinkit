@@ -133,7 +133,7 @@ public class FormUtils {
         }
         
         for (String rawTagName: tagNames) {
-            String tagName = rawTagName.trim();
+            String tagName = truncateString(rawTagName.trim(), 255);
             if (!tagName.isEmpty()) {
                 ReadingTipTag tag = readingTipTagRepository.findByName(tagName);
                 if (tag == null) {

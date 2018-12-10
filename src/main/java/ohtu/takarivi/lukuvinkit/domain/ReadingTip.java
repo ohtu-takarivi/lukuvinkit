@@ -21,16 +21,20 @@ import java.util.Set;
 @Setter
 public class ReadingTip extends AbstractPersistable<Long> {
 
+    private static final int DESC_LENGTH = 2000;
+    private static final int COMMENT_LENGTH = 2000;
+
     private String title;
     @Enumerated(EnumType.STRING)
     private ReadingTipCategory category;
-    @Lob
+    @Column(length = DESC_LENGTH)
     private String description;
     private String url;
     private String author;
     private String isbn;
     private Boolean isRead = false;
     private Boolean isSelected = false;
+    @Column(length = COMMENT_LENGTH)
     private String comment = "";
     @ManyToOne
     private CustomUser customUser;
