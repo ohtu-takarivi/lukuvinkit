@@ -16,8 +16,10 @@ import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
+import ohtu.takarivi.lukuvinkit.forms.FormUtils;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipTagRepository;
 
 /**
  * The Spring controller for miscellaneous pages.
@@ -35,6 +37,9 @@ public class MiscController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
+
+    @Autowired
+    private ReadingTipTagRepository readingTipTagRepository;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -61,8 +66,6 @@ public class MiscController {
         
         readingTipRepository.deleteAll();
         customUserRepository.deleteAll();
-
-        Set<ReadingTipTag> emptyTags = new HashSet<>();
         
         CustomUser user = new CustomUser("testuser", encoder.encode("testuser"), "testuser");
         customUserRepository.save(user);
@@ -71,7 +74,7 @@ public class MiscController {
         
         try (Scanner scanner = new Scanner(file, "utf-8")) {
             for (;;) {
-                ReadingTip rtip = getNextReadingTipFrom(scanner, emptyTags, user);
+                ReadingTip rtip = getNextReadingTipFrom(scanner, user);
                 if (rtip == null) {
                     break;
                 }
@@ -96,12 +99,13 @@ public class MiscController {
      * @param customUser The CustomUser to be passed to the ReadingTip constructor.
      * @return The next ReadingTip or null if there is no more (valid) test data.
      */
-    private ReadingTip getNextReadingTipFrom(Scanner scanner, Set<ReadingTipTag> tags, CustomUser customUser) {
+    private ReadingTip getNextReadingTipFrom(Scanner scanner, CustomUser customUser) {
         // testdata format:
         /// category (BOOK, LINK, VIDEO, ARTICLE)
         /// title
         /// author
         /// description
+        /// tags
         /// URL if VIDEO or ARTICLE, ISBN if BOOK, otherwise this line does not exist
         
         if (!scanner.hasNextLine()) {
@@ -123,6 +127,7 @@ public class MiscController {
         String title = scanner.nextLine();
         String author = scanner.nextLine();
         String description = scanner.nextLine();
+        String tagString = scanner.nextLine();
         String url = "";
         String isbn = "";
         
@@ -135,6 +140,7 @@ public class MiscController {
             isbn = scanner.nextLine();
         }
         
+        Set<ReadingTipTag> tags = FormUtils.prepareTags(readingTipTagRepository, tagString.split(" "));
         return new ReadingTip(title, category, description, url, author, isbn, tags, customUser);
     }
 }
