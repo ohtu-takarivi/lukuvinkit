@@ -49,15 +49,13 @@ public class ApiController {
             
             String title = "";
             String description = "";
-            
+
             if (isLikelyYouTube(url) && responseBodyLower.contains("document.title")) {
                 title = getTitleFromYouTubeVideo(responseBody);
             } else if (responseBodyLower.contains("<title>")) {
+                // get the text between title tags if ones exist
                 title = getTitleFromHtml(responseBody);
             }    
-            
-            // get the text between title tags if ones exist
-            
     
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
