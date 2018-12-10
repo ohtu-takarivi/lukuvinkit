@@ -81,3 +81,4 @@ Vielä toteuttamattomia, lisättäväksi suunniteltuja ominaisuuksia ovat:
 * kurssit & hakeminen kursseilla	
 * lukuvinkkien muokkaaminen	
 * tilin muokkaaminen, profiilit	
+* YouTube-API:n käyttö videon tietojen hakemiseen
