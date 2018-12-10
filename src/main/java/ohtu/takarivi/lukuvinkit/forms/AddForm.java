@@ -1,13 +1,12 @@
 
 package ohtu.takarivi.lukuvinkit.forms;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import org.springframework.validation.BindingResult;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.BindingResult;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,7 +17,6 @@ public abstract class AddForm {
     protected static final int DESCRIPTION_MAX_LENGTH = 2000;
     protected static final int AUTHOR_MIN_LENGTH = 1;
     protected static final int AUTHOR_MAX_LENGTH = 255;
-    protected static final int TAGS_MIN_LENGTH = 0;
     protected static final int TAGS_MAX_LENGTH = 1000;
 
     @NotEmpty
@@ -33,7 +31,7 @@ public abstract class AddForm {
     @Size(min = AUTHOR_MIN_LENGTH, max = AUTHOR_MAX_LENGTH, message = "Tekijän nimen pituus 1-255 merkkiä")
     protected String author;
     
-    @Size(min = TAGS_MIN_LENGTH, max = TAGS_MAX_LENGTH, message = "Tagi-merkkijonon pituus 1-1000 merkkiä")
+    @Size(max = TAGS_MAX_LENGTH, message = "Tagi-merkkijonon pituus 1-1000 merkkiä")
     protected String tags;
     
     /**

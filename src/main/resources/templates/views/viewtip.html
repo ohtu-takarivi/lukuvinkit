@@ -7,31 +7,32 @@
             <h4 class="card-title" th:text="${readingTip.title}" id="tiptitle"></h4>
             <h6 class="card-subtitle mb-2 text-muted" th:text="${readingTip.author}" id="tipauthor"></h6>
             <p class="card-text" th:text="${readingTip.description}" id="tipdescription"></p>
-          
             <p>
-              <div class="tipurl" th:remove="${readingTip.url} ? none : all">
-                <a th:href="${readingTip.url}" th:text="${readingTip.url}" id="tipurl"></a>
-              </div>
-              <div class="tipisbn" th:remove="${readingTip.isbn} ? none : all">
-                  <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20 (isbn=${readingTip.isbn})}" id="tipisbn" th:text=" ${readingTip.isbn}"></a>   
-              </div>
+            <div class="tipurl" th:remove="${readingTip.url} ? none : all">
+              <a th:href="${readingTip.url}" th:text="${readingTip.url}" id="tipurl"></a>
+            </div>
+            <div class="tipisbn" th:remove="${readingTip.isbn} ? none : all">
+              <a th:href="@{https://helka.finna.fi/Search/Results?lookfor={isbn}&type=AllFields&dfApplied=1&limit=20 (isbn=${readingTip.isbn})}"
+                 id="tipisbn" th:text=" ${readingTip.isbn}"></a>
+            </div>
             </p>
-          
             <p>
-              <div class="tiptags" th:if="${readingTip.tags.size() > 0}">
-                <b>Tagit</b>: 
-                <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}" th:href="@{/tag/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
-              </div>
+            <div class="tiptags" th:if="${readingTip.tags.size() > 0}">
+              <b>Tagit</b>:
+              <a class="btn btn-sm btn-outline-secondary mx-1" th:each="tag : ${readingTip.tags}"
+                 th:href="@{/tag/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
+            </div>
             </p>
-            <form action="#" th:action="@{/readingTips/setComment/{id}(id=${readingTip.id})}" method="POST">
+            <form action="#" th:action="@{/readingTips/setComment/{id}(id=${readingTip.id})}" th:object="${commentForm}"
+                  method="POST">
               <h6>Kommentti</h6>
               <div class="form-group">
-                <textarea type="text" id="comment" name="comment" class="form-control" placeholder="(tyhjä kommentti)" 
-                          maxlength="2000" th:text="${readingTip.comment}" th:value="${readingTip.comment}" />
+                <textarea type="text" id="comment" name="comment" class="form-control" placeholder="(tyhjä kommentti)"
+                          th:field="*{comment}"/>
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></p>
               </div>
               <button class="btn btn-secondary" type="submit" id="buttonupdatecomment">Päivitä kommentti</button>
             </form>
-          
             <div class="card-body" th:insert="fragments/read_delete :: read_delete"></div>
           </div>
         </div>

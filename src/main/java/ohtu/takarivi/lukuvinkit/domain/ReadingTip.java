@@ -1,22 +1,13 @@
 package ohtu.takarivi.lukuvinkit.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents a reading tip, consisting of a title,
@@ -29,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReadingTip extends AbstractPersistable<Long> {
-    
+
     private String title;
     @Enumerated(EnumType.STRING)
     private ReadingTipCategory category;
@@ -38,10 +29,9 @@ public class ReadingTip extends AbstractPersistable<Long> {
     private String url;
     private String author;
     private String isbn;
-    private Boolean isRead;
-    private Boolean isSelected;
-    @Lob
-    private String comment;
+    private Boolean isRead = false;
+    private Boolean isSelected = false;
+    private String comment = "";
     @ManyToOne
     private CustomUser customUser;
 
@@ -77,10 +67,7 @@ public class ReadingTip extends AbstractPersistable<Long> {
         this.url = url;
         this.author = author;
         this.isbn = isbn;
-        this.isRead = false;
-        this.isSelected = false;
         this.customUser = customUser;
-        this.comment = "";
         this.tags = tags;
     }
 
@@ -99,34 +86,34 @@ public class ReadingTip extends AbstractPersistable<Long> {
                 return super.toString();
         }
     }
-    
+
     private String addDescriptionAndComment(String string) {
         return string
-                    + this.description
-                    + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
+                + this.description
+                + (this.comment.isEmpty() ? "" : "\n---\n" + this.comment);
     }
 
     private String articleToString() {
         return "Artikkeli: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n";
+                + "Tekijä(t): " + this.author + "\n";
     }
-    
+
     private String bookToString() {
         return "Kirja: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "ISBN-tunnus: " + this.isbn + "\n";
+                + "Tekijä(t): " + this.author + "\n"
+                + "ISBN-tunnus: " + this.isbn + "\n";
     }
-    
+
     private String linkToString() {
         return "Verkkosivu: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n";
+                + "Tekijä(t): " + this.author + "\n"
+                + "Linkki: " + this.url + "\n";
     }
-    
+
     private String videoToString() {
         return "Video: " + this.title + "\n"
-                    + "Tekijä(t): " + this.author + "\n"
-                    + "Linkki: " + this.url + "\n";
+                + "Tekijä(t): " + this.author + "\n"
+                + "Linkki: " + this.url + "\n";
     }
 
     /**
