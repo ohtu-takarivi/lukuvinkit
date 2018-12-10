@@ -47,11 +47,18 @@ public class ApiController {
             
             String title = "";
             String description = "";
-    
-            // get the text between title tags if ones exist
-            if (responseBodyLower.contains("<title>")) {
+            
+            if(url.contains("youtube")){
+                if (responseBodyLower.contains("document.title")) {
+                title = getTitleFromVideo(responseBody);
+            } }else{
+                if (responseBodyLower.contains("<title>")) {
                 title = getTitleFromHtml(responseBody);
-            }
+            }    
+                }
+            
+            // get the text between title tags if ones exist
+            
     
             // get the text inside the "content" of a meta description if one exists
             if (responseBodyLower.contains("<meta name=\"description\" content=\"")) {
@@ -66,6 +73,12 @@ public class ApiController {
             return "";
         }
     }
+    
+    
+    
+    
+    
+    
 
     /**
      * Gets the HTML page source from a given URL.
@@ -98,6 +111,18 @@ public class ApiController {
         String htmlLower = html.toLowerCase();
         int titleStart = htmlLower.indexOf("<title>") + "<title>".length();
         return html.substring(titleStart, htmlLower.indexOf("</title>", titleStart)).replace('\n', ' ');
+    }
+    
+    /**
+     * Gets the title from document.title tag from the HTML source. The tag must be guaranteed to exist.
+     *
+     * @param html The HTML source.
+     * @return The title from document.title tag from the HTML source.
+     */
+    private String getTitleFromVideo(String html) {
+        String htmlLower = html.toLowerCase();
+        int titleStart = htmlLower.indexOf("document.title") + "document.title = '".length();
+        return html.substring(titleStart, htmlLower.indexOf('"', titleStart)).replace('\n', ' ');
     }
 
     /**
