@@ -1,0 +1,10 @@
+<main th:fragment="tags">
+  <section class="container mt-4">
+    <h2>Tagit</h2>
+    <br />
+    <div class="row">
+      <a th:each="tag : ${tags}" class="btn btn-outline-secondary mx-1"
+         th:href="@{/tag/{tag}(tag=${tag.name})}" th:text="${tag.name}"></a>
+    </div>
+  </section>
+</main>

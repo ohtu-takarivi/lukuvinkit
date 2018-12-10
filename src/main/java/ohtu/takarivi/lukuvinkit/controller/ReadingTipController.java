@@ -4,9 +4,12 @@ import ohtu.takarivi.lukuvinkit.domain.CustomUser;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTip;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipCategory;
 import ohtu.takarivi.lukuvinkit.domain.ReadingTipSearch;
+import ohtu.takarivi.lukuvinkit.domain.ReadingTipTag;
 import ohtu.takarivi.lukuvinkit.forms.CommentForm;
 import ohtu.takarivi.lukuvinkit.repository.CustomUserRepository;
 import ohtu.takarivi.lukuvinkit.repository.ReadingTipRepository;
+import ohtu.takarivi.lukuvinkit.repository.ReadingTipTagRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -18,7 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The Spring controller for reading tip related activity. Handlers for adding reading tips are under
@@ -32,6 +39,9 @@ public class ReadingTipController {
 
     @Autowired
     private ReadingTipRepository readingTipRepository;
+
+    @Autowired
+    private ReadingTipTagRepository readingTipTagRepository;
 
     /**
      * The page that allows an user to view the details of a reading tip.
@@ -140,11 +150,37 @@ public class ReadingTipController {
      * @return The text listing.
      */
     @GetMapping(value = "/readingTips/exportHTML")
-    public String exporthTMLListingOfSelected(Authentication auth, Model model) {
+    public String exportHtmlListingOfSelected(Authentication auth, Model model) {
         CustomUser customUser = customUserRepository.findByUsername(auth.getName());
         List<ReadingTip> tips = readingTipRepository.findByCustomUserIdAndIsSelectedTrue(customUser.getId());
         model.addAttribute("tips", tips);
         return "htmllisting";
+    }
+
+    /**
+     * The page that lists all the used tags.
+     *
+     * @param auth    An Authentication object representing the currently authenticated user.
+     * @param model   The model to feed the information into.
+     * @return The action to be taken by this controller.
+     */
+    @GetMapping("/tags")
+    public String listTags(Authentication auth, Model model) {
+        CustomUser customUser = customUserRepository.findByUsername(auth.getName());
+        List<ReadingTipTag> allTags = readingTipTagRepository.findAll();
+        // only list the tags that are used by the user
+        List<ReadingTipTag> tags = new ArrayList<>();
+        
+        for (ReadingTipTag tag: allTags) {
+            if (readingTipRepository.findByCustomUserIdAndTags_Name(customUser.getId(), tag.getName()).size() > 0) {
+                tags.add(tag);
+            }
+        }
+        
+        model.addAttribute("title", "Tagit");
+        model.addAttribute("tags", tags);
+        model.addAttribute("view", "tags");
+        return "layout";
     }
 
     /**
@@ -265,7 +301,21 @@ public class ReadingTipController {
             // the only user that can delete a reading tip is the one who added it
             throw new AccessDeniedException("Access denied");
         }
+        
+        List<ReadingTipTag> orphanTags = new ArrayList<>();
+        for (ReadingTipTag tag: readingTip.getTags()) {
+            if (readingTipRepository.findByTags_Name(tag.getName()).size() == 1) { // this is the only one
+                orphanTags.add(tag);
+            }
+        }
+        
         readingTipRepository.deleteById(readingTipId);
+        readingTipRepository.flush();
+        
+        // delete orphaned tips
+        readingTipTagRepository.deleteInBatch(orphanTags);
+        readingTipTagRepository.flush();
+        
         return "redirect:" + (referer == null || referer.contains("/view/" + readingTipId)
                 ? "/" : referer);
     }

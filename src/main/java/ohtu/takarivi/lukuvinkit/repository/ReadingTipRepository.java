@@ -46,11 +46,19 @@ public interface ReadingTipRepository extends JpaRepository<ReadingTip, Long>, J
     List<ReadingTip> findByCustomUserIdAndIsSelectedTrue(Long customUserId);
     
     /**
+     * Finds all reading tips with a given tag, regardless of user.
+     * 
+     * @param name The name of the tag.
+     * @return A list of reading tips that match the giveh conditions.
+     */
+    List<ReadingTip> findByTags_Name(String name);
+    
+    /**
      * Finds all reading tips based on the user ID and with a given tag.
      * 
      * @param customUserId The ID of the custom user.
      * @param name The name of the tag.
-     * @return A list of selected reading tips.
+     * @return A list of reading tips that match the giveh conditions.
      */
     List<ReadingTip> findByCustomUserIdAndTags_Name(Long customUserId, String name);
 
