@@ -65,7 +65,7 @@ LINK
 Geoguessr
 Geoguessr
 Peli, jossa pitää päätellä sijainti pelkästään Google Street View -palvelun katukuvien perusteella.
-verkkosivu
+verkkosivu peli
 https://geoguessr.com/
 
 BOOK
@@ -79,7 +79,7 @@ BOOK
 Ohjelmoinnin perusteet : Java
 Arto Sainio
 Ohjlmoinnin aloittamiseen liittyvä kirja, jossa käsitellään perusteita Java-kielellä.
-tieto
+tieto ohjelmointi
 952-5210-28-6
 
 BOOK
@@ -107,7 +107,7 @@ BOOK
 Risto Räppääjä ja juonikas Julia
 Sinikka Nopola, Tiina Nopola ja Christel Rönns
 Tunnetun lastenkirjasarjan uusi tulokas, jossa Risto ja Nello tutustuvat Juliaan.
-fiktio
+fiktio lasten
 9789520401405
 
 BOOK
@@ -135,7 +135,7 @@ BOOK
 The C Programming Language
 Brian Kernighan, Dennis Ritchie
 Ensimmäinen C-kielestä kirjoitettu kirja, joka toimi kielen standardina ja jonka nimeen yhä monet C-ohjelmoijat vannovat. Yksi ohjelmoinnin historian tärkeimmistä teoksista.
-tieto
+tieto ohjelmointi
 0-13-110163-3
 
 VIDEO
@@ -149,28 +149,28 @@ VIDEO
 Learn Java 8 - Full Tutorial for Beginners
 freeCodeCamp.org
 Hyvin pitkä Java tutoriaali.
-
+ohjelmointi tieto
 https://www.youtube.com/watch?v=grEKMHGYyns
 
 VIDEO
 10 Strangest Planets In Space
 Thoughty2
 Video mielenkiintoisista planeetoista universumissamme. 
-
+space
 https://www.youtube.com/watch?v=6KZ1kvIUFrU
 
 VIDEO
 Your kids might live on Mars. Here's how they'll survive | Stephen Petranek
 TED
 Stephen Petranek pohtii ihmiskunnan selviytymiskeinoja, sekä mahdollisuuksia asuttaa Mars.
-talk
+talk space
 https://www.youtube.com/watch?v=t9c7aheZxls
 
 VIDEO
 How Will Artificial Intelligence Affect Your Life | Jeff Dean | TEDxLA
 TEDx Talks
 Jeff Dean käy läpi tekoälyä ja sen tuomia mahdollisuuksia ja vaikutuksia tulevaisuudessa.
-talk
+talk ai
 https://www.youtube.com/watch?v=BfDQNrVphLQ
 
 VIDEO
@@ -184,28 +184,28 @@ VIDEO
 NASA Live: Earth Views from the Space Station
 Nasa
 Nasa's live feed from ISS. 
-
+space
 https://www.youtube.com/watch?v=Va0tdqjZz-c
 
 VIDEO
 Kuinka Avataan Tölkki Ilman Avaajaa - Zombie-selvitytymisvinkki #20
 CrazyRussianHacker
 Vinkki miten saa tonnikalapurkin auki, kun purkinavaaja on kadoksissa eikä kaapeissa ole muuta syötävää.
-
+vinkit
 https://www.youtube.com/watch?v=oH2NahLjx-Y
 
 VIDEO
 AAMUPALAVINKKI VIHERAHON MALLIIN
 Pasi Viheraho
 Pasi Viheraho tekee aamupalaa, ei näytä herkulliselta.
-
+vinkit
 https://www.youtube.com/watch?v=TJW4gc7a8Dk
 
 VIDEO
 LITTLE BIG – SKIBIDI (official music video)
 Little Big
 Mielenkiintoinen kappale ja musiikkivideo.
-
+musiikkivideo
 https://www.youtube.com/watch?v=mDFBTdToRmw
 
 ARTICLE
