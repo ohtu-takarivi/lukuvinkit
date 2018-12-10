@@ -9,6 +9,7 @@ import ohtu.takarivi.lukuvinkit.repository.ReadingTipTagRepository;
 public class FormUtils {
 
     private static final String ISBN_10_CHECK = "0123456789X";
+    private static final int MAXIMUM_TAG_LENGTH = 255;
 
     /**
      * Truncates the string if it is longer than length.
@@ -133,7 +134,7 @@ public class FormUtils {
         }
         
         for (String rawTagName: tagNames) {
-            String tagName = truncateString(rawTagName.trim(), 255);
+            String tagName = truncateString(rawTagName.trim(), MAXIMUM_TAG_LENGTH);
             if (!tagName.isEmpty()) {
                 ReadingTipTag tag = readingTipTagRepository.findByName(tagName);
                 if (tag == null) {
