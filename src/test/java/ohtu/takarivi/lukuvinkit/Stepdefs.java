@@ -271,6 +271,11 @@ public class Stepdefs extends SpringBootTestBase {
         browseTo("/tag/" + tag);
     }
 
+    @When("^listing all tags$")
+    public void list_all_tags() throws Throwable {
+        browseTo("/tags");
+    }
+
     @When("^searching for tips with \"([^\"]*)\"$")
     public void search_keyword(String keyword) throws Throwable {
         driver.findElement(By.id("keyword")).sendKeys(keyword);
@@ -512,6 +517,11 @@ public class Stepdefs extends SpringBootTestBase {
     @Then("^fetched title contains \"([^\"]*)\"$")
     public void autofill_title(String title) throws Throwable {
         assertTrue(driver.findElement(By.id("title")).getAttribute("value").contains(title));
+    }
+
+    @Then("^one of the tags is \"([^\"]*)\"$")
+    public void tag_visible(String tag) throws Throwable {
+        assertTrue(driver.getPageSource().contains(tag));
     }
 
     @Then("^there is an alert$")

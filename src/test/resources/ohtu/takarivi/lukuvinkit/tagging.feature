@@ -9,3 +9,8 @@ Feature: After logging in, I can create tips with tags and view tags
     Given test user is logged in
     When listing all tips with the tag "testing123"
     Then there are 2 tips listed
+
+  Scenario: user can create list tags
+    Given test user is logged in
+    When listing all tags
+    Then one of the tags is "testing123"
