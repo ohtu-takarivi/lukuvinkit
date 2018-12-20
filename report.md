@@ -19,19 +19,22 @@ Yleisesti ottaen jokainen sprintti sujui hyvin. Etukäteen asetetut tavoitteet s
 >**Tavoitteet:** URL- ja ISBN-linkit, automaattinen tietojenhaku URL ja ISBN perusteella, listaus ulos lukuvinkeistä sekä koodin dokumentointi & demoon valmistautuminen.   
 >**Toteutunut:** Tavoitteet + test data generator.  
   
->**Sprintin ongelmat:**
+>**Sprintin ongelmat:** Pieniä haasteita konfiguraatioiden kanssa, joista selvittiin hyvin.
 
 ### Sprintti 4
 >**Tavoitteet:** Tägäys, lisäys sivupalkista, koodin siivoaminen, dokumentointi ja valmistautuminen demoon.   
 >**Toteutunut:** Tavoitteet + kommentointi.  
  
->**Sprintin ongelmat:**
+>**Sprintin ongelmat:** Järjestelmän ominaisuuksien toiminta Herokussa tuotti joitain haasteita. Saatiin toimimaan hyvin ennen demoa.
 
 ## Mikä projektissa onnistui ja mitä voisi parantaa seuraavalla kerralla
 Ryhmässä työskentelyssä on aina omat haasteensa ajankäytön ja tehtävien jaon, sekä kommunikoinnin kanssa. Kaikki sujui kuitenkin hyvin. Ryhmästä löytyi taitoa ja kokemusta, joten projektia saatiin edistettyä ilman suurempia murheita, ja ongelmakohtiin löydettiin ratkaisut hyvinkin nopeasti.
 
 ## Mitä opittiin, mitä oltaisiin haluttu oppia, mikä tuntui turhalta
 Projektissa oppi paljon sekä ryhmätyöskentelystä, että ohjelmoinnista ryhmässä. Ajan ollessa rajattu joutuu keskittymään olennaisimpiin tehtäviin ja pyrkiä saamaan tietyt etukäteen sovitut tehtävät valmiiksi. Projektissa kirjattiin ylös sekä ajankäyttöä, että tehtävien tilannetta. Tämäkin oli erilaista verrattuna tavalliseen kouluprojektien kanssa työskentelyyn. Yhteisen versionhallinnan käyttöön tuli myös hyvin paljon käytännön kokemusta, joita kurssin laskaritehtävät myös hyvin tukivat. 
+
+## Yleiset fiilikset  
+Haasteet ja ongelmat olivat pääasiassa hyvin pieniä ja liittyivät suurimmalta osalta vain pieneen hienosäätöön ja konfiguroimiseen. Yhteishenki oli hyvä ja positiivinen, eikä mitään komplikaatioita henkilöiden välillä ollut. 
 
 ## Projektiin osallistuivat
 Sampo, Tuomas, Waltteri, Joonas, Aleksander, Pavel
