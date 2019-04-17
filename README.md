@@ -1,5 +1,5 @@
 ﻿# Lukuvinkit
-
+muutos
 [![Build Status - Travis](https://travis-ci.org/ohtu-takarivi/lukuvinkit.svg?branch=master)](https://travis-ci.org/ohtu-takarivi/lukuvinkit)
 
 [![Code Coverage - Codecov](https://codecov.io/gh/ohtu-takarivi/lukuvinkit/branch/master/graph/badge.svg)](https://codecov.io/github/ohtu-takarivi/lukuvinkit)
